@@ -1,0 +1,740 @@
+/*
+ * D-CENT UI Patterns — style.css
+ * Perustuu d-cent/patterns-repon spesifikaatioihin.
+ * Tekninen rakenne vastaa uutisseuranta.github.io/style.css-konventiota.
+ *
+ * Väripaletti:
+ *   --color-primary:     #007E84  (teal, brändiväri)
+ *   --color-primary-light: #00D3CA (hover-tila)
+ *   --color-bg:          #ffffff
+ *   --color-text:        #222222
+ *   --color-border:      #666666
+ *   --color-muted-bg:    #eeeeee
+ *
+ * BEM-nimeämiskonventio: Block__Element--Modifier
+ */
+
+/* ==========================================================================
+   1. RESET & BASE
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: #222222;
+  font-family: sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #007E84;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #00D3CA;
+  text-decoration: underline;
+}
+
+ul, ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+/* ==========================================================================
+   2. TYPOGRAFIA
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+  color: #222222;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.9rem; }
+
+small, .text--small {
+  font-size: 0.875rem;
+}
+
+.text--muted {
+  color: #666666;
+}
+
+/* ==========================================================================
+   3. GRID & LAYOUT
+   ========================================================================== */
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.g {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.g > * {
+  flex: 1 1 200px;
+}
+
+.g:last-child {
+  margin-right: 0;
+}
+
+.inactive {
+  opacity: 0.25;
+  transition: all 0.5s ease-out;
+}
+
+.inactive:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   4. BUTTONS (atoms/06-buttons)
+   ========================================================================== */
+
+.btn,
+.btn-alt {
+  display: inline-block;
+  padding: 0.5em 1.25em;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  text-align: center;
+  line-height: 1.4;
+  min-width: 7em;
+}
+
+.btn {
+  background-color: #007E84;
+  color: #ffffff;
+  border-color: #007E84;
+}
+
+.btn:hover {
+  background-color: #00D3CA;
+  border-color: #00D3CA;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-alt {
+  background-color: transparent;
+  color: #007E84;
+  border-color: #007E84;
+}
+
+.btn-alt:hover {
+  background-color: #007E84;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-group {
+  display: inline-flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   5. FORMS (atoms/05-forms)
+   ========================================================================== */
+
+fieldset {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.5em 0.75em;
+  border: 1px solid #666666;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #222222;
+  transition: border-color 0.2s ease;
+  margin-bottom: 0.75em;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #007E84;
+  box-shadow: 0 0 0 2px rgba(0, 126, 132, 0.2);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ==========================================================================
+   6. NAVIGATION (organisms/navigation)
+   ========================================================================== */
+
+.page--with-sticky {
+  padding-top: 44px;
+}
+
+.header--sticky {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 20;
+  background-color: #ffffff;
+  border-bottom: 1px solid #666666;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.nav-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-primary a {
+  color: #222222;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.25em 0;
+}
+
+.nav-primary a:hover {
+  color: #007E84;
+  text-decoration: none;
+}
+
+.titlebar-fixed {
+  background-color: #ffffff;
+  border-bottom: solid 1px #666666;
+  height: 44px;
+  overflow: hidden;
+  padding-top: 10px;
+  position: fixed;
+  top: 44px;
+  z-index: 10;
+  width: 100%;
+}
+
+.fixed-only {
+  display: none;
+}
+
+.titlebar-fixed .fixed-only {
+  display: block;
+}
+
+/* ==========================================================================
+   7. STREAM (molecules/streams, organisms/streams)
+   ========================================================================== */
+
+.stream {
+  margin: 1em auto;
+  max-width: 30em;
+}
+
+.stream h2 {
+  font-size: 1.25rem;
+}
+
+.stream .tabs {
+  text-align: left;
+  width: 100%;
+}
+
+.tabs__search {
+  float: right;
+  font-size: 1.1rem;
+}
+
+/* Stream item */
+.stream-item {
+  padding-bottom: 1.5em;
+  border-bottom: 1px dotted #007E84;
+  margin: 1em 0 1.5em 0;
+  max-width: 30em;
+}
+
+.stream-item:last-child {
+  border-bottom-width: 0;
+}
+
+/* Comment metadata */
+.comment__meta {
+  font-size: 0.875rem;
+  margin-bottom: 0.5em;
+  color: #666666;
+}
+
+.comment__meta a.group-name {
+  font-weight: 400;
+}
+
+.comment__actions > span {
+  margin-left: 0.5em;
+}
+
+.comment__actions > span:first-child {
+  margin-left: 0;
+}
+
+.comment__img .fa {
+  font-size: 28px;
+}
+
+/* ==========================================================================
+   8. EMBEDDED ITEM (molecules/objects)
+   ========================================================================== */
+
+.embedded-item {
+  border: solid 1px #007E84;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0.5em;
+  transition: background-color 0.2s ease;
+}
+
+.embedded-item:hover {
+  background-color: #eeeeee;
+}
+
+.embedded-item__meta {
+  font-size: 0.875rem;
+}
+
+.embedded-item__meta .embedded-item__title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.embedded-item__meta .action-taken {
+  color: #007E84;
+}
+
+.embedded-item .article__img {
+  clear: left;
+  width: 80px;
+  margin: 0.5em 0.5em 0.25em 0;
+  float: left;
+}
+
+/* ==========================================================================
+   9. ARTICLE ACTIONS
+   ========================================================================== */
+
+.article-actions {
+  text-align: center;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+.article-actions > li {
+  display: inline-block;
+}
+
+.article-actions > li > a.btn,
+.article-actions > li > a.btn-alt {
+  display: block;
+  min-width: 7em;
+}
+
+.embedded-item:hover .article-actions > li > a {
+  color: #00D3CA;
+}
+
+.article-actions i.count {
+  position: relative;
+  top: -7px;
+}
+
+.article-actions__meta {
+  font-size: 0.875rem;
+  margin-top: 0.25em;
+  text-align: center;
+}
+
+.article-actions__meta > a {
+  margin: 0 0.25em;
+}
+
+/* ==========================================================================
+   10. EVENT DATE (molecules/objects)
+   ========================================================================== */
+
+.event-date {
+  border: 1px solid #222222;
+  padding-bottom: 0.25em;
+  text-align: center;
+  width: 38px;
+  display: inline-block;
+}
+
+.event-date__month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  background-color: #222222;
+  color: #ffffff;
+  display: block;
+  padding: 0.1em 0;
+}
+
+.event-date__day {
+  font-size: 1.25rem;
+  color: #222222;
+  display: block;
+}
+
+/* ==========================================================================
+   11. TAGS & GENERAL ACTIONS
+   ========================================================================== */
+
+.tags {
+  margin: 0.25em 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  list-style: none;
+  padding: 0;
+}
+
+.tags a {
+  background-color: #eeeeee;
+  border-radius: 4px;
+  color: #007E84;
+  font-size: 0.85rem;
+  padding: 0.2em 0.6em;
+}
+
+.tags a:hover {
+  background-color: #007E84;
+  color: #ffffff;
+}
+
+.actions-general {
+  text-align: right;
+}
+
+.actions-general > a {
+  margin: 0 0.5em;
+}
+
+.pagination {
+  margin-top: 1em;
+  text-align: center;
+}
+
+/* ==========================================================================
+   12. FULL ARTICLE (organisms/streams)
+   ========================================================================== */
+
+.full-article {
+  margin: 1em 1em 1em 0;
+}
+
+.full-article > header {
+  overflow: hidden;
+  padding: 0 0 0.5em 0;
+  top: 0;
+  transition: all 0.5s ease-out;
+}
+
+.full-article > header h2 {
+  float: left;
+  margin-bottom: 0;
+}
+
+.full-article .article-actions {
+  float: right;
+  margin-top: 0.5em;
+}
+
+.full-article__meta {
+  float: left;
+  font-size: 0.875rem;
+  padding-top: 0.25em;
+}
+
+.full-article .excerpt {
+  clear: both;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.article-type-specifics {
+  border: 1px solid #007E84;
+  border-radius: 6px;
+  clear: both;
+  margin-bottom: 0.5em;
+  overflow: auto;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.article-type-specifics__intro {
+  font-weight: bold;
+}
+
+.article-type-specifics .article-actions {
+  float: none;
+  margin-top: 0.5em;
+}
+
+.full-article header .tags {
+  float: left;
+}
+
+.full-article header .actions-general {
+  float: right;
+}
+
+.full-article__body {
+  clear: both;
+  margin: 1em 0;
+}
+
+/* Full article fixed header overrides */
+.titlebar-fixed .article-actions {
+  margin-top: 0;
+}
+
+.titlebar-fixed .excerpt,
+.titlebar-fixed .full-article__meta,
+.titlebar-fixed .article-type-specifics,
+.titlebar-fixed .tags,
+.titlebar-fixed .actions-general {
+  display: none;
+}
+
+/* ==========================================================================
+   13. COMMENTS (molecules/comments, organisms/discussion)
+   ========================================================================== */
+
+.create-new {
+  margin: 1em 0;
+  text-align: center;
+}
+
+.comment-field {
+  margin: 0 0 0.5em 0;
+  max-width: 30em;
+  text-align: left;
+}
+
+.comment-field > textarea {
+  width: 85%;
+}
+
+.comment-field-argumentation {
+  max-width: none;
+}
+
+.comment-field-argumentation > .btn-group {
+  float: left;
+  margin-right: 1em;
+}
+
+.comment-field-argumentation > textarea {
+  max-width: 25em;
+}
+
+/* ==========================================================================
+   14. GROUP PAGE (organisms/streams)
+   ========================================================================== */
+
+.group-info header {
+  display: table;
+  margin: -20px -20px 0.5em -20px;
+  min-height: 300px;
+  width: calc(100% + 40px);
+}
+
+.group-info__container {
+  display: table-cell;
+  padding: 20px 20px 10px 20px;
+  vertical-align: bottom;
+}
+
+.group-info h1 {
+  color: #eeeeee;
+  float: left;
+  margin: 0;
+}
+
+.group-info .article-actions {
+  float: right;
+}
+
+.group-info .full-article__meta {
+  clear: left;
+  color: #eeeeee;
+}
+
+.group-info .tags {
+  float: left;
+}
+
+.group-info .comment-actions {
+  float: right;
+}
+
+.group-navigation {
+  background-color: #eeeeee;
+  clear: both;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  margin: 1em 0;
+  padding: 0.25em 0.5em;
+}
+
+.group-navigation__label {
+  float: left;
+  font-family: "Comfortaa", sans-serif;
+  font-weight: bold;
+  margin-right: 1.5em;
+}
+
+.nav__item-open * {
+  color: #007E84;
+}
+
+/* ==========================================================================
+   15. COUNT BADGE
+   ========================================================================== */
+
+.count {
+  position: static;
+  background-color: #007E84;
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  min-width: 1.2em;
+  min-height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1em 0.3em;
+}
+
+.login {
+  display: none;
+}
+
+/* ==========================================================================
+   16. MESSAGING & NOTIFICATIONS (molecules/messaging, organisms/notifications-list)
+   ========================================================================== */
+
+.notification {
+  background-color: #ffffff;
+  border-left: 4px solid #007E84;
+  border-radius: 4px;
+  padding: 0.75em 1em;
+  margin-bottom: 0.75em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.notification--unread {
+  background-color: #f0fbfb;
+}
+
+.notification__title {
+  font-weight: 600;
+  color: #222222;
+}
+
+.notification__meta {
+  font-size: 0.85rem;
+  color: #666666;
+  margin-top: 0.2em;
+}
+
+/* ==========================================================================
+   17. RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+
+  .stream,
+  .stream-item {
+    max-width: 100%;
+  }
+
+  .full-article {
+    margin: 1em 0;
+  }
+
+  .comment-field > textarea {
+    width: 100%;
+  }
+
+  .group-info header {
+    min-height: 150px;
+  }
+
+  .nav-primary {
+    gap: 0.5rem;
+  }
+
+  .btn, .btn-alt {
+    min-width: auto;
+    width: 100%;
+  }
+}

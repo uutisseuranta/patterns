@@ -1,239 +1,130 @@
-# Patterns
+# D-CENT UI Patterns
 
-D-CENT-projektin suunnitteluperiaatteet ja Pattern Lab -objektit, sovitettuna [uutisseuranta.github.io](https://uutisseuranta.github.io)-projektin tekniseen ympäristöön.
+Tämä repo dokumentoi D-CENT-projektin UI-suunnitteluperiaatteet ja Pattern Lab -objektihierarkian. Perustuu [d-cent/patterns](https://github.com/d-cent/patterns)-repoon.
 
-Live: http://d-cent.github.io/patterns/
+## Design Principles
 
----
+Design-periaatteita käytetään suunnittelupäätösten pohjana palvelua kehitettäessä.
 
-## Suunnitteluperiaatteet (Design Principles)
+### API first
+Rakennamme sovelluksen rajapinnat ensin, ja käyttäjäkokemuksen sen päälle. Tämä mahdollistaa monikanavaisen käyttäjäkokemuksen ja koneiden välisen kommunikaation. D-CENT-kontekstissa tämä on erityisen tärkeää solmujen välisen datan hajautuksen ja jakelun kannalta.
 
-Suunnitteluperiaatteita käytetään pohjana, kun tehdään palvelun kehittämiseen liittyviä suunnittelupäätöksiä.
+### Mobile first
+Käytämme responsiivisia käyttöliittymiä ja varmistamme, että käyttäjät voivat käyttää haluamiaan laitteita. Aloita layoutin suunnittelu pienimmillä laitteilla minimikognitiivisella kuormalla. Maailman väestö käyttää digitaalista maailmaa ensisijaisesti mobiililaitteiden kautta.
 
-### 1. API first
-Rakennamme sovellusrajapinnat ensin, ja käyttökokemuksen niiden päälle. Tämä mahdollistaa monikanavaisen käyttökokemuksen ja koneiden välisen viestinnän. D-CENT-projektissa tämä on erityisen tärkeää hajautuksen ja datanjakelun kannalta solmujen välillä.
+### Minimalistic technical user experience
+Yksi user story kutakin käyttäjähyötyä kohden. Haluamme välttää kognitiivista kuormaa ja jättää tilan sekä käyttäjän ajan käyttäjän luomalle sisällölle.
 
-### 2. Mobile first
-Käytämme responsiivisia käyttöliittymiä ja varmistamme, että käyttäjät voivat käyttää haluamiaan laitteita. Aloita layoutin suunnittelu oleellisimmasta sisällöstä pienille laitteille ja minimaalisella kognitiivisella kuormituksella. Maailman väestö käyttää digitaalista maailmaa ensisijaisesti mobiililaitteillaan.
+### Positive
+Positiivinen palvelu palkitsee käyttäjää, innostaa kokeilemaan uusia asioita ja kannustaa tutkimaan lisää turvallisen kokemuksen kautta. Käyttäjä palaa mielellään palveluun, joka tervehtii ja kiittää häntä.
 
-### 3. Minimalistinen tekninen käyttökokemus
-Yksi käyttäjätarina jokaista käyttäjähyötyä kohden. Haluamme välttää kognitiivista kuormitusta ja jättää tilan ja käyttäjän ajan käyttäjien luomalle sisällölle.
+### Communal
+Yhteisölliseksi työkaluksi ja vaikutuskanavaksi rakennettu palvelu mahdollistaa käyttäjille sisällön jakamisen ja kommunikoinnin. Monipuolinen interaktiivinen palvelu luo positiivisia vaikuttamiskokemuksia.
 
-### 4. Positiivisuus
-Positiivinen palvelu palkitsee käyttäjää, innostaa kokeilemaan uusia asioita ja kannustaa tutkimaan lisää turvallisessa ympäristössä. Käyttäjä palaa mielellään palveluun, joka tervehtii ja kiittää häntä.
+### Equality and inclusiveness
+Yhteiseen palveluun kaikki ovat tasavertaisesti tervetulleita. Asianmukaisesti tiivis ja visuaalinen palvelu tekee vaikeistakin asioista ymmärrettäviä. Yhdenvertaisuusperiaatteen noudattaminen tarkoittaa kaikkien ihmisten sisäisen arvon tunnistamista ja tukemista luomalla olosuhteet, jotka edistävät tasa-arvoa, voimaantumista, tietoisuutta ja kompetenssia henkilökohtaisella, ryhmä- ja organisaatiotasolla.
 
-### 5. Yhteisöllisyys
-Yhteisölliseksi työkaluksi ja vaikuttamisen välineeksi rakennettu palvelu mahdollistaa sisällön jakamisen ja kommunikaation käyttäjien välillä. Monipuolinen interaktiivinen palvelu luo positiivisia kokemuksia vaikuttamisesta.
+### Ease of use
+Kun käyttäjäkokemus on minimaalinen ja suoraviivainen ilman ylimääräisiä klikkauksia, luokitteluja tai vaiheita, ratkaisut ovat selkeämpiä ja intuitiivisempia. Ks. [https://www.gov.uk/designprinciples](https://www.gov.uk/designprinciples)
 
-### 6. Tasa-arvo ja osallisuus
-Yhteiseen palveluun ovat kaikki yhtä lailla tervetulleita. Asianmukaisesti tiivis ja visuaalinen palvelu tekee vaikeistakin asioista ymmärrettäviä. Osallisuusperiaatteen noudattaminen tarkoittaa kaikkien ihmisten sisäisen arvon tunnistamista ja tukemista luomalla olosuhteet, jotka edistävät tasa-arvoa, voimaantumista, tietoisuutta ja osaamista henkilökohtaisella, ryhmä- ja organisaatiotasolla.
+### Technical accessibility
+Kun ratkaisu noudattaa kokonaisvaltaista lähestymistapaa semantiikassa ja logiikassa, sekä käyttäjänavigaatio että tuleva kehitys on tehokkaampaa. Ks. [http://www.w3.org/QA/Tips/](http://www.w3.org/QA/Tips/) ja [http://www.w3.org/TR/WCAG20/](http://www.w3.org/TR/WCAG20/). Yksinkertaisesti: väreissä tulee olla mahdollisimman paljon kontrastia, ja fonttien tulee olla niin suuria kuin mahdollista.
 
-### 7. Helppokäyttöisyys
-Kun käyttökokemus on minimaalinen ja suoraviivainen, ilman ylimääräisiä klikkauksia, luokitteluja tai vaiheita, ratkaisuista tulee selkeämpiä ja intuitiivisempia. Katso https://www.gov.uk/designprinciples
+### Helpfulness
+Kun käyttäjä on kiinnostuneempi omasta asiastaan kuin siihen liittyvistä oikeudellisista tai teknisistä prosesseista, hänelle on tarjottava lisätietoja, esimerkkejä, apua ja käyttäjäystävällistä vuorovaikutusta. Tarkat ohjeet vähentävät epävarmuutta, ohjaavat käyttäjää rakentaviin käyttäytymismalleihin ja luovat positiivista palautetta.
 
-### 8. Tekninen saavutettavuus
-Kun ratkaisu noudattaa kokonaisvaltaista lähestymistapaa semantiikassa ja logiikassa, sekä käyttäjänavigaatio että tuleva kehitys on tehokkaampaa. Katso http://www.w3.org/QA/Tips/ ja http://www.w3.org/TR/WCAG20/. Yksinkertaisesti sanottuna: väreissä tulisi olla niin paljon kontrastia kuin mahdollista, ja kirjasinten tulisi olla niin suuria kuin mahdollista.
+### Interactive
+Ohjeet ja toiminnallisuudet osoittavat selkeästi ja konkreettisesti, mitkä ovat käyttäjän toimenpiteiden hyödyt, seuraukset ja vaikutukset. Esim. osallistumisesta kerrotaan, milloin tulokset ovat saatavilla, ja vahvemman tunnistautumisen jälkeen tarjotaan mahdollisuus laajempiin toiminnallisuuksiin kuten äänestämiseen.
 
-### 9. Avuliaisuus
-Kun käyttäjä on kiinnostuneempi omasta asiastaan kuin siihen liittyvistä oikeudellisista tai teknisistä prosesseista, hänelle tulee tarjota lisätietoja, esimerkkejä, apua ja käyttäjäystävällistä vuorovaikutusta. Tarkat ohjeet vähentävät epävarmuutta, ohjaavat käyttäjää rakentaviin käyttäytymismalleihin ja luovat positiivista palautetta.
-
-### 10. Interaktiivisuus
-Ohjeet ja toiminnot osoittavat selkeästi ja konkreettisesti, mitkä ovat käyttäjän toimien hyödyt, seuraukset ja vaikutukset. Osallistumisesta viestitään esimerkiksi, milloin tulokset ovat saatavilla ja että tilin vahvistamisen jälkeen vahvemmalla tunnistautumisella on mahdollisuus käyttää laajempia toimintoja kuten äänestämistä.
-
-### 11. Yksinkertaisuus
-Toimintoja suunniteltaessa rakennetaan ensin yksinkertaisin toiminto, jotta voidaan luoda ja validoida ydinetu, jonka toiminto tai käyttäjätarina on tarkoitus tuottaa. Lisätoimintoja tulisi lisätä vain mittareiden tai käyttäjäkokemuksen tutkimuksesta ja havainnoinnista saatujen konkreettisten löydösten perusteella.
+### Simple
+Toiminnallisuuksia suunniteltaessa rakennetaan ensin yksinkertaisin toiminnallisuus, jolla luodaan ja validoidaan toiminnallisuuden tai user storyn tuottama ydinetu. Lisätoiminnallisuuksia lisätään vain mittareiden tai käyttäjäkokemuksen konkreettisten havaintojen perusteella.
 
 ---
 
-## Pattern Lab -objektit
+## Pattern Lab -objektihierarkia
 
-Pattern Lab -rakenne noudattaa Atomic Design -metodologiaa: Atomit → Molekyylit → Organismit → Mallipohjat.
+D-CENT patterns noudattaa [Atomic Design](http://atomicdesign.bradfrost.com/) -metodologiaa. Objektit jaotellaan neljään tasoon: **Atoms → Molecules → Organisms → Templates**.
 
-### Atomit (Atoms)
+### Atoms (00-atoms)
 
-Atomit ovat rakennuspalikkojen perusyksiköt – HTML-elementtejä kuten tekstikenttiä, painikkeita ja värejä, joita ei voi enää jakaa pienempiin osiin.
+Atomit ovat pienimmät rakennuspalikat — HTML-elementtejä, joita ei voi enää jakaa pienemmiksi ilman että ne menettävät merkityksensä.
 
-#### Globaalit (Global)
-- **Värit** (`00-colors`) – D-CENT-väripaletti: teal `#007E84`, hover `#00D3CA`, ja taustavärit
-- **Fontit** (`01-fonts`) – Muli (body), Comfortaa (otsikot), icomoon-ikonifontit
-- **Näkyvyys** (`03-visibility`) – Apuluokat elementtien piilottamiseen/näyttämiseen
-- **Grid** (`04-grid`) – Yksinkertainen kolumnipohjainen ruudukko
+| Kansio | Kuvaus |
+|--------|--------|
+| `00-meta` | Meta-elementit (charset, viewport, title) |
+| `01-global` | Globaalit tyylit ja CSS-reset |
+| `02-text` | Typografia: otsikot (h1–h6), kappaleet, sitaatit, linkit |
+| `03-lists` | Listat: järjestetty, järjestämätön, kuvauslista |
+| `04-images` | Kuvat, logot, ikonit |
+| `05-forms` | Lomake-elementit: input, textarea, select, checkbox, radio |
+| `06-buttons` | Painikkeet: primary (`.btn`), secondary (`.btn-alt`), btn-group |
+| `07-tables` | Taulukot |
+| `08-media` | Media-elementit: video, audio |
+| `kalles-styles` | D-CENT-kohtaiset CSS-laajennukset ja JS sticky-header-logiikka |
 
-#### Teksti (Text)
-- **Otsikot** (`00-headings`) – H1–H6, alpha–zeta-luokat
-- **Kappale** (`01-paragraph`) – Peruskappaletyylit, lead/lede
-- **Lainaus** (`02-blockquote`) – Blockquote-tyyli
-- **Inline-elementit** (`03-inline-elements`) – strong, em, abbr, mark jne.
-- **Aika** (`04-time`) – Aikaleiman muotoilu
-- **Esimuotoiltu teksti** (`05-preformatted-text`) – code, pre, samp
-- **Vaakaviiva** (`06-hr`) – Erotinviiva
-- **Häivytettävä teksti** (`07-fade-out-text`) – Teksti, joka häivytetään loppua kohden
+### Molecules (01-molecules)
 
-#### Listat (Lists)
-- Järjestämätön lista
-- Järjestetty lista
-- Tyylitön lista (`.unstyled`)
+Molekyylit ovat atomien yhdistelmiä, jotka muodostavat yksinkertaisia UI-komponentteja.
 
-#### Kuvat (Images)
-- **Normaalikuva** – Responsiivinen kuva (`max-width: 100%`)
-- **Pyöreä kuva** (`.img--round`) – `border-radius: 50%`
-- **Kuva oikealle** (`.img--right`) – Float-sijoittelu
-- **Kuva vasemmalle** (`.img--left`) – Float-sijoittelu
-- **Kuva keskelle** (`.img--center`) – Centered-sijoittelu
-- **Figure** – Kuva ja kuvateksti
+| Kansio | Kuvaus |
+|--------|--------|
+| `comments` | Kommenttikomponentti: avatar, teksti, metadata, toimintopainikkeet |
+| `helper-text` | Ohjetekstit ja validointiviestit lomakkeissa |
+| `messaging` | Viesti- ja ilmoituskomponentit |
+| `navigations` | Navigaatiolinkit, leivänmurut, sivunumeroinit |
+| `notification` | Yksittäinen ilmoitus (notification item) |
+| `objects` | Sisältöobjektit: artikkeli-kortti (`.stream-item`), tapahtuma (`.event-date`), upotettava kohde (`.embedded-item`) |
+| `streams` | Aktiviteettivirran yksittäinen syöte |
 
-#### Lomakkeet (Forms)
-- **Tekstikentät** (`00-text-fields`) – input[type=text], textarea, label
-- **HTML5-syötteet** (`04-html5-inputs`) – sähköposti, numero, puhelin, URL
-- **Inline-muokkaus** (`05-inline-editing`) – Klikkaamalla muokattavat kentät (angular-xeditable)
-- **Päivämäärävalitsin** (`06-datepicker`) – Datepicker-komponentti
+### Organisms (02-organisms)
 
-#### Painikkeet (Buttons)
-- **Painikkeet** (`00-buttons`) – Ensisijainen, toissijainen, ghost, destructive
-- **Välilehdet** (`01-tabs`) – Perusvälilehdet
-- **Välilehdet + haku** (`01-tabs-with-search`) – Välilehdet hakukentällä
-- **Välilehdet alt** (`01-tabs-alt`) – Vaihtoehtoinen välilehtityyli
-- **Tagit** (`02-tags`) – Tunniste/tag-elementit
-- **Painikejoukko** (`04-button-group`) – Ryhmitellyt painikkeet
+Organismit ovat monimutkaisia UI-komponentteja, jotka koostuvat molekyyleistä ja/tai atomeista.
 
-#### Taulukot (Tables)
-- Perustaulu teal-reunaväreillä (`#48BEC4`)
-- Otsikkosolut (`th`) teal-värillä
+| Kansio | Kuvaus |
+|--------|--------|
+| `argumenting` | Argumentointinäkymä: for/against-kommentit, äänestys |
+| `discussion` | Keskusteluketju: kommentit, vastaukset |
+| `event` | Tapahtumasivunäkymä |
+| `global` | Globaalit organizmit: footer |
+| `login` | Kirjautumisnäkymä |
+| `navigation` | Päänavigaatio (`.nav-primary`), sticky header (`.header--sticky`) |
+| `notifications-list` | Ilmoituslista |
+| `profile` | Profiilisivu |
+| `registration` | Rekisteröitymisnäkymä |
+| `settings` | Asetukset-näkymä |
+| `streams` | Aktiviteettivirta (`.stream`), koko artikkeli (`.full-article`), ryhmäsivu (`.group-info`) |
 
-#### Media
-- Mediatietue – kuva vasemmalla/oikealla, teksti vieressä
+### Templates (03-templates)
 
----
+Templatet yhdistävät organismeja kokonaisiksi sivupohjiksi ilman oikeaa sisältöä.
 
-### Molekyylit (Molecules)
-
-Molekyylit ovat atomeista koostuvia yksinkertaisia UI-komponentteja, joilla on oma selkeä tarkoituksensa.
-
-#### Kommentit (`comments`)
-- Kommenttiketju
-- Yksittäinen kommentti
-- Kommenttilaatikko
-
-#### Aputekstit (`helper-text`)
-- Ohjeteksti-palkki, joka avautuu/sulkeutuu painikkeesta (`.js-helper__toggle`)
-- Sisältää otsikon, tekstin ja sulkemistoiminnon
-
-#### Viestit (`messaging`)
-- Ilmoitusviestit: virhe, varoitus, onnistuminen, info
-- Sulkemisnapilla varustettuja viestibannereita
-
-#### Navigaatiot (`navigations`)
-- Sivupalkin navigaatio
-- Leivänmurut
-- Sivutus
-
-#### Ilmoitukset (`notification`)
-- Yksittäinen ilmoituskortti
-- Ilmoituspisteen badge
-
-#### Objektit (`objects`)
-- **Media-objekti** – Kuva + tekstisisältö vierekkäin
-- **Navigaatio-objekti** (`.nav`) – Vaakasuora navigaatiolista
-- **Boxiobjekti** – Padding ylä/alas/vasemmalle/oikealle
-- **Block-objekti** – Padding ylä- ja alaosaan
-- **Paljas lista** – Marginaalien ja listatyylin poistaminen
-- **Väriluokat** – Teal, harmaa, valkoinen jne.
-
-#### Virrat (`streams`)
-- Aktiviteettivirran yksittäinen kohde
-- Virran aikaleima
-- Virran tekijätiedot
+| Malli | Kuvaus |
+|-------|--------|
+| `page` | Perusmallipohja: header + content + footer |
 
 ---
 
-### Organismit (Organisms)
+## CSS-arkkitehtuuri
 
-Organismit ovat monimutkaisia käyttöliittymäkomponentteja, jotka koostuvat atomeista ja molekyyleistä.
+Tyylit noudattavat BEM-nimeämiskonventiota (Block__Element--Modifier). Tärkeimmät värit:
 
-#### Argumentointi (`argumenting`)
-- Väittely-/argumentointilomake
-- Puolesta/vastaan-äänestyspainikkeet
-- Argumenttikortti kommenteilla
+- **Primääri / brand:** `#007E84` (teal)
+- **Primääri hover:** `#00D3CA` (kirkkaampi teal)
+- **Taustaväri:** `#ffffff`
+- **Teksti:** `#222222`
+- **Kevyt tausta:** `#eeeeee`
+- **Reunus:** `#666666`
 
-#### Keskustelu (`discussion`)
-- Koko keskusteluosio otsikolla, sisällöllä ja kommenttiketjulla
-- Sisältää häivytettävän tekstin ja "lue lisää" -toiminnon
+Typografia käyttää fonttia **Comfortaa** navigaatioelementeissä. Muu teksti periytyy selaindefaultista tai projektikohtaisesta CSS-frameworkista.
 
-#### Tapahtuma (`event`)
-- Tapahtumakortti tiedoilla (otsikko, päivämäärä, paikka, osallistujat)
-- Tapahtumalistaustila
-
-#### Globaali (`global`)
-- Sivuston ylätunniste (header)
-- Sivuston alatunniste (footer)
-
-#### Kirjautuminen (`login`)
-- Kirjautumislomake (`.login`, `.js-login-open`)
-- Sähköposti + salasanakenttä
-- Kirjaudu sisään / Rekisteröidy -välilehdet
-
-#### Navigaatio (`navigation`)
-- Päänavigointi (`.nav--primary`)
-- Hamburgeri-valikko mobiilille
-- Käyttäjävalikko ilmoituspisteineen
-
-#### Ilmoituslista (`notifications-list`)
-- Koko ilmoituslistaus kellokuvakkeella
-- Merkitse kaikki luetuiksi -toiminto
-
-#### Profiili (`profile`)
-- Käyttäjäprofiilisivun layout
-- Avatar, nimi, bio, osallistumistilastot
-
-#### Rekisteröinti (`registration`)
-- Rekisteröintilomake vaiheistettuna
-- Sähköposti, salasana, vahvistus
-
-#### Asetukset (`settings`)
-- Asetussivun layout (`.settings-container`, `.js-settings-open`)
-- Profiili-, turvallisuus- ja ilmoitusasetukset
-
-#### Virrat (`streams`)
-- Koko aktiviteettivirta-osio
-- Suodatus-, haku- ja järjestämistoiminnot
+Tiedostot:
+- `style.css` — päätyylitiedosto
+- `patterns.js` — JavaScript-toiminnallisuudet (sticky header, DOM-käsittely)
 
 ---
 
-### Mallipohjat (Templates)
+## Viitteet
 
-Mallipohjat ovat sivutason rakenteet, jotka kokoavat organismit yhteen.
-
-- **Etusivu** (`frontpage.mustache`) – Pääsivu virrat ja navigaatio
-- **Ryhmäsivu** (`group-page.mustache`) – Ryhmän tiedot ja aktiviteetit
-- **Ryhmäsivu sisältö auki** (`group-page-with-content-open.mustache`) – Kuten ryhmäsivu, mutta sisältöpaneeli avattuna
-- **Sivu: virrat + sisältö** (`page-stream-and-content.mustache`) – Kaksipalkkilayout
-- **Sivu: virrat** (`page-stream.mustache`) – Yksipalkki, virta-näkymä
-- **Perussivu** (`page.mustache`) – Geneerinen sivumallipohja
-
----
-
-## Asennus
-
-Nämä toimivat Linuxilla ja Macilla.
-
-```bash
-# Kloonaa repo paikallisesti
-git clone https://github.com/uutisseuranta/patterns.git
-cd patterns
-
-# Asenna Grunt
-npm install grunt-cli
-
-# Muokkaa tiedostoja /source -hakemistossa
-# Generoi muutokset skripteillä core/scripts/-hakemistossa
-git push
-
-# Julkaise GitHub Pagesille
-git push master:gh-pages
-```
-
----
-
-## Lisenssi
-
-MIT
+- Alkuperäinen repo: [d-cent/patterns](https://github.com/d-cent/patterns)
+- Pattern Lab: [http://d-cent.github.io/patterns/](http://d-cent.github.io/patterns/)
+- Atomic Design -metodologia: [http://atomicdesign.bradfrost.com/](http://atomicdesign.bradfrost.com/)
