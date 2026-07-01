@@ -77,7 +77,72 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 5. Artikkeli-ominaisuuden käyttäjäpolku
+## 5. Espanja — Podemos Ciencia (piirikokouksen järjestäminen)
+
+**Konteksti:** Podemos-puolueen tieteispiiri (yksi 42:sta virallisesta piiristä) tarvitsee virtuaalisen kokoontumistilan avoimen kokouksen pitämiseen.
+
+**Käyttäjätarina:** *"Podemos Ciencia -piirin jäsenenä haluan osallistua virtuaaliseen kokoukseen, äänestää asioista ja kommentoida muiden puheenvuoroja."*
+
+### Vaatimukset
+
+- Kirjautuminen Facebook- tai sähköpostitunnuksella
+- Ketjutetut keskustelut
+- Äänestystoiminto viesteille
+
+### Polku
+
+1. Käyttäjä kirjautuu sisään Facebook- tai sähköpostitunnuksella.
+2. Käyttäjä siirtyy kokouksen näkymään — näkyy 19 keskustelusäiettä.
+3. Käyttäjä osallistuu vähintään yhteen säikeeseen kommentoimalla tai äänestämällä.
+4. Käyttäjä äänestää palautesäikeessä: positiivinen / negatiivinen / tyhjä.
+5. Käyttäjä voi kirjoittaa ehdotuksen `#propuesta`-hashtagilla — ylläpitäjät voivat toteuttaa tai hylätä sen.
+
+### Käyttäjien spontaanit kehitysehdotukset (havaitut puutteet)
+
+- Indeksi käsiteltävistä aiheista
+- Hylättyjen kommenttien julkinen osio (läpinäkyvyys)
+- Sähköposti-ilmoitus kun omaan kommenttiin vastataan
+- Tilivalidointi suomalaisella sähköisellä henkilötodistuksella (analogia: fi-eID)
+
+---
+
+## 6. Espanja — Podemos I+D+i (tutkimus- ja kehityspiiri)
+
+**Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa D-CENT-alustaa kollektiiviseen päätöksentekoon.
+
+**Käyttäjätarina:** *"Podemos I+D+i -piirin jäsenenä haluan osallistua päätöksentekoprosessiin ja vaikuttaa piirin linjauksiin."*
+
+### Polku
+
+1. Käyttäjä kirjautuu D-CENT-instanssiin.
+2. Käyttäjä lukee piirin avoimet agendapisteet ja voi kommentoida niitä.
+3. Käyttäjä osallistuu äänestykseen piirin dokumenteista tai ehdotuksista.
+4. Äänestystulos kootaan ja jaetaan piirin jäsenille.
+
+---
+
+## 7. Espanja — Guanyem Barcelona (kansalaisliikkeen päätöksenteko)
+
+**Konteksti:** Guanyem Barcelona on kansalaisvetoinen kaupunginvaltuustoehdokkuus, joka tarvitsee laajan, läpinäkyvän ja poikkisektorisen osallistumisprosessin paikallisvaaleita varten.
+
+**Käyttäjätarina:** *"Guanyem-kampanjan osallistujana haluan osallistua ohjelman yhteiskirjoittamiseen ja äänestää keskeisistä linjauksista."*
+
+### Polku
+
+1. Käyttäjä rekisteröityy kampanja-alustalle ja vahvistaa henkilöllisyytensä.
+2. Käyttäjä selaa ehdotuksia ja agendakohtia sekä kommentoi niitä.
+3. Käyttäjä osallistuu deliberaatioon: esittää puolesta/vastaan -argumentteja strukturoidussa näkymässä.
+4. Käyttäjä äänestää — prosessissa käytetään blockchain-pohjaista allekirjoitusta tulosten validoimiseksi.
+5. Äänestystulos julkistetaan ja se dokumentoituu kampanjan kollektiiviseen muistiin.
+
+### Erityispiirteet
+
+- Prosessin on oltava **laaja** (tavoittaa kansalaiset yli sektorirajojen), **poikkisektorinen** (sosiaaliset ja poliittiset toimijat) ja **läpinäkyvä** (kaikki vaiheet dokumentoituna).
+- Alusta mahdollistaa sopimuspohjaisen päätöksenteon sosiaalisten ja poliittisten voimien välillä.
+
+---
+
+## 8. Artikkeli-ominaisuuden käyttäjäpolku
 
 **Käyttäjätarve:** Dokumenttidata kannattaa hallita rakenteisina artikkeleina URL-viitteiden sijaan — tämä mahdollistaa tehokkaan haun ja sisällön uudelleenkäytön.
 
@@ -90,7 +155,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 6. Keskustelu ja kommentointi
+## 9. Keskustelu ja kommentointi
 
 **Käyttäjätarve:** Käyttäjät tarvitsevat tilan omille argumenteilleen artikkelin sisällöstä menettämättä tekstin omistajuutta.
 
@@ -104,7 +169,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 7. Äänestys
+## 10. Äänestys
 
 **Käyttäjätarve:** *"Artikkelin editorina tarvitsen tavan viedä artikkeliin dokumentoidut ehdotukset käyttäjien ratifioitaviksi."*
 
@@ -118,7 +183,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 8. Yhteismuokkaus
+## 11. Yhteismuokkaus
 
 **Käyttäjätarve:** *"Artikkelin omistajana haluan antaa muille pääsyn muokata dokumenttia kanssani."*
 
@@ -130,7 +195,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 9. Annotaatio
+## 12. Annotaatio
 
 **Käyttäjätarve:** *"Artikkelin editorina haluan sallia muiden annotoida tekstiäni ja ehdottaa muutoksia."*
 
@@ -142,7 +207,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 10. Tehtävät
+## 13. Tehtävät
 
 **Käyttäjätarve:** *"Kansalaisaktivistina tarvitsen tavan jakaa tehtäviä tapahtumien ja vapaaehtoistyön organisoimiseksi nopeasti."*
 
@@ -155,7 +220,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 11. Kirjautuminen ja identiteetinhallinta
+## 14. Kirjautuminen ja identiteetinhallinta
 
 **Käyttäjätarve:** Käyttäjä haluaa kirjautua ilman, että salasana tallennetaan selväkielisenä palvelimelle.
 
@@ -174,7 +239,7 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 12. Ryhmän pääsynhallinta
+## 15. Ryhmän pääsynhallinta
 
 **Käyttäjätarve:** Ryhmä haluaa rajoittaa sisältönsä vain jäsenille.
 
