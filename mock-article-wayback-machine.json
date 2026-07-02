@@ -1,0 +1,19 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://uutisseuranta.fi/articles/wayback-machine",
+  "type": "Article",
+  "name": "Wayback Machine arkistoi nyt my\u00f6s some-postauksia",
+  "summary": "Internet Archive laajentaa Wayback Machinen arkistointikyky\u00e4 kattamaan sosiaalisen median sis\u00e4lt\u00f6j\u00e4.",
+  "content": "<p>Internet Archive ilmoitti...</p>",
+  "published": "2026-07-02T14:00:00Z",
+  "tag": [
+    { "type": "Hashtag", "name": "#internet-archive" },
+    { "type": "Hashtag", "name": "#wayback-machine" }
+  ],
+  "replies": {
+    "type": "Collection",
+    "id": "https://uutisseuranta.fi/articles/wayback-machine/replies",
+    "totalItems": 0,
+    "items": []
+  }
+}
