@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="fi" data-theme="light">
+<html lang="fi">
 <head>
+  <!-- Blocking script: set theme before any CSS renders to prevent FOUC (#2, #7) -->
+  <script>(function(){var s=localStorage.getItem('theme');var d=s||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',d);})();</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>D-CENT UI Patterns – uutisseuranta</title>
@@ -55,6 +58,7 @@
       --content-narrow: 640px;
     }
 
+    /* #7: only one dark-mode block — [data-theme="dark"] selector only, no duplicate media query */
     [data-theme="dark"] {
       --color-bg:            #171614;
       --color-surface:       #1c1b19;
@@ -67,17 +71,6 @@
       --color-primary:       #4f98a3;
       --color-primary-hover: #227f8b;
       --color-primary-highlight: #313b3b;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        --color-bg: #171614; --color-surface: #1c1b19;
-        --color-surface-2: #22211f; --color-border: #393836;
-        --color-divider: #262523; --color-text: #cdccca;
-        --color-text-muted: #797876; --color-text-faint: #5a5957;
-        --color-primary: #4f98a3; --color-primary-hover: #227f8b;
-        --color-primary-highlight: #313b3b;
-      }
     }
 
     /* ===== BASE ===== */
@@ -99,6 +92,22 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+
+    /* ===== SKIP LINK (#6) ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-4);
+      background: var(--color-primary);
+      color: #fff;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      z-index: 999;
+      transition: top 0.15s;
+    }
+    .skip-link:focus { top: var(--space-2); }
 
     /* ===== LAYOUT ===== */
     .site-wrapper { display: flex; flex-direction: column; min-height: 100dvh; }
@@ -147,6 +156,24 @@
     }
     .theme-btn:hover { color: var(--color-primary); border-color: var(--color-primary); }
 
+    /* #9: hamburger button — hidden on desktop */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-1) var(--space-2);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .nav-toggle:hover { color: var(--color-primary); border-color: var(--color-primary); }
+    .nav-toggle-icon { width: 18px; height: 18px; }
+
     /* ===== HERO ===== */
     .hero {
       padding: clamp(var(--space-12), 8vw, var(--space-16)) 0 clamp(var(--space-8), 5vw, var(--space-12));
@@ -177,6 +204,8 @@
       margin-bottom: var(--space-8);
     }
     .hero__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+    /* #17: .btn-primary hover uses var(--color-primary-hover) = #005f64, ~7:1 vs white */
     .btn-primary {
       display: inline-flex; align-items: center; gap: var(--space-2);
       background: var(--color-primary); color: #fff;
@@ -186,7 +215,7 @@
       cursor: pointer; text-decoration: none;
       transition: background var(--transition);
     }
-    .btn-primary:hover { background: var(--color-primary-hover); color: #fff; }
+    .btn-primary:hover, .btn-primary:focus-visible { background: var(--color-primary-hover); color: #fff; }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: var(--space-2);
       background: transparent; color: var(--color-text-muted);
@@ -375,8 +404,21 @@
     .site-footer a:hover { color: var(--color-primary); }
 
     /* ===== RESPONSIVE ===== */
+    /* #9 mobile nav */
     @media (max-width: 600px) {
-      .site-nav { display: none; }
+      .site-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-4);
+        gap: var(--space-2);
+        z-index: 99;
+      }
+      .site-nav.is-open { display: flex; }
+      .nav-toggle { display: flex; }
       .hero__lead { font-size: var(--text-base); }
       .hero__actions { flex-direction: column; }
       .site-footer .container { flex-direction: column; text-align: center; }
@@ -384,6 +426,10 @@
   </style>
 </head>
 <body>
+
+  <!-- #6: skip-to-content as first focusable element -->
+  <a class="skip-link" href="#main">Siirry sisältöön</a>
+
 <div class="site-wrapper">
 
   <!-- HEADER -->
@@ -399,27 +445,47 @@
         </svg>
         D-CENT Patterns
       </a>
+
+      <!-- #10: no hardcoded class="active" here — JS sets it dynamically -->
       <nav aria-label="Päänavigaatio">
-        <ul class="site-nav">
-          <li><a href="#principles" class="active">Periaatteet</a></li>
+        <ul class="site-nav" id="site-nav" role="list">
+          <li><a href="#hero">Etusivu</a></li>
+          <li><a href="#principles">Periaatteet</a></li>
           <li><a href="#patterns">Objektit</a></li>
           <li><a href="#files">Tiedostot</a></li>
           <li><a href="https://github.com/uutisseuranta/patterns" target="_blank" rel="noopener noreferrer">GitHub</a></li>
         </ul>
       </nav>
-      <button class="theme-btn" data-theme-toggle aria-label="Vaihda teema">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-      </button>
+
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <!-- #9: hamburger toggle, hidden on desktop via CSS -->
+        <button class="nav-toggle" id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Avaa navigaatio">
+          <svg class="nav-toggle-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="2" y1="4" x2="16" y2="4"/>
+            <line x1="2" y1="9" x2="16" y2="9"/>
+            <line x1="2" y1="14" x2="16" y2="14"/>
+          </svg>
+          Valikko
+        </button>
+
+        <!-- #4: aria-label updated dynamically by JS -->
+        <button class="theme-btn" id="theme-toggle" aria-label="Vaihda pimeään tilaan">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- HERO -->
-    <section class="hero">
+    <!-- HERO — #10: id="hero" so IntersectionObserver can track it -->
+    <section id="hero" class="hero">
       <div class="container">
         <span class="hero__eyebrow">D-CENT / Atomic Design</span>
         <h1 class="hero__title">UI-komponenttikirjasto<br>ja design-periaatteet</h1>
@@ -490,7 +556,7 @@
           <article class="principle-card">
             <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             <h3 class="principle-card__title">Technical accessibility</h3>
-            <p class="principle-card__body">Holistinen lähestymistapa semantiikkaan. WCAG 2.0 -yhteensopivuus, riittävä kontrasti ja suuri fonttikoko.</p>
+            <p class="principle-card__body">Holistinen lähestymistapa semantiikkaan. WCAG 2.1 AA -yhteensopivuus, riittävä kontrasti, näppäimistönavigaatio ja näkyvä focus-indikaattori.</p>
           </article>
 
           <article class="principle-card">
@@ -523,26 +589,10 @@
         <p class="section__lead">D-CENT patterns noudattaa Brad Frostin Atomic Design -metodologiaa. Neljä tasoa pienimmistä rakennuspalikoista kokonaisiin sivupohjiin.</p>
 
         <div class="levels">
-          <div class="level-card">
-            <span class="level-card__badge">00</span>
-            <div class="level-card__name">Atoms</div>
-            <p class="level-card__desc">HTML-peruselementit: typografia, lomakkeet, painikkeet, kuvat</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">01</span>
-            <div class="level-card__name">Molecules</div>
-            <p class="level-card__desc">Atomien yhdistelmät: kommentit, navigaatiot, stream-kohteet</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">02</span>
-            <div class="level-card__name">Organisms</div>
-            <p class="level-card__desc">Monimutkaiset komponentit: sivupalkit, virrat, profiilisivut</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">03</span>
-            <div class="level-card__name">Templates</div>
-            <p class="level-card__desc">Kokonaiset sivupohjat ilman oikeaa sisältöä</p>
-          </div>
+          <div class="level-card"><span class="level-card__badge">00</span><div class="level-card__name">Atoms</div><p class="level-card__desc">HTML-peruselementit: typografia, lomakkeet, painikkeet, kuvat</p></div>
+          <div class="level-card"><span class="level-card__badge">01</span><div class="level-card__name">Molecules</div><p class="level-card__desc">Atomien yhdistelmät: kommentit, navigaatiot, stream-kohteet</p></div>
+          <div class="level-card"><span class="level-card__badge">02</span><div class="level-card__name">Organisms</div><p class="level-card__desc">Monimutkaiset komponentit: sivupalkit, virrat, profiilisivut</p></div>
+          <div class="level-card"><span class="level-card__badge">03</span><div class="level-card__name">Templates</div><p class="level-card__desc">Kokonaiset sivupohjat ilman oikeaa sisältöä</p></div>
         </div>
 
         <div class="objects-section">
@@ -666,29 +716,8 @@
 
 </div>
 
-<script>
-  // Dark mode toggle
-  (function(){
-    const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
-    let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
-    r.setAttribute('data-theme',d);
-    if(t)t.addEventListener('click',()=>{
-      d=d==='dark'?'light':'dark';
-      r.setAttribute('data-theme',d);
-    });
-    // Active nav link on scroll
-    const sections=document.querySelectorAll('section[id]');
-    const navLinks=document.querySelectorAll('.site-nav a[href^="#"]');
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id);});
-        }
-      });
-    },{rootMargin:'-40% 0px -50%'});
-    sections.forEach(s=>obs.observe(s));
-  })();
-</script>
+<!-- patterns.js handles all interactive logic (#8 refactor) -->
+<script src="patterns.js"></script>
 
 </body>
 </html>
