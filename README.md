@@ -2,6 +2,20 @@
 
 Tämä repo dokumentoi D-CENT-projektin UI-suunnitteluperiaatteet ja Pattern Lab -objektihierarkian. Perustuu [d-cent/patterns](https://github.com/d-cent/patterns)-repoon.
 
+## Dokumentaatio
+
+- [STANDARDS.md](./STANDARDS.md) — AS2-kenttätaulukko, RFC 3339, WCAG 2.1 AA, GDPR-rajaukset, hallitut poikkeamat
+- [TECHNICAL_DESIGN.md](./TECHNICAL_DESIGN.md) — arkkitehtuuri, muutoshistoria, teknologiavalinnat
+- [user-paths.md](./user-paths.md) — käyttäjäpolut ja user storyt
+- [LICENSES.md](./LICENSES.md) — lisenssit ja attribuutio
+
+## Liittyvät repot
+
+- [uutisseuranta/gcs-activitystreams](https://github.com/uutisseuranta/gcs-activitystreams) — backend: Cloud Run, BigQuery, AS2-dataputki
+- [uutisseuranta/uutisseuranta.github.io](https://github.com/uutisseuranta/uutisseuranta.github.io) — frontend-sovellus
+
+---
+
 ## Design Principles
 
 Design-periaatteita käytetään suunnittelupäätösten pohjana palvelua kehitettäessä.
@@ -47,52 +61,13 @@ Toiminnallisuuksia suunniteltaessa rakennetaan ensin yksinkertaisin toiminnallis
 
 ### AS2-yhteensopivuus
 
-UI-komponenttien HTML-rakenne ja data-attribuutit ovat ensisijaisesti yhteensopivia [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/) -tietomallin kanssa. Tämä tarkoittaa:
-
-- Jokaisella sisältöobjektilla (`Article`, `Note`) on `data-ap-id`-attribuutti absoluuttisella IRI:llä
-- `data-ap-context` ankkuroi objektin AS2-sanastoon (`https://www.w3.org/ns/activitystreams`)
-- Aikaleima-elementeillä on aina RFC 3339 -muotoinen `datetime`-attribuutti
-- `data-ap-type` kertoo konkreettisen AS2-objektityypin
-
-Tietoiset poikkeamat AS2- ja ActivityPub-standardeista on dokumentoitu alla omassa osiossaan. Poikkeamat ovat hallittuja: ne voidaan myöhemmin viedä upstreamiin yhteisölle tai ylläpitää projektikohtaisina laajennuksina.
+UI-komponenttien HTML-rakenne ja data-attribuutit ovat ensisijaisesti yhteensopivia [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/) -tietomallin kanssa. Normatiiviset standardit ja rajaukset: **[STANDARDS.md](./STANDARDS.md)**.
 
 ---
 
 ## AS2-poikkeamat — hallitut divergenssit
 
-Nämä ovat tietoisia suunnittelupäätöksiä, jotka poikkeavat AS2/ActivityPub-standardista. Jokainen poikkeama on dokumentoitu syineen. Ne eivät ole bugeja.
-
-### 1. Ei Actor-profiileja tässä repossa
-
-**Poikkeama:** ActivityPub edellyttää, että jokaisella osallistujalla (`attributedTo`) on dereferointikelpoinen `Actor`-objekti omalla URL:llaan (`inbox`, `outbox`, `publicKey`). Tämä frontend-repo ei toteuta Actor-endpointteja.
-
-**Syy:** Actor-arkkitehtuuri kuuluu backend-repoon. Frontend mallintaa käyttäjän nimen ja avatarin ilman täyttä Actor-rakennetta.
-
-**Linjaus:** Backend-repo vastaa Actor-yhteensopivuudesta. Stack-alignment tarkistetaan tiketissä #35.
-
-### 2. Ei audience targeting (`to` / `cc`)
-
-**Poikkeama:** AS2/ActivityPub käyttää `to`- ja `cc`-kenttiä kohdentamaan sisällön tietyille Actoreille tai yleisölle (esim. `as:Public`). Tämä repo ei toteuta kohdentamista.
-
-**Syy:** Uutisseurannan sisältö on julkista eikä tarvitse yksilökohtaista kohdentamista tässä vaiheessa. Julkisuus oletetaan oletusarvoisesti.
-
-**Linjaus:** Jos yksityinen viestintä tai ryhmärajoitukset tulevat tarpeellisiksi, lisätään `to: ["https://www.w3.org/ns/activitystreams#Public"]` -kenttä.
-
-### 3. `tag-agree` / `tag-disagree` ovat D-CENT-spesifistä demokratiasemantikkaa
-
-**Poikkeama:** AS2-sanastossa ei ole `Agree`- tai `Disagree`-tyyppejä. Fediverse käyttää `Like`/`Dislike`-aktiviteetteja tai `EmojiReact`-laajennusta.
-
-**Syy:** D-CENT:n kansalaisosallistumismalli tarvitsee eksplisiittisen kannanotto-semantiikan joka ylittää tykkäämisen.
-
-**Linjaus:** Toteutetaan projektikohtaisena `@context`-laajennuksena: `{"type": "dcentAgree", "@id": "https://uutisseuranta.fi/ns#Agree"}`. Voidaan ehdottaa upstreamiin FEP-prosessiin (Fediverse Enhancement Proposal).
-
-### 4. `notification`-komponentti ei kartoidu AS2 Activity -tyyppeihin
-
-**Poikkeama:** AS2-toimintamallissa ilmoitukset ovat semanttisesti tarkkoja `Activity`-objekteja (`Create`, `Like`, `Announce`, `Follow`). Nykyinen `.notif-main` / `.notif-special` / `.notif-neutral` on visuaalinen jaottelu, ei AS2-tyyppijako.
-
-**Syy:** Komponentti on tällä hetkellä UI-tason palaute, ei federoidun verkon Activity.
-
-**Linjaus:** Kun `inbox`-virta toteutetaan, `notification`-komponenttiin lisätään `data-ap-type="Create"` / `"Like"` / `"Announce"` -attribuutit ja visuaalinen jaottelu päivitetään vastaamaan.
+Nämä ovat tietoisia suunnittelupäätöksiä, jotka poikkeavat AS2/ActivityPub-standardista. Jokainen poikkeama on dokumentoitu syineen. Ne eivät ole bugeja. Täydellinen lista: **[STANDARDS.md § Hallitut poikkeamat](./STANDARDS.md#hallitut-poikkeamat)**.
 
 ---
 
@@ -230,6 +205,8 @@ ActivityStreams 2.0 `Article`-objekti on tietomalliltaan blogipostauksen tai uut
 
 ### Kenttäkartta — AS2 → UI-komponentti
 
+Täydellinen AS2-kenttätaulukko: **[STANDARDS.md § AS2-kenttätaulukko](./STANDARDS.md#as2-kenttätaulukko)**.
+
 | AS2-kenttä | Tyyppi | UI-vastine (`index.html`) | `data-ap-*` |
 |---|---|---|---|
 | `@context` | IRI | `data-ap-context` juurielementissä | `data-ap-context` |
@@ -290,21 +267,6 @@ HTML-templaatissa käytetään `data-ap-*` -attribuutteja kytkemään visuaalise
   </section>
 
 </article>
-
-<!--
-  TIETOINEN POIKKEAMA — ei Actor-endpointteja tässä repossa
-  AS2/ActivityPub edellyttää, että attributedTo-linkit osoittavat
-  dereferointikelpoisen Actor-objektin (inbox, outbox, publicKey).
-  Frontend käyttää nimeä + avataria ilman täyttä Actor-rakennetta.
-  Actor-arkkitehtuuri toteutetaan backend-repossa.
-  Linjaus: tiketti #35.
--->
-
-<!--
-  TIETOINEN POIKKEAMA — ei audience targeting (to / cc)
-  AS2 tukee to/cc-kohdentamista. Tässä projektissa kaikki sisältö
-  on oletusarvoisesti julkista. Kohdentaminen lisätään tarvittaessa.
--->
 ```
 
 ### Miksi AS2 Article eikä Note
