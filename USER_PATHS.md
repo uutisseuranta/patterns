@@ -1,39 +1,45 @@
-# D-CENT User Paths
+# USER_PATHS.md — Käyttäjäpolut
 
-Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toimintapolut piloteittain ja ominaisuuksittain.
+Tämä dokumentti sisältää kaksi osiota:
+
+1. **D-CENT-käyttäjäpolut** — D-CENT D4.3 -spesifikaation pilottikohtaiset polut
+2. **Uutisseuranta-sovelluksen käyttäjäpolut (UP-1–UP-15)** — uutisseuranta.net-sovelluksen toteutetut ja suunnitellut polut
 
 ---
 
-## 1. Helsinki — Kansalaistoiminta kaupunkipäätösten pohjalta
+## Osa 1: D-CENT-käyttäjäpolut
+
+Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset | [patterns/DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md) — komponenttikirjasto
+
+### 1. Helsinki — Kansalaistoiminta kaupunkipäätösten pohjalta
 
 **Konteksti:** Käyttäjä seuraa Helsingin kaupungin avointa päätöksentekodataa (OpenAhjo API) ja ryhtyy kollektiiviseen toimintaan.
 
-**Käyttäjätarina:** *"Helsingin kaupunkilaisena tarvitsen välineitä levittää tietoa valtuuston kokouksen esityslistasta ennen kokousta, tehdä se ymmärrettävämmiksi ja ryhtyä toimiin."*
+**Käyttäjätarina:** *"Äänioikeutettuna Helsingin kaupunkilaisena tarvitsen välineitä levittää tietoa valtuuston kokouksen esityslistasta ennen kokousta, tehdä se ymmärettävämmiksi ja ryhtyä toimiin."*
 
-### Polku
+#### Polku
 
 1. Käyttäjä kirjautuu sisään ja asettaa hakusana-alertit omalle sivulleen (esim. `#pyöräily`, `#kallio`).
 2. Käyttäjä seuraa aktiviteettivirran päivityksiä.
-3. Käyttäjä luo ryhmän ("projektin"): määrittää aktiviteettivirran suodattimen ja toiminta-algoritmin, kutsuu muita ja asettaa yksityisyysasetuksen (`julkinen` / `yksityinen`).
+3. Käyttäjä luo ryhmän: määrittää aktiviteettivirran suodattimen ja toiminta-algoritmin, kutsuu muita ja asettaa yksityisyysasetuksen (`julkinen` / `yksityinen`).
 4. Käyttäjä näkee jaetun artikkelin ja voi kommentoida sitä lomakkeen kautta.
 
-### Vaihtoehtoisia jatkopolkuja
+#### Vaihtoehtoisia jatkopolkuja
 
-- **Yhteisohjaus:** Käyttäjä avaa Etherpadin ja jakaa sen ryhmälle yhteismuokkausta varten (esim. sähköposti kaupunginvaltuutetuille, tiedote, kansalaisaloite).
-- **Tehtävät:** Käyttäjä luo tehtäviä ja jakaa ne ryhmän jäsenille; tehtävillä on aikataulu ja kalenteri.
+- **Yhteisohjaus:** Etherpad + jako ryhmälle yhteismuokkausta varten.
+- **Tehtavät:** Käyttäjä luo tehtäviä ja jakaa ne ryhmän jäsenille; tehtävillä on aikataulu ja kalenteri.
 - **Äänestys:** Käyttäjä aloittaa ryhmässä äänestyksen (Loomio-tyyli).
-- **Jakominen:** Käyttäjä jakaa artikkelin tai linkin ryhmään ja luo ilmoituksia jäsenille.
 - **API-päivitys:** Decisions API päivittää keskustelun automaattisesti valtuuston päätöstuloksella.
 
 ---
 
-## 2. Helsinki — Julkinen kuulemispalvelu (virkamiehen polku)
+### 2. Helsinki — Julkinen kuulemispalvelu (virkamiehen polku)
 
 **Konteksti:** Virkamies haluaa kerätä kansalaisten palautetta kaavahankkeesta.
 
 **Käyttäjätarina:** *"Kaupunkisuunnittelua luonnostelevana virkamiehenä haluan julkaista kysymykseni kansalaisten kommentoitavaksi."*
 
-### Polku
+#### Polku
 
 1. Virkamies klikkaa **"Luo uusi artikkeli"**.
 2. Virkamies syöttää asiakirjan diaarinumeron — metadata ja liitteet haetaan automaattisesti OpenAhjo-päätös-API:sta.
@@ -42,18 +48,18 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 3. Islanti — Better Reykjavík / Better Iceland
+### 3. Islanti — Better Reykjavík / Better Iceland
 
-**Konteksti:** Kansalainen ehdottaa kaupungin kehittämisideoita; kaupunki käsittelee kuukausittain 10–15 suosituinta ehdotusta.
+**Konteksti:** Kansalainen ehdottaa kaupungin kehittamisideöita; kaupunki käsittelee kuukausittain 10–15 suosituinta ehdotusta.
 
-### Polku
+#### Polku
 
 1. Käyttäjä kirjautuu sisään ja lähettää idean tai kannattaa olemassa olevaa ehdotusta.
-2. Käyttäjä kommentoi ja lisää perusteluja puolesta tai vastaan (argumentit ryhmitellään `for` / `against`).
+2. Käyttäjä kommentoi ja lisää perusteluja puolesta tai vastaan (`for` / `against`).
 3. Rekisteröityneet käyttäjät äänestävät ehdotuksia — kaupunginvaltuusto ottaa kuukausittain käsittelyyn eniten ääniä saaneet.
-4. Kaupungin vastaus ehdotukseen julkaistaan, ja käyttäjät arvioivat vastauksen laadun **tähtiasteikolla (1–5)** — tämä kannustaa parempaan vastauskulttuuriin.
+4. Kaupungin vastaus julkaistaan; käyttäjät arvioivat vastauksen laadun **tähtiasteikolla (1–5)**.
 
-### Osallistava budjetti (Better Neighborhoods)
+#### Osallistava budjetti (Better Neighborhoods)
 
 1. Käyttäjät lähettävät naapurustoparannusehdotuksia.
 2. Virkamiehet laskevat kustannukset.
@@ -61,58 +67,39 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 4. Suomi — Open Ministry / Kansalaisaloitekampanja
+### 4. Suomi — Open Ministry / Kansalaisaloitekampanja
 
-**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
+**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
 
-**Käyttäjätarina:** *"Kansalaisaloitekampanjaan osallistuvana aktivistina tarvitsen tehokkaan tavan organisoida omaa ja muiden aikaa ja tehtäviä."*
+#### Polku
 
-### Polku
-
-1. Aktivisti luo projektin tai ryhmän aiheen ympärille (esim. lakiehdotus tai kaupunginosatason ehdotus).
+1. Aktivisti luo projektin tai ryhmän aiheen ympärille.
 2. Aktivisti kutsuu yhteistyökumppaneita ja jakaa projektin sosiaalisessa mediassa.
-3. Ryhmä yhteismuokkaa dokumenttia (lehdistötiedote, tietopyynty, lakiehdotus).
+3. Ryhmä yhteismuokkaa dokumenttia (lehdistotiedote, tietopyynto, lakiehdotus).
 4. Ryhmän jäsenille jaetaan tehtäviä (deadline, vastuuhenkilö, estivaatimukset).
 5. Kampanja kerää tukijoita — eteneminen näkyy aktiviteettivirrassa.
 
 ---
 
-## 5. Espanja — Podemos Ciencia (piirikokouksen järjestäminen)
+### 5. Espanja — Podemos Ciencia
 
-**Konteksti:** Podemos-puolueen tieteispiiri (yksi 42:sta virallisesta piiristä) tarvitsee virtuaalisen kokoontumistilan avoimen kokouksen pitämiseen.
+**Konteksti:** Podemos-puolueen tietdepiiri tarvitsee virtuaalisen kokoontumistilan avoimen kokouksen pitämiseen.
 
-**Käyttäjätarina:** *"Podemos Ciencia -piirin jäsenenä haluan osallistua virtuaaliseen kokoukseen, äänestää asioista ja kommentoida muiden puheenvuoroja."*
-
-### Vaatimukset
-
-- Kirjautuminen Facebook- tai sähköpostitunnuksella
-- Ketjutetut keskustelut
-- Äänestystoiminto viesteille
-
-### Polku
+#### Polku
 
 1. Käyttäjä kirjautuu sisään Facebook- tai sähköpostitunnuksella.
-2. Käyttäjä siirtyy kokouksen näkymään — näkyy 19 keskustelusäiettä.
+2. Käyttäjä siirtyy kokouksen näkymään — näkyy 19 keskusteluSäiettä.
 3. Käyttäjä osallistuu vähintään yhteen säikeeseen kommentoimalla tai äänestämällä.
-4. Käyttäjä äänestää palautesäikeessä: positiivinen / negatiivinen / tyhjä.
-5. Käyttäjä voi kirjoittaa ehdotuksen `#propuesta`-hashtagilla — ylläpitäjät voivat toteuttaa tai hylätä sen.
-
-### Käyttäjien spontaanit kehitysehdotukset (havaitut puutteet)
-
-- Indeksi käsiteltävistä aiheista
-- Hylättyjen kommenttien julkinen osio (läpinäkyvyys)
-- Sähköposti-ilmoitus kun omaan kommenttiin vastataan
-- Tilivalidointi suomalaisella sähköisellä henkilötodistuksella (analogia: fi-eID)
+4. Käyttäjä äänestää palautessäikeessä: positiivinen / negatiivinen / tyhjä.
+5. Käyttäjä voi kirjoittaa ehdotuksen `#propuesta`-hashtagilla.
 
 ---
 
-## 6. Espanja — Podemos I+D+i (tutkimus- ja kehityspiiri)
+### 6. Espanja — Podemos I+D+i
 
 **Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa D-CENT-alustaa kollektiiviseen päätöksentekoon.
 
-**Käyttäjätarina:** *"Podemos I+D+i -piirin jäsenenä haluan osallistua päätöksentekoprosessiin ja vaikuttaa piirin linjauksiin."*
-
-### Polku
+#### Polku
 
 1. Käyttäjä kirjautuu D-CENT-instanssiin.
 2. Käyttäjä lukee piirin avoimet agendapisteet ja voi kommentoida niitä.
@@ -121,32 +108,21 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 7. Espanja — Guanyem Barcelona (kansalaisliikkeen päätöksenteko)
+### 7. Espanja — Guanyem Barcelona
 
-**Konteksti:** Guanyem Barcelona on kansalaisvetoinen kaupunginvaltuustoehdokkuus, joka tarvitsee laajan, läpinäkyvän ja poikkisektorisen osallistumisprosessin paikallisvaaleita varten.
+**Konteksti:** Guanyem Barcelona on kansalaisvetoinen kaupunginvaltuustoehdokkuus, joka tarvitsee läpinäkyvän osallistumisprosessin.
 
-**Käyttäjätarina:** *"Guanyem-kampanjan osallistujana haluan osallistua ohjelman yhteiskirjoittamiseen ja äänestää keskeisistä linjauksista."*
-
-### Polku
+#### Polku
 
 1. Käyttäjä rekisteröityy kampanja-alustalle ja vahvistaa henkilöllisyytensä.
 2. Käyttäjä selaa ehdotuksia ja agendakohtia sekä kommentoi niitä.
-3. Käyttäjä osallistuu deliberaatioon: esittää puolesta/vastaan -argumentteja strukturoidussa näkymässä.
-4. Käyttäjä äänestää — prosessissa käytetään blockchain-pohjaista allekirjoitusta tulosten validoimiseksi.
-5. Äänestystulos julkistetaan ja se dokumentoituu kampanjan kollektiiviseen muistiin.
-
-### Erityispiirteet
-
-- Prosessin on oltava **laaja** (tavoittaa kansalaiset yli sektorirajojen), **poikkisektorinen** (sosiaaliset ja poliittiset toimijat) ja **läpinäkyvä** (kaikki vaiheet dokumentoituna).
-- Alusta mahdollistaa sopimuspohjaisen päätöksenteon sosiaalisten ja poliittisten voimien välillä.
+3. Käyttäjä osallistuu deliberaatioon: esittää puolesta/vastaan -argumentteja.
+4. Käyttäjä äänestää — prosessissa käytetään blockchain-pohjaista allekirjoitusta.
+5. Äänestystulos julkistetaan ja dokumentoituu kampanjan kollektiiviseen muistiin.
 
 ---
 
-## 8. Artikkeli-ominaisuuden käyttäjäpolku
-
-**Käyttäjätarve:** Dokumenttidata kannattaa hallita rakenteisina artikkeleina URL-viitteiden sijaan — tämä mahdollistaa tehokkaan haun ja sisällön uudelleenkäytön.
-
-### Polku
+### 8. Artikkeli-ominaisuuden käyttäjäpolku
 
 1. Käyttäjä luo artikkelin — tukee tekstiä, HTML:ää ja Markdownia.
 2. Artikkelin omistaja muokkaa tekstiä ja metatietoja (avainsanat, omistajat) suoraan paikalla.
@@ -155,83 +131,59 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 9. Keskustelu ja kommentointi
-
-**Käyttäjätarve:** Käyttäjät tarvitsevat tilan omille argumenteilleen artikkelin sisällöstä menettämättä tekstin omistajuutta.
-
-### Polku
+### 9. Keskustelu ja kommentointi
 
 1. Käyttäjä kirjoittaa mikroblogikommentin (max. 297 merkkiä) artikkelin alle.
 2. Kommentti tallennetaan — käyttäjälle tarjoutuu mahdollisuus kopioida pysyväislinkki leikepöydälle.
-3. Käyttäjä voi jakaa kommentin kolmannen osapuolen sosiaalisen median palveluun (Twitter, Facebook jne.).
+3. Käyttäjä voi jakaa kommentin kolmannen osapuolen sosiaalisen median palveluun.
 4. Muut käyttäjät voivat kommentoida kommenttia — syntyy hierarkiaton ketju.
-5. "Tykkäys" tallennetaan tyhjänä mikroblogikommenttina; tykätyn objektin URI lisätään käyttäjän profiiliin hakusuodattimia varten.
+5. "Tykkäys" tallennetaan tyhjänä mikroblogikommenttina.
 
 ---
 
-## 10. Äänestys
-
-**Käyttäjätarve:** *"Artikkelin editorina tarvitsen tavan viedä artikkeliin dokumentoidut ehdotukset käyttäjien ratifioitaviksi."*
-
-### Polku
+### 10. Äänestys
 
 1. Artikkelin omistaja avaa äänestyksen artikkelin toimintopainikkeesta.
 2. Äänioikeutettu käyttäjä klikkaa haluamaansa äänestystulosta.
 3. Äänestys tallennetaan allekirjoitettuna blockchain-avaimena.
 4. Jos käyttäjä muuttaa mieltään ennen määräaikaa — blockchain ylikirjoitetaan.
-5. Äänestystulokset visualisoidaan; argumentit voidaan ryhmitellä `for/against`-näkymään.
+5. Äänestystulokset visualisoidaan; argumentit voidaan ryhmätellä `for/against`-näkymään.
 
 ---
 
-## 11. Yhteismuokkaus
-
-**Käyttäjätarve:** *"Artikkelin omistajana haluan antaa muille pääsyn muokata dokumenttia kanssani."*
-
-### Polku
+### 11. Yhteismuokkaus
 
 1. Artikkelin omistaja klikkaa **"Avaa yhteismuokkaukseen"** -painiketta.
-2. Kaikki, jotka on merkitty editoriksi, voivat nyt muokata tekstiä samanaikaisesti paikanpäällä.
+2. Kaikki, jotka on merkitty editoriksi, voivat nyt muokata tekstiä samanaikaisesti.
 3. Omistaja sulkee yhteismuokkauksen — uusi artikkeliversio tallennetaan ja julkaistaan.
 
 ---
 
-## 12. Annotaatio
-
-**Käyttäjätarve:** *"Artikkelin editorina haluan sallia muiden annotoida tekstiäni ja ehdottaa muutoksia."*
-
-### Polku
+### 12. Annotaatio
 
 1. Artikkelin omistaja sallii annotoinnin.
 2. Muut käyttäjät voivat korostaa tekstikohtia ja liittää niihin annotaatio-objekteja.
-3. Annotaatiot ovat artikkelin omistajan hallinnassa — ne eivät ole annotaattorin omaisuutta.
+3. Annotaatiot ovat artikkelin omistajan hallinnassa.
 
 ---
 
-## 13. Tehtävät
+### 13. Tehtävät
 
-**Käyttäjätarve:** *"Kansalaisaktivistina tarvitsen tavan jakaa tehtäviä tapahtumien ja vapaaehtoistyön organisoimiseksi nopeasti."*
-
-### Polku
-
-1. Käyttäjä luo tehtävän (artikkeli erityisellä metatiedolla): otsikko, vastuuhenkilö, deadline, estivaatimukset.
+1. Käyttäjä luo tehtävän: otsikko, vastuuhenkilö, deadline, estivaatimukset.
 2. Tehtävä lähetetään vastuuhenkilölle ilmoituksena.
-3. Tehtävässä riippuvuudet: `estivaatimukset` (mitkä tehtävät pitää tehdä ensin) ja `estää` (mitä tämä tehtävä estää).
-4. Tehtävälistat näkyvät kalenterinäkymässä tai aikajanarakenteessa.
+3. Tehtävälistat näkyvät kalenterinäkymässä tai aikajanarakenteessa.
 
 ---
 
-## 14. Kirjautuminen ja identiteetinhallinta
+### 14. Kirjautuminen ja identiteetinhallinta
 
-**Käyttäjätarve:** Käyttäjä haluaa kirjautua ilman, että salasana tallennetaan selvakielisenä palvelimelle.
+#### Polku (uusi käyttäjä)
 
-### Polku (uusi käyttäjä)
-
-1. Käyttäjä avaa D-CENT-noden osoitteen ja syöttää käyttäjänimen ja salasanan.
+1. Käyttäjä syöttää käyttäjänimen ja salasanan.
 2. Selain luo kryptografisen verifierin (SRP-protokolla + SHA-256) — salasana ei koskaan siirry palvelimelle.
 3. Verifier ja salt tallennetaan palvelimen tietokantaan.
-4. Käyttäjä saa pääsyn D-CENT-palveluihin (päätöksenteko, dokumentit, ryhmät).
 
-### Polku (palannut käyttäjä)
+#### Polku (palannut käyttäjä)
 
 1. Käyttäjä syöttää salasanan.
 2. Selain luo ephemeral-avaimen — palvelin vahvistaa omistajuuden ilman salasanan siirtoa (zero-knowledge proof).
@@ -239,13 +191,239 @@ Tämä dokumentti kokoaa D-CENT D4.3 -spesifikaatiossa kuvatut käyttäjien toim
 
 ---
 
-## 15. Ryhmän pääsynhallinta
-
-**Käyttäjätarve:** Ryhmä haluaa rajoittaa sisältönsä vain jäsenille.
-
-### Polku
+### 15. Ryhmän pääsynhallinta
 
 1. Käyttäjä liittyy ryhmään — palvelin lisää ryhmän yksityisen avaimen käyttäjän profiiliin.
-2. Ryhmäavain todistaa jäsenyyden; sen hallussapito riittää pääsynhallintaan (capability-malli).
+2. Ryhmäavain todistaa jäsenyyden (capability-malli).
 3. Käyttäjä poistuu ryhmästä — palvelin poistaa ryhmäavaimen käyttäjän profiilista.
-4. Kaikki ryhmän sisäiset viestit allekirjoitetaan digitaalisesti — vastaanottajat voivat tarkistaa alkuperän WebFinger-protokollalla.
+4. Kaikki ryhmän sisäiset viestit allekirjoitetaan digitaalisesti — alkuperä tarkistettavissa WebFinger-protokollalla.
+
+---
+
+## Osa 2: Uutisseuranta-sovelluksen käyttäjäpolut (UP-1–UP-15)
+
+Lähde: [uutisseuranta/uutisseuranta.github.io](https://github.com/uutisseuranta/uutisseuranta.github.io)
+
+Tämä osio kuvaa uutisseuranta.net-sovelluksen käyttäjäpolut ja käyttotapaukset — sekä toteutetut (UP-1–8) että suunnitellut laajennukset (UP-9–15).
+
+### Käyttäjäprofiilit
+
+| Rooli | Kuvaus | Autentikointi |
+|---|---|---|
+| **Anonyymi käyttäjä** | Vierailee sivustolla ilman kirjautumista | Ei vaadi |
+| **Kirjautunut käyttäjä** | Tunnistautunut Google-tunnuksella | Firebase Auth / Google Sign-In |
+
+---
+
+### UP-1 · Ensivierailu (anonyymi)
+
+**Lähtötilanne:** Käyttäjä saapuu sivustolle ensimmäistä kertaa.
+
+```
+Saapuu uutisseuranta.net
+  └─ Näkee hero-osion
+       ├─ Lukee arvolupauksen
+       ├─ [CTA] "Aloita seuranta" → vie GitHubiin
+       └─ [CTA] "Katso esimerkkejä" → ankkuroi #uutiset-osioon
+```
+
+---
+
+### UP-2 · Uutisvirran selaaminen
+
+```
+Klikkaa navigaation "Uutiset" tai "Katso esimerkkejä" -linkkiä
+  └─ Scrollaa #uutiset-osioon
+       ├─ Näkee pääuutisen (feed-item--lead)
+       └─ Näkee 2 sivuuutista (feed-item--small)
+```
+
+---
+
+### UP-3 · Teeman vaihto
+
+```
+Klikkaa navigaation aurinko/kuu-ikonipainike
+  └─ JavaScript vaihtaa data-theme-attribuuttia
+       ├─ "light" → CSS-muuttujat vaaleat sävyt
+       └─ "dark"  → CSS-muuttujat tummat sävyt
+```
+
+---
+
+### UP-4 · Kirjautuminen Google-tunnuksella
+
+```
+Klikkaa "Kirjaudu"-painiketta (btn-login)
+  └─ Firebase Auth käynnistää signInWithPopup(GoogleAuthProvider)
+       ├─ [Onnistuu] → onAuthStateChanged laukeaa, user ≠ null
+       └─ [Epäonnistuu] → Alert: "Tämä verkkotunnus ei ole sallittu..."
+```
+
+---
+
+### UP-5 · Uloskirjautuminen
+
+```
+Klikkaa "Ulos"-painiketta
+  └─ signOut(auth)
+       └─ onAuthStateChanged laukeaa, user = null
+```
+
+---
+
+### UP-6 · Lähteiden aktiivisuuden tarkastelu
+
+Staattinen esittelykomponentti (`aria-hidden="true"`). Reaaliaikainen data integroidaan myöhemmin.
+
+---
+
+### UP-7 · Avoin lähdekoodi – osallistuminen
+
+```
+Klikkaa "Katso GitHubissa" tai navigaation "GitHub"
+  └─ Uusi välilehti: github.com/jaakkokorhonen/uutisseuranta
+```
+
+---
+
+### UP-8 · Mobiiliselaus
+
+```
+Mobiiliselain lataa sivuston (≤ 768px)
+  └─ Responsiiviset mediakysely aktivoituvat
+       ├─ Navigaation linkit piilotetaan
+       ├─ feed-grid yksisarakkeiseksi
+       └─ features-visual -widget piilotetaan
+```
+
+---
+
+### UP-9 · Henkilökohtainen uutisvirtanakymä
+
+**D-CENT-malli:** `streams`
+
+```
+Käyttäjä klikkaa tagiä uutiskortissa
+  ├─ [Anonyymi] Tag lisätään istuntokohtaiseen suodatinlistaan (JS-muistissa)
+  └─ [Kirjautunut] Sama + tallennetaan localStorage:iin UID:lla avainparina
+```
+
+**Tekniset valinnat:** `selectedTags = new Set()` muistissa; kirjautuneelle `localStorage.setItem('prefs_' + uid, ...)`.
+
+---
+
+### UP-10 · Käyttäjäasetusten hallinta
+
+**D-CENT-malli:** `settings`
+
+```
+Kirjautunut käyttäjä avaa asetukset
+  └─ Asetuspaneeli aukeaa
+       ├─ Seuratut tagit – poistettavissa
+       ├─ Teemavalinta (vaalea/tummä/järjestelmä)
+       └─ "Tyhjennekäikki asetukset"
+```
+
+**Tekniset valinnat:** `localStorage.setItem('prefs_' + uid, JSON.stringify({tags, theme}))`.
+
+---
+
+### UP-11 · "Uutta seuraamissasi aiheissa" -ilmoitus
+
+**D-CENT-malli:** `notifications-list`
+
+```
+Käyttäjä palaa sivulle (uusi istunto)
+  └─ Sovellus vertaa: nykyinen syöte vs. edellisen käynnin "viimeisin artikkeli" per tagi
+       ├─ Uusia → kellokuvakkeessa numero
+       └─ Ei uusia → kelloa ei näytetä
+```
+
+---
+
+### UP-12 · Käyttäjäprofiilisivu
+
+**D-CENT-malli:** `profile`
+
+```
+Klikkaa avatarikuvaa → "Profiili"
+  └─ Profiilipaneeli aukeaa
+       ├─ Google-profiilikuva ja nimi (Firebase Auth currentUser)
+       ├─ Seurantatilastot (localStorage-datasta)
+       └─ "Kirjaudu ulos" ja "Poista tili"
+```
+
+---
+
+### UP-13 · Artikkelin kontekstuaalinen vertailu
+
+**D-CENT-malli:** `discussion` + `argumenting`
+
+```
+Käyttäjä klikkaa uutiskorttia
+  └─ Artikkelimodal aukeaa
+       └─ "Sama aihe muualla" -osio
+            └─ Jaccard-samankaltaisuus tokenisoiduille otsikoille (kynnys > 0.2)
+                 └─ 2–5 artikkelia eri lähteistä
+```
+
+---
+
+### UP-14 · Hakutoiminto
+
+**D-CENT-malli:** `streams` (hakusuodatin)
+
+```
+Hakuikoni → hakukenttä laajenee
+  └─ Käyttäjä kirjoittaa
+       └─ Debounce 200ms → client-side suodatus
+            ├─ Hakusana korostetaan otsikoissa (<mark>)
+            └─ Hash-parametri: #haku=... (jaettava linkki)
+```
+
+---
+
+### UP-15 · Kirjautuminen ja anonyymiyS (suunnitteluperiaatteet)
+
+Kirjautuminen on valinnaista eikä toimi porttina sisällölle.
+
+| Tilanne | Toiminto |
+|---|---|
+| Anonyymi avaa etusivun | Diskreetti "Kirjaudu tallentaaksesi valinnat" -linkki |
+| Anonyymi klikkaa tallennusta vaativaa toimintoa | Kirjautumismodaali selityksellä |
+| Kirjautunut käyttäjä | Avatar headerissa; ei kirjautumiskehotteita |
+| Kirjautuminen epäonnistuu | Virheilmoitus: "Kirjautuminen peruutettiin" |
+
+---
+
+### Käyttötapausten yhteenveto (UP-1–UP-15)
+
+| Tunnus | Käyttötapaus | Autentikointi | Nykyinen tila |
+|---|---|---|---|
+| UP-1 | Ensivierailu | Ei vaadi | ✅ Toteutettu |
+| UP-2 | Uutisvirran selaaminen | Ei vaadi | ✅ Staattinen demo |
+| UP-3 | Teeman vaihto | Ei vaadi | ✅ Toteutettu |
+| UP-4 | Kirjautuminen Google-tunnuksella | Vaatii | ✅ Toteutettu |
+| UP-5 | Uloskirjautuminen | Vaatii | ✅ Toteutettu |
+| UP-6 | Lähteiden aktiivisuus | Ei vaadi | 🔲 Staattinen demo |
+| UP-7 | Osallistuminen avoimeen lähdekoodiin | Ei vaadi | ✅ Toteutettu |
+| UP-8 | Mobiiliselaus | Ei vaadi | ✅ Toteutettu |
+| UP-9 | Tagipohjainen suodatus | Ei vaadi | 🔲 Ehdotettu |
+| UP-10 | Asetuspaneeli | Ei vaadi | 🔲 Ehdotettu |
+| UP-11 | Uusien artikkelien ilmoitus | Ei vaadi | 🔲 Ehdotettu |
+| UP-12 | Profiilipaneeli | Vaatii | 🔲 Ehdotettu |
+| UP-13 | Kontekstuaalinen vertailu | Ei vaadi | 🔲 Ehdotettu |
+| UP-14 | Hakutoiminto | Ei vaadi | 🔲 Ehdotettu |
+| UP-15 | Kirjautuminen ja anonyymiys | Ei vaadi | 🔲 Ehdotettu |
+
+**Legenda:** ✅ = toiminnallinen · 🔲 = placeholder / tuleva ominaisuus
+
+---
+
+## Ristiin-linkit
+
+- [uutisseuranta/uutisseuranta.github.io](https://github.com/uutisseuranta/uutisseuranta.github.io) — frontend-sovellus
+- [uutisseuranta/gcs-activitystreams](https://github.com/uutisseuranta/gcs-activitystreams) — backend AS2-rajapinta
+- [patterns/DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md) — komponenttikirjasto
+- [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
