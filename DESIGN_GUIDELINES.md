@@ -1,4 +1,4 @@
-# DESIGN_GUIDELINES.md — D-CENT UI Patterns visuaalinen kieli
+# DESIGN_GUIDELINES.md — Uutisseuranta UI Patterns visuaalinen kieli
 
 > **Rajanveto:** UI-visuaalinen kieli tässä tiedostossa.
 > Normatiiviset vaatimukset (WCAG, GDPR, AS2-kenttätaulukko) ovat [STANDARDS.md](./STANDARDS.md):ssä.
@@ -25,13 +25,13 @@ Kaikki värit on määritelty CSS custom property -tokeneina `:root`-lohkossa (`
 | `--color-text-muted` | `#7a7974` | `#797876` | Toissijainen teksti |
 | `--color-border` | `#d4d1ca` | `#393836` | Kehykset |
 
-#### D-CENT-spesifiset erikoisvärit
+#### Uutisseuranta-spesifiset erikoisvärit
 
 | Token | Arvo | Käyttö |
 |-------|------|--------|
 | `--color-agree` | `#007E84` (primary) | `tag-agree` -semantiikka — puolesta-tagit |
 | `--color-disagree` | `#c0392b` | `tag-disagree` -semantiikka — vastaan-tagit |
-| `--color-magenta` | `#c2185b` | Magenta-erikoiskorostus (ks. alla § D-CENT-poikkeamat) |
+| `--color-magenta` | `#c2185b` | Magenta-erikoiskorostus (ks. alla § Uutisseuranta-poikkeamat) |
 
 ### Typografia
 
@@ -83,13 +83,13 @@ Kaikki värit on määritelty CSS custom property -tokeneina `:root`-lohkossa (`
 
 ---
 
-## 3. D-CENT-spesifiset poikkeamat
+## 3. Uutisseuranta-spesifiset poikkeamat
 
 Nämä ovat tietoisia visuaalisia valintoja, jotka poikkeavat tai laajentavat yleistä komponenttimallia D-CENT-kontekstiin.
 
 ### `tag-agree` / `tag-disagree` -semantiikka
 
-D-CENT-alustalla argumentointiominaisuus käyttää tageja puolesta/vastaan-semantiikkaan. Visuaalinen erottelu:
+Uutisseuranta-alustalla argumentointiominaisuus käyttää tageja puolesta/vastaan-semantiikkaan. Visuaalinen erottelu:
 
 | Tyyppi | CSS-luokka | Väri | Käyttö |
 |--------|-----------|------|--------|
@@ -110,7 +110,7 @@ Magenta ei ole yleinen aksenttiväri — käyttö rajattu yllä mainittuihin tap
 
 | # | Poikkeama | Perustelu | Vakiokomponentti johon poikkeaa |
 |---|-----------|-----------|--------------------------------|
-| D-1 | `tag-agree`/`tag-disagree` -värit | D-CENT-argumentointisemantiikka vaatii selkeän visuaalisen erottelun | `.article-tag` yleinen tyyli |
+| D-1 | `tag-agree`/`tag-disagree` -värit | Uutisseuranta-argumentointisemantiikka vaatii selkeän visuaalisen erottelun | `.article-tag` yleinen tyyli |
 | D-2 | Magenta ilmoitusbadgessa | Korkea näkyvyys kriittisissä toimintakehotuksissa | `--color-primary` normaalitilanteessa |
 | D-3 | Kommenttitasot max 2 | Kognitiivisen kuorman rajoittaminen; D4.3-spesifikaatio | Rajaton hierarkia |
 

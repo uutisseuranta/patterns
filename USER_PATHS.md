@@ -2,12 +2,12 @@
 
 Tämä dokumentti sisältää kaksi osiota:
 
-1. **D-CENT-käyttäjäpolut** — D-CENT D4.3 -spesifikaation pilottikohtaiset polut
+1. **Uutisseuranta-käyttäjäpolut** — Uutisseuranta D4.3 -spesifikaation pilottikohtaiset polut
 2. **Uutisseuranta-sovelluksen käyttäjäpolut (UP-1–UP-15)** — uutisseuranta.net-sovelluksen toteutetut ja suunnitellut polut
 
 ---
 
-## Osa 1: D-CENT-käyttäjäpolut
+## Osa 1: Uutisseuranta-käyttäjäpolut
 
 Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset | [patterns/DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md) — komponenttikirjasto
 
@@ -301,7 +301,7 @@ Mobiiliselain lataa sivuston (≤ 768px)
 
 ### UP-9 · Henkilökohtainen uutisvirtanakymä
 
-**D-CENT-malli:** `streams`
+**kuviointikirjastomalli:** `streams`
 
 ```
 Käyttäjä klikkaa tagiä uutiskortissa
@@ -315,7 +315,7 @@ Käyttäjä klikkaa tagiä uutiskortissa
 
 ### UP-10 · Käyttäjäasetusten hallinta
 
-**D-CENT-malli:** `settings`
+**kuviointikirjastomalli:** `settings`
 
 ```
 Kirjautunut käyttäjä avaa asetukset
@@ -331,7 +331,7 @@ Kirjautunut käyttäjä avaa asetukset
 
 ### UP-11 · "Uutta seuraamissasi aiheissa" -ilmoitus
 
-**D-CENT-malli:** `notifications-list`
+**kuviointikirjastomalli:** `notifications-list`
 
 ```
 Käyttäjä palaa sivulle (uusi istunto)
@@ -344,7 +344,7 @@ Käyttäjä palaa sivulle (uusi istunto)
 
 ### UP-12 · Käyttäjäprofiilisivu
 
-**D-CENT-malli:** `profile`
+**kuviointikirjastomalli:** `profile`
 
 ```
 Klikkaa avatarikuvaa → "Profiili"
@@ -358,7 +358,7 @@ Klikkaa avatarikuvaa → "Profiili"
 
 ### UP-13 · Artikkelin kontekstuaalinen vertailu
 
-**D-CENT-malli:** `discussion` + `argumenting`
+**kuviointikirjastomalli:** `discussion` + `argumenting`
 
 ```
 Käyttäjä klikkaa uutiskorttia
@@ -372,7 +372,7 @@ Käyttäjä klikkaa uutiskorttia
 
 ### UP-14 · Hakutoiminto
 
-**D-CENT-malli:** `streams` (hakusuodatin)
+**kuviointikirjastomalli:** `streams` (hakusuodatin)
 
 ```
 Hakuikoni → hakukenttä laajenee
