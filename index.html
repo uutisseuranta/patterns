@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* ===== DESIGN TOKENS ===== */
     :root, [data-theme="light"] {
       --font-body: 'Satoshi', 'Helvetica Neue', sans-serif;
       --font-display: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
@@ -69,18 +68,6 @@
       --color-primary-highlight: #313b3b;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        --color-bg: #171614; --color-surface: #1c1b19;
-        --color-surface-2: #22211f; --color-border: #393836;
-        --color-divider: #262523; --color-text: #cdccca;
-        --color-text-muted: #797876; --color-text-faint: #5a5957;
-        --color-primary: #4f98a3; --color-primary-hover: #227f8b;
-        --color-primary-highlight: #313b3b;
-      }
-    }
-
-    /* ===== BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: var(--space-16); -webkit-font-smoothing: antialiased; }
     body {
@@ -100,12 +87,10 @@
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    /* ===== LAYOUT ===== */
     .site-wrapper { display: flex; flex-direction: column; min-height: 100dvh; }
     .container { max-width: var(--content-default); margin-inline: auto; padding-inline: var(--space-6); }
     .container--narrow { max-width: var(--content-narrow); margin-inline: auto; padding-inline: var(--space-6); }
 
-    /* ===== HEADER / NAV ===== */
     .site-header {
       position: sticky; top: 0; z-index: 100;
       background: var(--color-surface);
@@ -138,16 +123,20 @@
       color: var(--color-primary);
       border-bottom-color: var(--color-primary);
     }
-    .theme-btn {
+    .header-actions {
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .theme-btn,
+    .nav-toggle {
       background: none; border: 1px solid var(--color-border);
       border-radius: var(--radius-md); padding: var(--space-1) var(--space-2);
       color: var(--color-text-muted); cursor: pointer;
-      display: flex; align-items: center;
+      display: flex; align-items: center; justify-content: center;
       transition: color var(--transition), border-color var(--transition);
     }
-    .theme-btn:hover { color: var(--color-primary); border-color: var(--color-primary); }
+    .theme-btn:hover, .nav-toggle:hover { color: var(--color-primary); border-color: var(--color-primary); }
+    .nav-toggle { display: none; }
 
-    /* ===== HERO ===== */
     .hero {
       padding: clamp(var(--space-12), 8vw, var(--space-16)) 0 clamp(var(--space-8), 5vw, var(--space-12));
       border-bottom: 1px solid var(--color-divider);
@@ -199,7 +188,6 @@
     }
     .btn-ghost:hover { color: var(--color-text); border-color: var(--color-text); }
 
-    /* ===== SECTION GENERIC ===== */
     .section {
       padding: clamp(var(--space-8), 6vw, var(--space-16)) 0;
     }
@@ -222,7 +210,6 @@
       margin-bottom: var(--space-8);
     }
 
-    /* ===== PRINCIPLES GRID ===== */
     .principles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
@@ -252,7 +239,6 @@
       line-height: 1.6;
     }
 
-    /* ===== PATTERN LEVELS ===== */
     .levels {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
@@ -282,7 +268,6 @@
     }
     .level-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
 
-    /* ===== OBJECTS TABLE ===== */
     .objects-section { margin-bottom: var(--space-10); }
     .objects-section h3 {
       font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
@@ -328,7 +313,6 @@
       font-family: 'Courier New', monospace;
     }
 
-    /* ===== CSS/JS FILES ===== */
     .files-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
@@ -359,7 +343,6 @@
       display: inline-flex; align-items: center; gap: var(--space-1);
     }
 
-    /* ===== FOOTER ===== */
     .site-footer {
       margin-top: auto;
       border-top: 1px solid var(--color-divider);
@@ -374,9 +357,24 @@
     .site-footer a { color: var(--color-text-muted); }
     .site-footer a:hover { color: var(--color-primary); }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      .site-nav { display: none; }
+      .nav-toggle { display: flex; }
+      .site-nav {
+        display: none;
+        position: absolute;
+        top: 56px;
+        right: var(--space-6);
+        left: var(--space-6);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: var(--space-4);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+      .site-nav.is-open { display: flex; }
       .hero__lead { font-size: var(--text-base); }
       .hero__actions { flex-direction: column; }
       .site-footer .container { flex-direction: column; text-align: center; }
@@ -384,9 +382,9 @@
   </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Siirry sisältöön</a>
 <div class="site-wrapper">
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="container">
       <a href="/" class="site-logo" aria-label="D-CENT Patterns etusivu">
@@ -400,26 +398,33 @@
         D-CENT Patterns
       </a>
       <nav aria-label="Päänavigaatio">
-        <ul class="site-nav">
-          <li><a href="#principles" class="active">Periaatteet</a></li>
+        <ul class="site-nav" id="site-nav">
+          <li><a href="#hero" class="active">Etusivu</a></li>
+          <li><a href="#principles">Periaatteet</a></li>
           <li><a href="#patterns">Objektit</a></li>
           <li><a href="#files">Tiedostot</a></li>
           <li><a href="https://github.com/uutisseuranta/patterns" target="_blank" rel="noopener noreferrer">GitHub</a></li>
         </ul>
       </nav>
-      <button class="theme-btn" data-theme-toggle aria-label="Vaihda teema">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-      </button>
+      <div class="header-actions">
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Avaa valikko">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+        </button>
+        <button class="theme-btn" data-theme-toggle aria-label="Vaihda pimeään tilaan">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- HERO -->
-    <section class="hero">
+    <section id="hero" class="hero">
       <div class="container">
         <span class="hero__eyebrow">D-CENT / Atomic Design</span>
         <h1 class="hero__title">UI-komponenttikirjasto<br>ja design-periaatteet</h1>
@@ -437,7 +442,6 @@
       </div>
     </section>
 
-    <!-- DESIGN PRINCIPLES -->
     <section id="principles" class="section">
       <div class="container">
         <p class="section__label">Design-periaatteet</p>
@@ -445,77 +449,22 @@
         <p class="section__lead">Näitä periaatteita käytetään suunnittelupäätösten pohjana palvelua kehitettäessä. Perustuvat d-cent/patterns-dokumentaatioon.</p>
         <div class="principles-grid">
 
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <h3 class="principle-card__title">API first</h3>
-            <p class="principle-card__body">Rakennamme sovelluksen rajapinnat ensin, ja käyttäjäkokemuksen sen päälle. Mahdollistaa monikanavaisen käytön ja koneiden välisen kommunikaation.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-            <h3 class="principle-card__title">Mobile first</h3>
-            <p class="principle-card__body">Responsiiviset käyttöliittymät pienimmistä laitteista alkaen. Minimoi kognitiivinen kuorma.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-            <h3 class="principle-card__title">Minimalistic UX</h3>
-            <p class="principle-card__body">Yksi user story kutakin käyttäjähyötyä kohden. Vältä kognitiivista kuormaa.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <h3 class="principle-card__title">Positive</h3>
-            <p class="principle-card__body">Palvelu palkitsee, innostaa ja kannustaa turvallisen kokemuksen kautta.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
-            <h3 class="principle-card__title">Communal</h3>
-            <p class="principle-card__body">Yhteisölliseksi rakennettu palvelu mahdollistaa sisällön jakamisen ja kommunikoinnin.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
-            <h3 class="principle-card__title">Equality &amp; inclusiveness</h3>
-            <p class="principle-card__body">Kaikki ovat tasavertaisesti tervetulleita. Tukee tasa-arvoa ja voimaantumista kaikilla tasoilla.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <h3 class="principle-card__title">Ease of use</h3>
-            <p class="principle-card__body">Minimaalinen, suoraviivainen kokemus ilman ylimääräisiä klikkauksia tai vaiheita.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            <h3 class="principle-card__title">Technical accessibility</h3>
-            <p class="principle-card__body">Holistinen lähestymistapa semantiikkaan. WCAG 2.0 -yhteensopivuus, riittävä kontrasti ja suuri fonttikoko.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <h3 class="principle-card__title">Helpfulness</h3>
-            <p class="principle-card__body">Tarjoa lisätietoja, esimerkkejä ja ohjeita. Tarkat ohjeet vähentävät epävarmuutta.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg>
-            <h3 class="principle-card__title">Interactive</h3>
-            <p class="principle-card__body">Ohjeet ja toiminnallisuudet osoittavat selkeästi käyttäjän toimenpiteiden hyödyt ja seuraukset.</p>
-          </article>
-
-          <article class="principle-card">
-            <svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 9-14 9V3z"/></svg>
-            <h3 class="principle-card__title">Simple</h3>
-            <p class="principle-card__body">Rakennetaan yksinkertaisin toiminnallisuus ensin. Lisätään vain käyttäjätutkimuksen perusteella.</p>
-          </article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><h3 class="principle-card__title">API first</h3><p class="principle-card__body">Rakennamme sovelluksen rajapinnat ensin, ja käyttäjäkokemuksen sen päälle. Mahdollistaa monikanavaisen käytön ja koneiden välisen kommunikaation.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><h3 class="principle-card__title">Mobile first</h3><p class="principle-card__body">Responsiiviset käyttöliittymät pienimmistä laitteista alkaen. Minimoi kognitiivinen kuorma.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg><h3 class="principle-card__title">Minimalistic UX</h3><p class="principle-card__body">Yksi user story kutakin käyttäjähyötyä kohden. Vältä kognitiivista kuormaa.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><h3 class="principle-card__title">Positive</h3><p class="principle-card__body">Palvelu palkitsee, innostaa ja kannustaa turvallisen kokemuksen kautta.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg><h3 class="principle-card__title">Communal</h3><p class="principle-card__body">Yhteisölliseksi rakennettu palvelu mahdollistaa sisällön jakamisen ja kommunikoinnin.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg><h3 class="principle-card__title">Equality &amp; inclusiveness</h3><p class="principle-card__body">Kaikki ovat tasavertaisesti tervetulleita. Tukee tasa-arvoa ja voimaantumista kaikilla tasoilla.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><h3 class="principle-card__title">Ease of use</h3><p class="principle-card__body">Minimaalinen, suoraviivainen kokemus ilman ylimääräisiä klikkauksia tai vaiheita.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><h3 class="principle-card__title">Technical accessibility</h3><p class="principle-card__body">Holistinen lähestymistapa semantiikkaan. WCAG 2.0 -yhteensopivuus, riittävä kontrasti ja suuri fonttikoko.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><h3 class="principle-card__title">Helpfulness</h3><p class="principle-card__body">Tarjoa lisätietoja, esimerkkejä ja ohjeita. Tarkat ohjeet vähentävät epävarmuutta.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/></svg><h3 class="principle-card__title">Interactive</h3><p class="principle-card__body">Ohjeet ja toiminnallisuudet osoittavat selkeästi käyttäjän toimenpiteiden hyödyt ja seuraukset.</p></article>
+          <article class="principle-card"><svg class="principle-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 9-14 9V3z"/></svg><h3 class="principle-card__title">Simple</h3><p class="principle-card__body">Rakennetaan yksinkertaisin toiminnallisuus ensin. Lisätään vain käyttäjätutkimuksen perusteella.</p></article>
 
         </div>
       </div>
     </section>
 
-    <!-- PATTERN LAB HIERARCHY -->
     <section id="patterns" class="section">
       <div class="container">
         <p class="section__label">Pattern Lab</p>
@@ -523,140 +472,37 @@
         <p class="section__lead">D-CENT patterns noudattaa Brad Frostin Atomic Design -metodologiaa. Neljä tasoa pienimmistä rakennuspalikoista kokonaisiin sivupohjiin.</p>
 
         <div class="levels">
-          <div class="level-card">
-            <span class="level-card__badge">00</span>
-            <div class="level-card__name">Atoms</div>
-            <p class="level-card__desc">HTML-peruselementit: typografia, lomakkeet, painikkeet, kuvat</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">01</span>
-            <div class="level-card__name">Molecules</div>
-            <p class="level-card__desc">Atomien yhdistelmät: kommentit, navigaatiot, stream-kohteet</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">02</span>
-            <div class="level-card__name">Organisms</div>
-            <p class="level-card__desc">Monimutkaiset komponentit: sivupalkit, virrat, profiilisivut</p>
-          </div>
-          <div class="level-card">
-            <span class="level-card__badge">03</span>
-            <div class="level-card__name">Templates</div>
-            <p class="level-card__desc">Kokonaiset sivupohjat ilman oikeaa sisältöä</p>
-          </div>
+          <div class="level-card"><span class="level-card__badge">00</span><div class="level-card__name">Atoms</div><p class="level-card__desc">HTML-peruselementit: typografia, lomakkeet, painikkeet, kuvat</p></div>
+          <div class="level-card"><span class="level-card__badge">01</span><div class="level-card__name">Molecules</div><p class="level-card__desc">Atomien yhdistelmät: kommentit, navigaatiot, stream-kohteet</p></div>
+          <div class="level-card"><span class="level-card__badge">02</span><div class="level-card__name">Organisms</div><p class="level-card__desc">Monimutkaiset komponentit: sivupalkit, virrat, profiilisivut</p></div>
+          <div class="level-card"><span class="level-card__badge">03</span><div class="level-card__name">Templates</div><p class="level-card__desc">Kokonaiset sivupohjat ilman oikeaa sisältöä</p></div>
         </div>
 
-        <div class="objects-section">
-          <h3>Atoms <span class="badge">00-atoms</span></h3>
-          <div class="objects-list">
-            <div class="object-item"><div class="object-item__name">Meta</div><p class="object-item__desc"><code>00-meta</code> — charset, viewport, title</p></div>
-            <div class="object-item"><div class="object-item__name">Global</div><p class="object-item__desc"><code>01-global</code> — CSS-reset, globaalit tyylit</p></div>
-            <div class="object-item"><div class="object-item__name">Text</div><p class="object-item__desc"><code>02-text</code> — otsikot h1–h6, kappaleet, linkit</p></div>
-            <div class="object-item"><div class="object-item__name">Lists</div><p class="object-item__desc"><code>03-lists</code> — järjestetyt ja järjestämättömät listat</p></div>
-            <div class="object-item"><div class="object-item__name">Images</div><p class="object-item__desc"><code>04-images</code> — kuvat, logot, ikonit</p></div>
-            <div class="object-item"><div class="object-item__name">Forms</div><p class="object-item__desc"><code>05-forms</code> — input, textarea, select, checkbox, radio</p></div>
-            <div class="object-item"><div class="object-item__name">Buttons</div><p class="object-item__desc"><code>06-buttons</code> — <code>.btn</code>, <code>.btn-alt</code>, btn-group</p></div>
-            <div class="object-item"><div class="object-item__name">Tables</div><p class="object-item__desc"><code>07-tables</code> — taulukot</p></div>
-            <div class="object-item"><div class="object-item__name">Media</div><p class="object-item__desc"><code>08-media</code> — video, audio</p></div>
-          </div>
-        </div>
+        <div class="objects-section"><h3>Atoms <span class="badge">00-atoms</span></h3><div class="objects-list"><div class="object-item"><div class="object-item__name">Meta</div><p class="object-item__desc"><code>00-meta</code> — charset, viewport, title</p></div><div class="object-item"><div class="object-item__name">Global</div><p class="object-item__desc"><code>01-global</code> — CSS-reset, globaalit tyylit</p></div><div class="object-item"><div class="object-item__name">Text</div><p class="object-item__desc"><code>02-text</code> — otsikot h1–h6, kappaleet, linkit</p></div><div class="object-item"><div class="object-item__name">Lists</div><p class="object-item__desc"><code>03-lists</code> — järjestetyt ja järjestämättömät listat</p></div><div class="object-item"><div class="object-item__name">Images</div><p class="object-item__desc"><code>04-images</code> — kuvat, logot, ikonit</p></div><div class="object-item"><div class="object-item__name">Forms</div><p class="object-item__desc"><code>05-forms</code> — input, textarea, select, checkbox, radio</p></div><div class="object-item"><div class="object-item__name">Buttons</div><p class="object-item__desc"><code>.btn</code>, <code>.btn-alt</code>, btn-group</p></div><div class="object-item"><div class="object-item__name">Tables</div><p class="object-item__desc"><code>07-tables</code> — taulukot</p></div><div class="object-item"><div class="object-item__name">Media</div><p class="object-item__desc"><code>08-media</code> — video, audio</p></div></div></div>
 
-        <div class="objects-section">
-          <h3>Molecules <span class="badge">01-molecules</span></h3>
-          <div class="objects-list">
-            <div class="object-item"><div class="object-item__name">Comments</div><p class="object-item__desc">Kommenttikomponentti: avatar, teksti, metadata</p></div>
-            <div class="object-item"><div class="object-item__name">Helper text</div><p class="object-item__desc">Ohjetekstit ja validointiviestit lomakkeissa</p></div>
-            <div class="object-item"><div class="object-item__name">Messaging</div><p class="object-item__desc">Viesti- ja ilmoituskomponentit</p></div>
-            <div class="object-item"><div class="object-item__name">Navigations</div><p class="object-item__desc">Navigaatiolinkit, leivänmurut, sivunumerointi</p></div>
-            <div class="object-item"><div class="object-item__name">Notification</div><p class="object-item__desc">Yksittäinen ilmoitus (notification item)</p></div>
-            <div class="object-item"><div class="object-item__name">Objects</div><p class="object-item__desc"><code>.stream-item</code>, <code>.event-date</code>, <code>.embedded-item</code></p></div>
-            <div class="object-item"><div class="object-item__name">Streams</div><p class="object-item__desc">Aktiviteettivirran yksittäinen syöte</p></div>
-          </div>
-        </div>
+        <div class="objects-section"><h3>Molecules <span class="badge">01-molecules</span></h3><div class="objects-list"><div class="object-item"><div class="object-item__name">Comments</div><p class="object-item__desc">Kommenttikomponentti: avatar, teksti, metadata</p></div><div class="object-item"><div class="object-item__name">Helper text</div><p class="object-item__desc">Ohjetekstit ja validointiviestit lomakkeissa</p></div><div class="object-item"><div class="object-item__name">Messaging</div><p class="object-item__desc">Viesti- ja ilmoituskomponentit</p></div><div class="object-item"><div class="object-item__name">Navigations</div><p class="object-item__desc">Navigaatiolinkit, leivänmurut, sivunumerointi</p></div><div class="object-item"><div class="object-item__name">Notification</div><p class="object-item__desc">Yksittäinen ilmoitus (notification item)</p></div><div class="object-item"><div class="object-item__name">Objects</div><p class="object-item__desc"><code>.stream-item</code>, <code>.event-date</code>, <code>.embedded-item</code></p></div><div class="object-item"><div class="object-item__name">Streams</div><p class="object-item__desc">Aktiviteettivirran yksittäinen syöte</p></div></div></div>
 
-        <div class="objects-section">
-          <h3>Organisms <span class="badge">02-organisms</span></h3>
-          <div class="objects-list">
-            <div class="object-item"><div class="object-item__name">Argumenting</div><p class="object-item__desc">For/against-kommentit ja äänestys</p></div>
-            <div class="object-item"><div class="object-item__name">Discussion</div><p class="object-item__desc">Keskusteluketju: kommentit ja vastaukset</p></div>
-            <div class="object-item"><div class="object-item__name">Event</div><p class="object-item__desc">Tapahtumasivunäkymä</p></div>
-            <div class="object-item"><div class="object-item__name">Global</div><p class="object-item__desc">Footer ja globaalit komponentit</p></div>
-            <div class="object-item"><div class="object-item__name">Login</div><p class="object-item__desc">Kirjautumisnäkymä</p></div>
-            <div class="object-item"><div class="object-item__name">Navigation</div><p class="object-item__desc"><code>.nav-primary</code>, sticky header</p></div>
-            <div class="object-item"><div class="object-item__name">Notifications list</div><p class="object-item__desc">Ilmoituslista</p></div>
-            <div class="object-item"><div class="object-item__name">Profile</div><p class="object-item__desc">Profiilisivu</p></div>
-            <div class="object-item"><div class="object-item__name">Registration</div><p class="object-item__desc">Rekisteröitymisnäkymä</p></div>
-            <div class="object-item"><div class="object-item__name">Settings</div><p class="object-item__desc">Asetukset-näkymä</p></div>
-            <div class="object-item"><div class="object-item__name">Streams</div><p class="object-item__desc"><code>.stream</code>, <code>.full-article</code>, <code>.group-info</code></p></div>
-          </div>
-        </div>
+        <div class="objects-section"><h3>Organisms <span class="badge">02-organisms</span></h3><div class="objects-list"><div class="object-item"><div class="object-item__name">Argumenting</div><p class="object-item__desc">For/against-kommentit ja äänestys</p></div><div class="object-item"><div class="object-item__name">Discussion</div><p class="object-item__desc">Keskusteluketju: kommentit ja vastaukset</p></div><div class="object-item"><div class="object-item__name">Event</div><p class="object-item__desc">Tapahtumasivunäkymä</p></div><div class="object-item"><div class="object-item__name">Global</div><p class="object-item__desc">Footer ja globaalit komponentit</p></div><div class="object-item"><div class="object-item__name">Login</div><p class="object-item__desc">Kirjautumisnäkymä</p></div><div class="object-item"><div class="object-item__name">Navigation</div><p class="object-item__desc"><code>.nav-primary</code>, sticky header</p></div><div class="object-item"><div class="object-item__name">Notifications list</div><p class="object-item__desc">Ilmoituslista</p></div><div class="object-item"><div class="object-item__name">Profile</div><p class="object-item__desc">Profiilisivu</p></div><div class="object-item"><div class="object-item__name">Registration</div><p class="object-item__desc">Rekisteröitymisnäkymä</p></div><div class="object-item"><div class="object-item__name">Settings</div><p class="object-item__desc">Asetukset-näkymä</p></div><div class="object-item"><div class="object-item__name">Streams</div><p class="object-item__desc"><code>.stream</code>, <code>.full-article</code>, <code>.group-info</code></p></div></div></div>
 
-        <div class="objects-section">
-          <h3>Templates <span class="badge">03-templates</span></h3>
-          <div class="objects-list">
-            <div class="object-item"><div class="object-item__name">Page</div><p class="object-item__desc">Perusmallipohja: header + content + footer</p></div>
-          </div>
-        </div>
-
+        <div class="objects-section"><h3>Templates <span class="badge">03-templates</span></h3><div class="objects-list"><div class="object-item"><div class="object-item__name">Page</div><p class="object-item__desc">Perusmallipohja: header + content + footer</p></div></div></div>
       </div>
     </section>
 
-    <!-- FILES -->
     <section id="files" class="section">
       <div class="container">
         <p class="section__label">Tiedostot</p>
         <h2 class="section__title">CSS ja JavaScript</h2>
         <p class="section__lead">Tyylit ja toiminnallisuudet on toteutettu d-cent/patterns-spesifikaatioilla mutta uutisseuranta.github.io-teknisessä muodossa.</p>
         <div class="files-grid">
-
-          <div class="file-card">
-            <div class="file-card__header">
-              <div class="file-card__icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-              </div>
-              <div>
-                <div class="file-card__name">style.css</div>
-                <div class="file-card__meta">CSS-tyylitiedosto</div>
-              </div>
-            </div>
-            <p class="file-card__desc">D-CENT-väripaletti (#007E84 teal), BEM-nimeämiskonventio, 17 osiota: reset, typografia, grid, painikkeet, lomakkeet, navigaatio, stream, kommentit, ryhmäsivu ja responsiivisuus.</p>
-            <a href="https://github.com/uutisseuranta/patterns/blob/main/style.css" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a>
-          </div>
-
-          <div class="file-card">
-            <div class="file-card__header">
-              <div class="file-card__icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </div>
-              <div>
-                <div class="file-card__name">patterns.js</div>
-                <div class="file-card__meta">JavaScript-toiminnallisuudet</div>
-              </div>
-            </div>
-            <p class="file-card__desc">Vanilla JS (ei jQuery-riippuvuutta). Sisältää: sticky header, comment toggle, embedded item -klikkaus, välilehdet, ilmoitusten sulkeminen ja mobiilinavigaatio pulldown.</p>
-            <a href="https://github.com/uutisseuranta/patterns/blob/main/patterns.js" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a>
-          </div>
-
-          <div class="file-card">
-            <div class="file-card__header">
-              <div class="file-card__icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-              </div>
-              <div>
-                <div class="file-card__name">README.md</div>
-                <div class="file-card__meta">Dokumentaatio</div>
-              </div>
-            </div>
-            <p class="file-card__desc">Kaikki 11 design-periaatetta selityksineen ja täydellinen Pattern Lab -objektihierarkia taulukoina.</p>
-            <a href="https://github.com/uutisseuranta/patterns/blob/main/README.md" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a>
-          </div>
-
+          <div class="file-card"><div class="file-card__header"><div class="file-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="file-card__name">style.css</div><div class="file-card__meta">CSS-tyylitiedosto</div></div></div><p class="file-card__desc">D-CENT-väripaletti (#007E84 teal), BEM-nimeämiskonventio, 17 osiota: reset, typografia, grid, painikkeet, lomakkeet, navigaatio, stream, kommentit, ryhmäsivu ja responsiivisuus.</p><a href="https://github.com/uutisseuranta/patterns/blob/main/style.css" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a></div>
+          <div class="file-card"><div class="file-card__header"><div class="file-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div><div class="file-card__name">patterns.js</div><div class="file-card__meta">JavaScript-toiminnallisuudet</div></div></div><p class="file-card__desc">Vanilla JS (ei jQuery-riippuvuutta). Sisältää: sticky header, comment toggle, embedded item -klikkaus, välilehdet, ilmoitusten sulkeminen, dark mode, mobiilinavigaatio ja aktiivinen navigointi.</p><a href="https://github.com/uutisseuranta/patterns/blob/main/patterns.js" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a></div>
+          <div class="file-card"><div class="file-card__header"><div class="file-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div><div class="file-card__name">README.md</div><div class="file-card__meta">Dokumentaatio</div></div></div><p class="file-card__desc">Kaikki 11 design-periaatetta selityksineen ja täydellinen Pattern Lab -objektihierarkia taulukoina.</p><a href="https://github.com/uutisseuranta/patterns/blob/main/README.md" target="_blank" rel="noopener noreferrer">Katso GitHubissa →</a></div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <p>D-CENT Patterns — <a href="https://github.com/uutisseuranta/patterns" target="_blank" rel="noopener noreferrer">uutisseuranta/patterns</a></p>
@@ -666,29 +512,6 @@
 
 </div>
 
-<script>
-  // Dark mode toggle
-  (function(){
-    const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
-    let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
-    r.setAttribute('data-theme',d);
-    if(t)t.addEventListener('click',()=>{
-      d=d==='dark'?'light':'dark';
-      r.setAttribute('data-theme',d);
-    });
-    // Active nav link on scroll
-    const sections=document.querySelectorAll('section[id]');
-    const navLinks=document.querySelectorAll('.site-nav a[href^="#"]');
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id);});
-        }
-      });
-    },{rootMargin:'-40% 0px -50%'});
-    sections.forEach(s=>obs.observe(s));
-  })();
-</script>
-
+<script src="patterns.js" defer></script>
 </body>
 </html>

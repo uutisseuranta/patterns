@@ -1,17 +1,32 @@
 /**
  * D-CENT UI Patterns — patterns.js
- * Perustuu d-cent/patterns kalles-styles.mustache JS-logiikkaan.
- * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota (vanilla JS, ei jQuery-riippuvuutta).
  */
 
 (function () {
   'use strict';
 
-  /* ==========================================================================
-     1. STICKY HEADER / TITLEBAR-FIXED
-     Lisää luokan 'titlebar-fixed' .sticky-elementeille kun ne scrollaavat
-     näkymän yläosan ohi. Vastaa alkuperäistä jQuery-logiikkaa.
-     ========================================================================== */
+  function activateTab(tab) {
+    var tabList = tab.closest('[role="tablist"]');
+    if (!tabList) return;
+
+    tabList.querySelectorAll('[role="tab"]').forEach(function (t) {
+      t.setAttribute('aria-selected', 'false');
+      t.classList.remove('is-active');
+      t.setAttribute('tabindex', '-1');
+    });
+
+    tab.setAttribute('aria-selected', 'true');
+    tab.classList.add('is-active');
+    tab.setAttribute('tabindex', '0');
+
+    var panelId = tab.getAttribute('aria-controls');
+    if (!panelId) return;
+
+    var container = tabList.closest('[data-tabs]') || document;
+    container.querySelectorAll('[role="tabpanel"]').forEach(function (panel) {
+      panel.hidden = panel.id !== panelId;
+    });
+  }
 
   function initStickyHeaders() {
     var stickyElements = document.querySelectorAll('.sticky');
@@ -23,8 +38,7 @@
     stickyElements.forEach(function (el) {
       var rect = el.getBoundingClientRect();
       var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      var originalOffset = rect.top + scrollY + el.offsetHeight;
-      // Force same width when position changes to fixed
+      var originalOffset = rect.top + scrollY;
       el.style.width = el.offsetWidth + 'px';
       stickies.push({ el: el, originalOffset: originalOffset });
     });
@@ -41,31 +55,19 @@
     }, { passive: true });
   }
 
-  /* ==========================================================================
-     2. STREAM ITEM — INACTIVE / ACTIVE TOGGLE
-     Hallitsee .inactive-luokan käyttöliittymätilaa stream-kohteissa.
-     ========================================================================== */
-
   function initInactiveToggle() {
-    // CSS hoitaa hover-efektin, mutta tarvittaessa JS-pohjainen toggle:
-    var items = document.querySelectorAll('.stream-item');
+    var items = document.querySelectorAll('.stream-item.inactive');
     items.forEach(function (item) {
       item.addEventListener('focusin', function () {
         item.classList.remove('inactive');
       });
       item.addEventListener('focusout', function () {
-        // Palauta inactive-tila vain jos ei ole valittuna
         if (!item.contains(document.activeElement)) {
           item.classList.add('inactive');
         }
       });
     });
   }
-
-  /* ==========================================================================
-     3. COMMENT FIELD — NÄYTÄ/PIILOTA
-     Näyttää kommentointikentän kun "Kommentoi"-painiketta klikataan.
-     ========================================================================== */
 
   function initCommentToggle() {
     document.addEventListener('click', function (e) {
@@ -87,16 +89,10 @@
     });
   }
 
-  /* ==========================================================================
-     4. EMBEDDED ITEM — KLIKKAUS
-     Ohjaa käyttäjän embedded-item-kohteen URL:iin.
-     ========================================================================== */
-
   function initEmbeddedItemClick() {
     document.addEventListener('click', function (e) {
       var item = e.target.closest('.embedded-item');
       if (!item) return;
-      // Älä navigoi jos klikkaus osui suoraan painikkeeseen tai linkkiin
       if (e.target.closest('a, button')) return;
 
       var link = item.querySelector('a[href]');
@@ -106,46 +102,35 @@
     });
   }
 
-  /* ==========================================================================
-     5. TABS — AKTIIVINEN VÄLILEHTI
-     Hallitsee välilehtivalintaa .tabs-komponentissa.
-     ========================================================================== */
-
   function initTabs() {
     document.addEventListener('click', function (e) {
       var tab = e.target.closest('[role="tab"]');
       if (!tab) return;
+      activateTab(tab);
+      e.preventDefault();
+    });
 
+    document.addEventListener('keydown', function (e) {
+      var tab = e.target.closest('[role="tab"]');
+      if (!tab) return;
       var tabList = tab.closest('[role="tablist"]');
       if (!tabList) return;
 
-      // Poista aktiivisuus kaikilta
-      tabList.querySelectorAll('[role="tab"]').forEach(function (t) {
-        t.setAttribute('aria-selected', 'false');
-        t.classList.remove('is-active');
-      });
+      var tabs = Array.prototype.slice.call(tabList.querySelectorAll('[role="tab"]'));
+      var idx = tabs.indexOf(tab);
+      var nextTab = null;
 
-      // Aktivoi klikattu
-      tab.setAttribute('aria-selected', 'true');
-      tab.classList.add('is-active');
+      if (e.key === 'ArrowRight') nextTab = tabs[(idx + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') nextTab = tabs[(idx - 1 + tabs.length) % tabs.length];
+      if (e.key === 'Home') nextTab = tabs[0];
+      if (e.key === 'End') nextTab = tabs[tabs.length - 1];
 
-      // Piilota/näytä panel-sisällöt
-      var panelId = tab.getAttribute('aria-controls');
-      if (!panelId) return;
-
-      var container = tabList.closest('[data-tabs]') || document;
-      container.querySelectorAll('[role="tabpanel"]').forEach(function (panel) {
-        panel.hidden = panel.id !== panelId;
-      });
-
+      if (!nextTab) return;
+      nextTab.focus();
+      activateTab(nextTab);
       e.preventDefault();
     });
   }
-
-  /* ==========================================================================
-     6. NOTIFICATION — SULJE
-     Sulkee ilmoituksen [data-dismiss]-painikkeella.
-     ========================================================================== */
 
   function initNotificationDismiss() {
     document.addEventListener('click', function (e) {
@@ -163,11 +148,6 @@
     });
   }
 
-  /* ==========================================================================
-     7. GROUP NAVIGATION — MOBILE PULLDOWN
-     Muuntaa .group-navigation-linkit pudotusvalikoksi mobiilissa.
-     ========================================================================== */
-
   function initGroupNavPulldown() {
     var groupNavs = document.querySelectorAll('.group-navigation');
     groupNavs.forEach(function (nav) {
@@ -175,7 +155,6 @@
       var links = nav.querySelectorAll('a');
       if (!label || links.length < 2) return;
 
-      // Luo select-elementti mobiilia varten
       var select = document.createElement('select');
       select.className = 'group-navigation__select';
       select.setAttribute('aria-label', label.textContent.trim());
@@ -198,9 +177,75 @@
     });
   }
 
-  /* ==========================================================================
-     INIT
-     ========================================================================== */
+  function initThemeToggle() {
+    var button = document.querySelector('[data-theme-toggle]');
+    var root = document.documentElement;
+    var saved = localStorage.getItem('theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    function updateLabel(current) {
+      if (!button) return;
+      button.setAttribute('aria-label', current === 'dark' ? 'Vaihda vaaleaan tilaan' : 'Vaihda pimeään tilaan');
+    }
+
+    root.setAttribute('data-theme', theme);
+    updateLabel(theme);
+
+    if (button) {
+      button.addEventListener('click', function () {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateLabel(theme);
+      });
+    }
+  }
+
+  function initScrollSpy() {
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
+    if (!sections.length || !navLinks.length || !('IntersectionObserver' in window)) return;
+
+    var currentSection = 'hero';
+
+    function updateLinks() {
+      navLinks.forEach(function (link) {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + currentSection);
+      });
+    }
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          currentSection = entry.target.id;
+        }
+      });
+      updateLinks();
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(function (section) { obs.observe(section); });
+    updateLinks();
+  }
+
+  function initMobileNav() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var nav = document.querySelector('#site-nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Sulje valikko' : 'Avaa valikko');
+    });
+
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Avaa valikko');
+      });
+    });
+  }
 
   function init() {
     initStickyHeaders();
@@ -210,6 +255,9 @@
     initTabs();
     initNotificationDismiss();
     initGroupNavPulldown();
+    initThemeToggle();
+    initScrollSpy();
+    initMobileNav();
   }
 
   if (document.readyState === 'loading') {
@@ -217,5 +265,4 @@
   } else {
     init();
   }
-
 })();
