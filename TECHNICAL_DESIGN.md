@@ -30,7 +30,21 @@ Kaikki kuviointikirjaston muutokset ja julkaisut viedään läpi täysin automat
 
 ---
 
-## 3. Muutoshistoria
+## 3. Suunnittelu- ja kehityskäytännöt
+
+### Teknologiavalintojen ensisijaisuusperiaate
+Kuviointikirjaston kehityksessä noudatetaan ensisijaisuusperiaatetta riippuvuuksien minimoimiseksi ja järjestelmän pitkäikäisyyden takaamiseksi:
+1. **Ensisijaisesti:** Avoimet standardit (kuten ActivityStreams 2.0, WCAG 2.1 AA, standardit web-rajapinnat).
+2. **Toissijaisesti:** Standardoidut, de facto standardoidut tai puhtaat "vanilla"-teknologiat (kuten Vanilla JS, Vanilla CSS).
+
+### Luonnos-Pull Requestit (Draft PR) ja kysymykset kontekstissa
+Monimutkaiset tai laajat komponenttilisäykset voidaan aloittaa avaamalla luonnos-Pull Request (Draft PR).
+- PR voi aluksi olla tyhjä esikatselurunko, johon kirjataan suunnitteluvaihtoehdot.
+- Avoimet arkkitehtuuri- ja visualisointikysymykset jätetään Pull Requestin kommenteiksi koodikontekstiin, jotta niistä voidaan päättää suoraan GitHubissa.
+
+---
+
+## 4. Muutoshistoria
 
 | Päivämäärä | Päätös | Perustelu | Vaihtoehto jota harkittiin | Revisit-kriteeri | Issue |
 |---|---|---|---|---|---|
