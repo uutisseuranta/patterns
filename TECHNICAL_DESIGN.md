@@ -134,7 +134,17 @@ Kuviointikirjaston kehityksessä noudatetaan ensisijaisuusperiaatetta riippuvuuk
 Monimutkaiset tai laajat komponenttilisäykset voidaan aloittaa avaamalla luonnos-Pull Request (Draft PR).
 - PR voi aluksi olla tyhjä esikatselurunko, johon kirjataan suunnitteluvaihtoehdot.
 - Avoimet arkkitehtuuri- ja visualisointikysymykset jätetään Pull Requestin kommenteiksi koodikontekstiin, jotta niistä voidaan päättää suoraan GitHubissa.
-- Draft PR muutetaan valmiiksi kun DoD (Definition of Done) täyttyy — ks. [patterns#49](https://github.com/uutisseuranta/patterns/issues/49).
+- Draft PR muutetaan valmiiksi kun DoD (Definition of Done) täyttyy — ks. [Definition of Done (DoD) -määritelmä patterns#49](https://github.com/uutisseuranta/patterns/issues/49).
+
+### Koodi- ja nimeämiskäytännöt (Code Conventions)
+- **BEM-nimeäminen:** CSS-luokkien nimeämisessä käytetään virallisesti BEM (Block-Element-Modifier) -nimeämiskonventiota (esim. `.vote-stats`, `.vote-stats__bar`, `.vote-stats__segment--agree`).
+- **Avoimien standardien mukainen nimeäminen:** Sovelletaan avoimien standardien seuraamisohjetta. Nimeämisessä käytetään ensisijaisesti standardien (kuten ActivityStreams 2.0 / `as2` tai `rss`) käyttämiä termejä ja nimiä asioille (esim. `like`, `dislike` sijaan käytetään AS2-kontekstin mukaisia termejä, tai jos kyseessä on uutissyöte, käytetään `rss`-termejä).
+
+### Koodin laadun valvonta
+Kuviointikirjaston HTML- ja CSS-koodin laadun ja virheettömyyden valvontaan otetaan myöhemmin käyttöön seuraavat työkalut:
+- **W3C Markup Validator** – HTML-komponenttien validointi ja standardienmukaisuuden varmistus.
+- **Stylelint** – CSS-sääntöjen ja muotoilujen laadunvalvonta.
+Nämä integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 
 ---
 

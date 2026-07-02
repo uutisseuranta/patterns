@@ -8,6 +8,36 @@
  * BEM-nimeämiskonventio: Block__Element--Modifier
  */
 
+/* Local Fonts */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./satoshi-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./satoshi-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./satoshi-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('./cabinet-grotesk-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
 :root {
   /* Uutisseuranta Brand Colors */
   --c-teal:         #007E84;
@@ -46,8 +76,9 @@
   --color-divider:        rgba(0,0,0,0.07);
 
   /* Fonts */
-  --font-header: 'Comfortaa', 'Helvetica', 'Arial', sans-serif;
-  --font-body:   'Muli', sans-serif;
+  --font-display: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+  --font-header:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+  --font-body:    'Satoshi', 'Helvetica Neue', sans-serif;
 
   /* Type scale */
   --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
