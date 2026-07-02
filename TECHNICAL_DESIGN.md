@@ -1,4 +1,4 @@
-# TECHNICAL_DESIGN.md — D-CENT UI Patterns tekniset linjaukset
+# TECHNICAL_DESIGN.md — Uutisseuranta UI Patterns tekniset linjaukset
 
 Tämä dokumentti määrittää `patterns`-repositorion tekniset linjaukset, komponenttimallin ja release-prosessin. Kaikki muutokset noudattavat näitä linjauksia.
 

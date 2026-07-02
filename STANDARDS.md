@@ -109,7 +109,7 @@ Nämä ovat **tietoisia suunnittelupäätöksiä**, eivät bugeja. Jokainen on d
 
 **Linjaus:** Jos yksityinen viestintä tai ryhmärajoitukset tulevat tarpeellisiksi, lisätään `"to": ["https://www.w3.org/ns/activitystreams#Public"]` -kenttä.
 
-### Poikkeama 3 — `tag-agree` / `tag-disagree` ovat D-CENT-spesifistä semantiikkaa
+### Poikkeama 3 — `tag-agree` / `tag-disagree` ovat Uutisseuranta-spesifistä semantiikkaa
 
 **Mitä eroaa:** AS2-sanastossa ei ole `Agree`- tai `Disagree`-tyyppejä. Fediverse käyttää `Like`/`Dislike`-aktiviteetteja.
 
@@ -121,7 +121,7 @@ Nämä ovat **tietoisia suunnittelupäätöksiä**, eivät bugeja. Jokainen on d
 
 **Mitä eroaa:** `--color-error` / `--c-maroon` käytetään korostukseen, ei pelkästään virhetilaan.
 
-**Syy:** D-CENT-perintö; magenta toimii visuaalisena erotteluvärinä Disagree/Eri-mieltä -elementeille.
+**Syy:** Uutisseuranta-perintö; magenta toimii visuaalisena erotteluvärinä Disagree/Eri-mieltä -elementeille.
 
 **Linjaus:** Säilytetään tietoisesti; dokumentoitu `DESIGN_GUIDELINES.md`:ssä (#45).
 

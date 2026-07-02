@@ -1,5 +1,5 @@
 /*
- * D-CENT UI Patterns — style.css
+ * Uutisseuranta UI Patterns — style.css
  * Perustuu d-cent/patterns-repon spesifikaatioihin.
  *
  * Kaikki värit ja spacing käyttävät design-tokeneita (CSS custom properties).
@@ -9,7 +9,7 @@
  */
 
 :root {
-  /* D-CENT Brand Colors */
+  /* Uutisseuranta Brand Colors */
   --c-teal:         #007E84;
   --c-teal-dark:    #00444A;
   --c-teal-mid:     #00D3CA;
@@ -1059,8 +1059,8 @@ textarea {
    ========================================================================== */
 
 /* =============================================
-       D-CENT DESIGN TOKENS
-       Palette from: d-cent.github.io/patterns
+       Uutisseuranta DESIGN TOKENS
+       Palette: alkuperäinen väripaletti uudistettu Uutisseuranta-brendäyksen mukaan
        Art direction: civic-tech, open democracy
        Fonts: Comfortaa (headers) + Muli (body)
        Dominant color: teal #007E84 (80-90%)

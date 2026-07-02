@@ -2,12 +2,12 @@
 
 Tämä dokumentti sisältää kaksi osiota:
 
-1. **D-CENT-käyttäjäpolut** — D-CENT D4.3 -spesifikaation pilottikohtaiset polut
+1. **Uutisseuranta-käyttäjäpolut** — pilottikohtaiset käyttötapaukset
 2. **Uutisseuranta-sovelluksen käyttäjäpolut (UP-1–UP-15)** — uutisseuranta.net-sovelluksen toteutetut ja suunnitellut polut
 
 ---
 
-## Osa 1: D-CENT-käyttäjäpolut
+## Osa 1: Uutisseuranta-käyttäjäpolut
 
 Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset | [patterns/DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md) — komponenttikirjasto
 
@@ -69,7 +69,7 @@ Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
 
 ### 4. Suomi — Open Ministry / Kansalaisaloitekampanja
 
-**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
+**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
 
 #### Polku
 
@@ -97,11 +97,11 @@ Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
 
 ### 6. Espanja — Podemos I+D+i
 
-**Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa D-CENT-alustaa kollektiiviseen päätöksentekoon.
+**Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa alustaa kollektiiviseen päätöksentekoon.
 
 #### Polku
 
-1. Käyttäjä kirjautuu D-CENT-instanssiin.
+1. Käyttäjä kirjautuu Uutisseuranta-instanssiin.
 2. Käyttäjä lukee piirin avoimet agendapisteet ja voi kommentoida niitä.
 3. Käyttäjä osallistuu äänestykseen piirin dokumenteista tai ehdotuksista.
 4. Äänestystulos kootaan ja jaetaan piirin jäsenille.
@@ -301,7 +301,7 @@ Mobiiliselain lataa sivuston (≤ 768px)
 
 ### UP-9 · Henkilökohtainen uutisvirtanakymä
 
-**D-CENT-malli:** `streams`
+**kuviointikirjastomalli:** `streams`
 
 ```
 Käyttäjä klikkaa tagiä uutiskortissa
@@ -315,14 +315,14 @@ Käyttäjä klikkaa tagiä uutiskortissa
 
 ### UP-10 · Käyttäjäasetusten hallinta
 
-**D-CENT-malli:** `settings`
+**kuviointikirjastomalli:** `settings`
 
 ```
 Kirjautunut käyttäjä avaa asetukset
   └─ Asetuspaneeli aukeaa
        ├─ Seuratut tagit – poistettavissa
-       ├─ Teemavalinta (vaalea/tummä/järjestelmä)
-       └─ "Tyhjennekäikki asetukset"
+       ├─ Teemavalinta (vaalea/tumma/järjestelmä)
+       └─ "Tyhjennä kaikki asetukset"
 ```
 
 **Tekniset valinnat:** `localStorage.setItem('prefs_' + uid, JSON.stringify({tags, theme}))`.
@@ -331,7 +331,7 @@ Kirjautunut käyttäjä avaa asetukset
 
 ### UP-11 · "Uutta seuraamissasi aiheissa" -ilmoitus
 
-**D-CENT-malli:** `notifications-list`
+**kuviointikirjastomalli:** `notifications-list`
 
 ```
 Käyttäjä palaa sivulle (uusi istunto)
@@ -344,7 +344,7 @@ Käyttäjä palaa sivulle (uusi istunto)
 
 ### UP-12 · Käyttäjäprofiilisivu
 
-**D-CENT-malli:** `profile`
+**kuviointikirjastomalli:** `profile`
 
 ```
 Klikkaa avatarikuvaa → "Profiili"
@@ -358,7 +358,7 @@ Klikkaa avatarikuvaa → "Profiili"
 
 ### UP-13 · Artikkelin kontekstuaalinen vertailu
 
-**D-CENT-malli:** `discussion` + `argumenting`
+**kuviointikirjastomalli:** `discussion` + `argumenting`
 
 ```
 Käyttäjä klikkaa uutiskorttia
@@ -372,7 +372,7 @@ Käyttäjä klikkaa uutiskorttia
 
 ### UP-14 · Hakutoiminto
 
-**D-CENT-malli:** `streams` (hakusuodatin)
+**kuviointikirjastomalli:** `streams` (hakusuodatin)
 
 ```
 Hakuikoni → hakukenttä laajenee
@@ -384,7 +384,7 @@ Hakuikoni → hakukenttä laajenee
 
 ---
 
-### UP-15 · Kirjautuminen ja anonyymiyS (suunnitteluperiaatteet)
+### UP-15 · Kirjautuminen ja anonyymiys (suunnitteluperiaatteet)
 
 Kirjautuminen on valinnaista eikä toimi porttina sisällölle.
 

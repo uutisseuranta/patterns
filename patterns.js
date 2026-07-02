@@ -1,6 +1,5 @@
 /**
- * D-CENT UI Patterns — patterns.js
- * Perustuu d-cent/patterns kalles-styles.mustache JS-logiikkaan.
+ * Uutisseuranta UI Patterns — patterns.js
  * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota (vanilla JS, ei jQuery-riippuvuutta).
  *
  * Issues implemented:

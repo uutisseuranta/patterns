@@ -1,4 +1,4 @@
-# LICENSES.md — Avointen komponenttien lisenssit ja ylläpito (D-CENT Patterns)
+# LICENSES.md — Avointen komponenttien lisenssit ja ylläpito (uutisseurannan kuviot)
 
 Tämä tiedosto kuvaa **patterns**-repositoriossa käytetyt avoimen lähdekoodin kolmannen osapuolen ohjelmistokomponentit, niiden lisenssit, ylläpidon tilan, vastuutahot ja ylläpitäjien ensisijaiset toimintamaat.
 
