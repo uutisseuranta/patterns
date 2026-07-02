@@ -85,7 +85,7 @@ Kaikki värit on määritelty CSS custom property -tokeneina `:root`-lohkossa (`
 
 ## 3. Uutisseuranta-spesifiset poikkeamat
 
-Nämä ovat tietoisia visuaalisia valintoja, jotka poikkeavat tai laajentavat yleistä komponenttimallia D-CENT-kontekstiin.
+Nämä ovat tietoisia visuaalisia valintoja, jotka poikkeavat tai laajentavat yleistä komponenttimallia Uutisseuranta-kontekstiin.
 
 ### `tag-agree` / `tag-disagree` -semantiikka
 

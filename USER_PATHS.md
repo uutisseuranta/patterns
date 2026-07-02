@@ -101,7 +101,7 @@ Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
 
 #### Polku
 
-1. Käyttäjä kirjautuu D-CENT-instanssiin.
+1. Käyttäjä kirjautuu Uutisseuranta-instanssiin.
 2. Käyttäjä lukee piirin avoimet agendapisteet ja voi kommentoida niitä.
 3. Käyttäjä osallistuu äänestykseen piirin dokumenteista tai ehdotuksista.
 4. Äänestystulos kootaan ja jaetaan piirin jäsenille.
