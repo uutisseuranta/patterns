@@ -1,7 +1,6 @@
 /**
  * Uutisseuranta UI Patterns — patterns.js
- * Käyttöliittymälogiikka Uutisseuranta-kuviointikirjastolle (vanilla JS, ei jQuery-riippuvuutta).
- * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota.
+ * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota (vanilla JS, ei jQuery-riippuvuutta).
  *
  * Issues implemented:
  *  #2  dark mode localStorage persistence + FOUC fix
