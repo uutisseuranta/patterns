@@ -225,6 +225,29 @@ Täydellinen AS2-kenttätaulukko: **[STANDARDS.md § AS2-kenttätaulukko](./STAN
 | `likes.totalItems` | integer | tykkäyslaskuri | — |
 | `shares.totalItems` | integer | jakamislaskuri | — |
 
+### Backend ↔ Frontend alignment
+
+Taulukko kuvaa, miten kukin AS2-kenttä on mallinnettu backend-puolella (`gcs-activitystreams`, BigQuery `objects`-taulu ja `object_json`-JSON-sarake) ja frontend-puolella (`patterns`, `index.html` data-attribuutit ja CSS-komponentit). Status-sarake kuvaa yhteensopivuuden nykytilan.
+
+| AS2-kenttä | Backend (`gcs-activitystreams`) | Frontend (`patterns`) | Status |
+|---|---|---|---|
+| `@context` | Ei tallenneta BigQuery-sarakkeena; sisältyy `object_json`-JSON:iin vakiona `"https://www.w3.org/ns/activitystreams"` | `data-ap-context` juurielementissä (`<article>`/`<section>`) | ⚠️ Puuttuu frontend-templaatista — ks. #40 |
+| `id` | Primääriavain `objects.id`-sarakkeessa; IRI-kaava lähteittäin (esim. `.../articles/{source}/{sha256(url)}`) | `data-ap-id` — absoluuttinen IRI | ⚠️ Puuttuu frontend-templaatista — ks. #40 |
+| `type` | `object_json.type` — `Article`, `Note`, `Document`, `OrderedCollection` | `data-ap-type` — `Article`, `Collection`, `Note`, `Hashtag` | ✅ Yhteensopiva |
+| `name` | `object_json.name` (RSS: `<title>`, Ahjo: `subject`, HRI: `result.title`) | `.article-card__title` | ✅ Yhteensopiva |
+| `summary` | `object_json.summary` (RSS: `<description>`, Ahjo: `agenda_item.content`, OG: `og:description`) | `.article-card__text` (lyhyt näkymä) | ✅ Yhteensopiva |
+| `content` | `object_json.content` — HTML-merkkijono | `.article-card__text` (täysi näkymä) | ✅ Yhteensopiva |
+| `published` | `objects.published` TIMESTAMP (NOT NULL, partitiointi); myös `object_json.published` ISO 8601 | `<time datetime="...">` RFC 3339 | ✅ Yhteensopiva |
+| `replies` | Ei BigQuery-saraketta; kommentit haetaan `activities`-taulusta `in_reply_to`-kentän perusteella | `data-ap-type="Collection"` replies-wrapperissa; `data-ap-type="Note"` kommenttikortissa | ⚠️ Backend ei palauta `replies`-objektia suoraan — frontend kokoaa itse |
+| `tag` | `objects.tags ARRAY<STRING>` (Voikko-lemmat); `object_json.tag[]` Hashtag-objekteina | `data-ap-type="Hashtag"` `.article-tag`-linkeissä | ✅ Yhteensopiva |
+| `likes` | `objects.like_count INT64`; `activitystreams_social.likes`-taulu; palautetaan `object_json.likes.totalItems`-kenttänä | Tykkäyslaskuri (näkyvä numero) | ✅ Yhteensopiva |
+| `shares` | Ei erillistä taulua; `object_json.shares.totalItems` JSON:ssa | Jakamislaskuri (näkyvä numero) | ⚠️ Backend ei laske shares-arvoa — kentän lähde tarkistettava |
+| `attributedTo` | `object_json.attributedTo` — kevyt objekti (`type`, `id`, `name`); Ahjo: `policymaker.name`; HRI: organisaatiotaso | `.article-card__meta a` (ryhmän nimi); `data-ap-type="Group"` | ✅ Yhteensopiva (kevyt, ei Actor-endpoint) |
+
+#### Eksplisiittinen rajaus
+
+Tässä projektissa ei toteuteta ActivityPub Actor -objekteja (`Person`, `Group`, `Organization`, `Service`) täysinä Actor-endpointeina. `attributedTo`-kenttä sisältää kevyen viittauksen (`type` + `id` + `name`) ilman erillistä Actor-profiilisivua tai Webfinger-hakua. Samoin audience targeting -kenttiä (`to`, `cc`, `bto`, `bcc`, `audience`) ei käytetä missään API-vastauksessa eikä frontend-templaatissa — kaikki objektit oletetaan julkisiksi. Ensisijainen tavoite on ActivityStreams 2.0 -yhteensopivuus; ActivityPub-laajennukset ovat mahdollisia myöhemmin erillisissä projekteissa ja dokumentoidaan silloin hallittuina divergensseinä STANDARDS.md:hen.
+
 ### `data-ap-*` -attribuuttikäytäntö
 
 HTML-templaatissa käytetään `data-ap-*` -attribuutteja kytkemään visuaaliset elementit AS2-tietomalliin ilman nimeämiskonfliktiä BEM-CSS-luokkien kanssa:
