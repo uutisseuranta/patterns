@@ -20,8 +20,8 @@ Tämä dokumentti määrittelee `patterns`-repositorion normatiiviset standardit
 | `Note` | Kommentti (`replies`-kokoelman sisällä) |
 | `Collection` | `replies`-kokoelma, tag-kokoelmat |
 | `Hashtag` | Artikkelin tai kommentin tagi (`tag[]`) |
-| `Like` | Käyttäjän “Samaa mieltä”-reaktio |
-| `Dislike` | Käyttäjän “Eri mieltä”-reaktio |
+| `Like` | Käyttäjän "Samaa mieltä"-reaktio |
+| `Dislike` | Käyttäjän "Eri mieltä"-reaktio |
 
 ### AS2-kenttätaulukko
 
@@ -33,8 +33,8 @@ Tämä dokumentti määrittelee `patterns`-repositorion normatiiviset standardit
 | `name` | string | ✅ | `.article-card__title` | Artikkelin otsikko |
 | `summary` | string | ✅ | `.article-card__text` (lyhyt) | Lyhyt kuvaus |
 | `content` | HTML string | ✅ | `.article-card__text` (täysi) | Artikkelin leipäteksti |
-| `published` | RFC 3339 | ✅ | `<time datetime="...">` | RFC 3339-muoto pakollinen, ks. alla |
-| `updated` | RFC 3339 | ✅ | `<time datetime="...">` | RFC 3339-muoto pakollinen |
+| `published` | RFC 3339 | ✅ | `<time datetime="...">` | RFC 3339-muoto pakollinen, ks. alla |
+| `updated` | RFC 3339 | ✅ | `<time datetime="...">` | RFC 3339-muoto pakollinen |
 | `url` | IRI | ✅ | `<a href="...">` | Alkuperäinen URL |
 | `url_archive` | IRI | ✅ | arkistolinkki (ks. #44) | Wayback Machine -URL, D-CENT-laajennus |
 | `replies` | Collection | ✅ | `data-ap-type="Collection"` | Kommenttien kokoelma |
@@ -50,11 +50,11 @@ Tämä dokumentti määrittelee `patterns`-repositorion normatiiviset standardit
 
 ## RFC 3339 — Aikaleimastandardi
 
-Kaikki aikaleimat käyttävät ISO 8601 / RFC 3339 -muotoa.
+Kaikki aikaleimat käyttävät ISO 8601 / RFC 3339 -muotoa.
 
 - **Normaalimuoto:** `2026-07-02T14:00:00Z` (UTC, `Z`-pääte)
 - **HTML:** `<time datetime="2026-07-02T14:00:00Z">noin tunti sitten</time>`
-  - `datetime`-attribuutti aina RFC 3339 — näkyvä teksti voi olla lokalisoitu
+  - `datetime`-attribuutti aina RFC 3339 — näkyvä teksti voi olla lokalisoitu
 - **Aikavyöhyke:** UTC (`Z`) oletusarvo; lokalisointi tehdään UI-kerroksessa
 - **Ei sallita:** pelkkä päivämäärä (`2026-07-02`) aikaleimaksi — vaaditaan kellonaika
 
@@ -69,20 +69,20 @@ Spesifikaatio: [https://www.w3.org/TR/WCAG21/](https://www.w3.org/TR/WCAG21/)
 
 | Vaatimus | Kriteeri | Käytännön toteutus |
 |---|---|---|
-| Tekstin kontrasti | SC 1.4.3 | ≥ 4,5:1 normaaliteksti; ≥ 3:1 iso teksti (24 px+) |
-| Ei-tekstuaaliset elementit | SC 1.4.11 | ≥ 3:1 (ikonit, lomakekehykset, focus-indikaattori) |
+| Tekstin kontrasti | SC 1.4.3 | ≥ 4,5:1 normaaliteksti; ≥ 3:1 iso teksti (24 px+) |
+| Ei-tekstuaaliset elementit | SC 1.4.11 | ≥ 3:1 (ikonit, lomakekehykset, focus-indikaattori) |
 | Näppäimistökäyttö | SC 2.1.1 | Kaikki toiminnallisuudet saavutettavissa Tab/Enter/Space/Esc |
 | Focus-indikaattori | SC 2.4.7 | Näkyvä `:focus-visible`-tila pakollinen |
 | Hover/focus-sisällöt | SC 1.4.13 | Suljettavissa ilman siirtymistä, pysyvät osoittimen päällä |
 | ARIA | — | Vain kun natiivi semantiikka riittämätön; `aria-label` kaikille ikonipainikkeille |
 | Kuvien alt-teksti | SC 1.1.1 | Kaikilla `<img>`-elementeillä `alt`-attribuutti; koristekuvat `alt=""` |
-| `<time>`-elementti | — | Kaikkiin aikaleimiin; `datetime` RFC 3339-muodossa |
+| `<time>`-elementti | — | Kaikkiin aikaleimiin; `datetime` RFC 3339-muodossa |
 
 ---
 
 ## GDPR — Henkilötietojen käsittely
 
-- **Frontend-templaateissa ei henkilökohtaisia tunnistetietoja** (ei sähköpostia, ei IP:tä, ei evästeidä) ilman eksplisiittistä suostumusta
+- **Frontend-templaateissa ei henkilökohtaisia tunnistetietoja** (ei sähköpostia, ei IP:tä, ei evästeitä) ilman eksplisiittistä suostumusta
 - `data-ap-id` viittaa **artikkeliin tai kommenttiin**, ei käyttäjään
 - Käyttäjäprofiilisivu käsitelee henkilötietoja erikseen (ks. uutisseuranta.github.io STANDARDS.md)
 - Analytiikka vain anonymisoituna
@@ -113,9 +113,9 @@ Nämä ovat **tietoisia suunnittelupäätöksiä**, eivät bugeja. Jokainen on d
 
 **Mitä eroaa:** AS2-sanastossa ei ole `Agree`- tai `Disagree`-tyyppejä. Fediverse käyttää `Like`/`Dislike`-aktiviteetteja.
 
-**Syy:** D-CENT:n kansalaisosallistumismalli tarvitsee eksplisiittisen kannanotto-semantiikan. UI näyttää “Samaa mieltä” / “Eri mieltä”, backend lähettää `Like`/`Dislike`.
+**Syy:** D-CENT:n kansalaisosallistumismalli tarvitsee eksplisiittisen kannanotto-semantiikan. UI näyttää "Samaa mieltä" / "Eri mieltä", backend lähettää `Like`/`Dislike`.
 
-**Linjaus:** Toteutetaan projektikohtaisena `@context`-laajennuksena. Voidaan ehdottaa upstreamiin FEP-prosessiin.
+**Linjaus:** `Like` ja `Dislike` ovat AS2-standardin aktiviteettityyppejä ([AS2 Vocabulary §like](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-like), [§dislike](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-dislike)), joita käytetään `data-ap-type`-attribuuteissa reaktiopainikkeissa (`data-ap-type="Like"` / `data-ap-type="Dislike"`). UI-teksti lokalisoidaan suomeksi ("Samaa mieltä" / "Eri mieltä") erillään semanttisesta tyypistä. Toteutetaan projektikohtaisena `@context`-laajennuksena tarvittaessa; voidaan ehdottaa upstreamiin FEP-prosessiin.
 
 ### Poikkeama 4 — Magenta-erikoiskorostus
 
