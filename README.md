@@ -107,6 +107,109 @@ Templatet yhdistävät organismeja kokonaisiksi sivupohjiksi ilman oikeaa sisäl
 | Malli | Kuvaus |
 |-------|--------|
 | `page` | Perusmallipohja: header + content + footer |
+| `template-article-page` | AS2 `Article`-objekti: otsikko, sisältö, tagit, ryhmä, kommentit (`Note[]`), tykkäys- ja jakamislaskurit |
+
+---
+
+## AS2 Article -templaatti
+
+ActivityStreams 2.0 `Article`-objekti on tietomalliltaan blogipostauksen tai uutisartikkelin vakiomuoto hajautetuissa sosiaalisissa verkoissa (ActivityPub-protokolla). D-CENT-kontekstissa se sopii kansalaisaloitteiden, kommentaarien ja kampanjakirjoitusten esittämiseen.
+
+### Tietomalli
+
+```json
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "Article",
+  "id": "https://uutisseuranta.fi/articles/energiaremontti-2050",
+  "url": "https://uutisseuranta.fi/articles/energiaremontti-2050",
+  "name": "Energiaremontti 2050",
+  "summary": "Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.",
+  "content": "<p>Käynnistetään energiaremontti, joka tähtää siihen, että Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.</p>",
+  "attributedTo": {
+    "type": "Group",
+    "id": "https://uutisseuranta.fi/groups/suomen-uusenergiset",
+    "name": "Suomen uusenergiset"
+  },
+  "published": "2025-03-15T09:00:00Z",
+  "updated": "2025-03-15T10:42:00Z",
+  "tag": [
+    { "type": "Hashtag", "name": "#UusiutuvaEnergia",  "href": "https://uutisseuranta.fi/tags/uusiutuva-energia" },
+    { "type": "Hashtag", "name": "#Ilmastonmuutos",    "href": "https://uutisseuranta.fi/tags/ilmastonmuutos" },
+    { "type": "Hashtag", "name": "#UusiTalous",        "href": "https://uutisseuranta.fi/tags/uusi-talous" }
+  ],
+  "replies": {
+    "type": "Collection",
+    "totalItems": 2,
+    "items": [
+      {
+        "type": "Note",
+        "id": "https://uutisseuranta.fi/comments/1",
+        "attributedTo": {
+          "type": "Person",
+          "id": "https://uutisseuranta.fi/users/mikko-mallikas",
+          "name": "Mikko Mallikas"
+        },
+        "content": "Luvut ovat niin nannaa, että tuossa kannattaisi suoraan linkata alkuperäiseen lähteeseen epäilijöiden vakuuttamiseksi.",
+        "published": "2025-03-15T10:05:00Z",
+        "inReplyTo": "https://uutisseuranta.fi/articles/energiaremontti-2050"
+      },
+      {
+        "type": "Note",
+        "id": "https://uutisseuranta.fi/comments/2",
+        "attributedTo": {
+          "type": "Person",
+          "id": "https://uutisseuranta.fi/users/elina-esimerkki",
+          "name": "Elina Esimerkki"
+        },
+        "content": "Sana \"parantaisi\" toistuu. Joku muu saa miettiä korvaavan ilmaisun, kun täältä loppui kahvi.",
+        "published": "2025-03-15T10:38:00Z",
+        "inReplyTo": "https://uutisseuranta.fi/articles/energiaremontti-2050"
+      }
+    ]
+  },
+  "likes": {
+    "type": "Collection",
+    "totalItems": 47
+  },
+  "shares": {
+    "type": "Collection",
+    "totalItems": 12
+  }
+}
+```
+
+### Kenttäkartta — AS2 → UI-komponentti
+
+| AS2-kenttä | Tyyppi | UI-vastine (`index.html`) |
+|---|---|---|
+| `name` | `string` | `.article-card__title` |
+| `summary` | `string` | `.article-card__text` (lyhyt) |
+| `content` | `HTML string` | `.article-card__text` (täysi) |
+| `attributedTo.name` | `string` | `.article-card__meta a` (ryhmän nimi) |
+| `published` | `xsd:dateTime` | `.article-card__meta` aikaleima |
+| `updated` | `xsd:dateTime` | `.comment-time` (viimeksi muokattu) |
+| `tag[].name` | `Hashtag[]` | `.article-tag` |
+| `replies.totalItems` | `integer` | kommenttilaskuri |
+| `replies.items[]` | `Note[]` | `.comment-card` (yksi per Note) |
+| `replies.items[].attributedTo.name` | `string` | `.comment-author` + `.comment-avatar` (nimikirjaimet) |
+| `likes.totalItems` | `integer` | tykkäyslaskuri |
+| `shares.totalItems` | `integer` | jakamislaskuri |
+
+### Miksi AS2 Article eikä Note
+
+ActivityStreams 2.0 -spesifikaatiossa `Note` on lyhyt, kontekstiton viesti (twiitti, kommentti). `Article` on nimenomaan kirjoitettu, otsikollinen sisältöobjekti, jolla on `name`-kenttä ja joka on tarkoitettu luettavaksi pidempänä kokonaisuutena. D-CENT:n kansalaisaloitteet, kampanjakirjoitukset ja uutisanalyysit ovat rakenteeltaan artikkeleita, eivät lyhytviestejä — tämä tekee `Article`-tyypistä semanttisesti oikean valinnan.
+
+`Note`-tyyppiä käytetään `replies`-kokoelman sisällä yksittäisille kommenteille, mikä vastaa AS2-spesifikaation suositeltua rakennetta.
+
+### Pattern Lab -sijoitus
+
+Templaatti sijoittuu `03-templates`-tasolle, mutta hyödyntää kaikki alla olevat tasot:
+
+- **Atom:** `.article-tag` (Hashtag-linkki), `.comment-avatar` (Person-avatar)
+- **Molecule:** `.comment-card` (Note-objekti), `.article-card__meta` (aikaleima + ryhmälinkki)
+- **Organism:** `.article-card` (koko Article-objekti kommentteineen)
+- **Template:** `template-article-page` — Article + replies-Collection + like/share-laskurit
 
 ---
 
@@ -169,3 +272,5 @@ Vanilla JS — ei jQuery-riippuvuutta. Toiminnallisuudet:
 - Pattern Lab: [http://d-cent.github.io/patterns/](http://d-cent.github.io/patterns/)
 - Atomic Design -metodologia: [http://atomicdesign.bradfrost.com/](http://atomicdesign.bradfrost.com/)
 - WCAG 2.1: [https://www.w3.org/TR/WCAG21/](https://www.w3.org/TR/WCAG21/)
+- ActivityStreams 2.0: [https://www.w3.org/TR/activitystreams-core/](https://www.w3.org/TR/activitystreams-core/)
+- ActivityStreams 2.0 Vocabulary: [https://www.w3.org/TR/activitystreams-vocabulary/](https://www.w3.org/TR/activitystreams-vocabulary/)
