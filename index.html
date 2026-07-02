@@ -384,16 +384,44 @@
         <h2 class="section__title" id="patterns-heading">Artikkelikortti</h2>
         <p class="section__lead">Esimerkki täydellisestä artikkeli-snapshot-kortista kommentteineen — pohja D-CENT:n kansalaisaloite-näkymille.</p>
 
-        <div class="article-card" style="max-width:680px;">
+        <!--
+          AS2-first: tämä artikkelikortti mallinnetaan ActivityStreams 2.0 Article-objektina
+          jonka replies-kenttä sisältää Note-objektien Collectionin.
+
+          Semantiikka:
+            - data-ap-context="https://www.w3.org/ns/activitystreams"
+            - data-ap-id       = absoluuttinen IRI (Article.id)
+            - data-ap-type     = "Article" (pääobjekti), "Collection" (replies-wrapper), "Note" (kommentit)
+
+          Rajaukset (ks. STANDARDS.md):
+            - Ei ActivityPub Actor-objekteja (Person, Group, Organization, Service) tässä UI:ssa.
+            - Ei audience targeting -kenttiä (to, cc, bto, bcc, audience); oletusarvoisesti kaikki objektit ovat julkisia.
+            - Ensisijainen tavoite on olla ActivityStreams 2.0 -yhteensopiva ilman täyttä ActivityPub-protokollaa.
+
+          Poikkeamat:
+            - D-CENT-spesifiset semantiikat (esim. tag-agree / tag-disagree, magenta-erikoiskorostus)
+              dokumentoidaan STANDARDS.md:hen hallittuina poikkeamina.
+        -->
+        <article
+          class="article-card"
+          style="max-width:680px;"
+          data-ap-type="Article"
+          data-ap-id="https://uutisseuranta.fi/articles/energiaremontti-2050"
+          data-ap-context="https://www.w3.org/ns/activitystreams"
+        >
           <div class="article-card__header">
             <div>
               <div class="article-card__title">Energiaremontti 2050</div>
               <div class="article-card__meta" style="margin-top:var(--sp-2);">
                 <span>5 muokkaajaa</span>
                 <span>·</span>
-                <span style="color:var(--c-teal-mid);">noin tunti sitten</span>
+                <time
+                  class="comment-time"
+                  datetime="2026-07-02T14:00:00Z"
+                  style="color:var(--c-teal-mid);"
+                >noin tunti sitten</time>
                 <span>·</span>
-                <a href="#" style="color:#fff;">Suomen uusenergiset</a>
+                <a href="#" style="color:#fff;" data-ap-type="Group">Suomen uusenergiset</a>
               </div>
             </div>
             <a href="#" class="article-card__vote">&#9654; Äänestä</a>
@@ -401,19 +429,30 @@
           <div class="article-card__body">
             <p class="article-card__text">Käynnistetään energiaremontti, joka tähtää siihen, että Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.</p>
             <div class="article-card__tags">
-              <a href="#" class="article-tag">Uusiutuva energia</a>
-              <a href="#" class="article-tag">Ilmastonmuutos</a>
-              <a href="#" class="article-tag">Uusi talous</a>
+              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#UusiutuvaEnergia">Uusiutuva energia</a>
+              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#Ilmastonmuutos">Ilmastonmuutos</a>
+              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#UusiTalous">Uusi talous</a>
             </div>
           </div>
-          <!-- Comments -->
-          <div style="padding:0 var(--sp-6) var(--sp-6);">
-            <div class="comment-card">
+          <!-- AS2: replies → Collection of Note objects -->
+          <section
+            class="article-replies"
+            data-ap-type="Collection"
+            data-ap-part-of="https://uutisseuranta.fi/articles/energiaremontti-2050/replies"
+            aria-label="Kommentit"
+            style="padding:0 var(--sp-6) var(--sp-6);"
+          >
+            <article
+              class="comment-card"
+              data-ap-type="Note"
+              data-ap-id="https://uutisseuranta.fi/comments/1"
+              data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
+            >
               <div class="comment-meta">
                 <div class="comment-avatar" aria-hidden="true">MM</div>
                 <div>
                   <div class="comment-author"><a href="#">Mikko Mallikas</a></div>
-                  <div class="comment-time">noin tunti sitten</div>
+                  <time class="comment-time" datetime="2026-07-02T14:05:00Z">noin tunti sitten</time>
                 </div>
               </div>
               <p class="comment-body">Luvut ovat niin nannaa, että tuossa kannattaisi suoraan linkata alkuperäiseen lähteeseen epäilijöiden vakuuttamiseksi.</p>
@@ -421,13 +460,18 @@
                 <button class="comment-action">Kommentoi</button>
                 <button class="comment-action">Tykkää</button>
               </div>
-            </div>
-            <div class="comment-card">
+            </article>
+            <article
+              class="comment-card"
+              data-ap-type="Note"
+              data-ap-id="https://uutisseuranta.fi/comments/2"
+              data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
+            >
               <div class="comment-meta">
                 <div class="comment-avatar" style="background:var(--c-magenta-dark);" aria-hidden="true">EE</div>
                 <div>
                   <div class="comment-author"><a href="#">Elina Esimerkki</a></div>
-                  <div class="comment-time">noin tunti sitten</div>
+                  <time class="comment-time" datetime="2026-07-02T14:38:00Z">noin tunti sitten</time>
                 </div>
               </div>
               <p class="comment-body">Sana "parantaisi" toistuu. Joku muu saa miettiä korvaavan ilmaisun, kun täältä loppui kahvi.</p>
@@ -435,9 +479,9 @@
                 <button class="comment-action">Kommentoi</button>
                 <button class="comment-action">Tykkää</button>
               </div>
-            </div>
-          </div>
-        </div>
+            </article>
+          </section>
+        </article>
       </div>
     </section>
 
