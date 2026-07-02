@@ -6,7 +6,7 @@ Tämä repo dokumentoi D-CENT-projektin UI-suunnitteluperiaatteet ja Pattern Lab
 
 - [STANDARDS.md](./STANDARDS.md) — AS2-kenttätaulukko, RFC 3339, WCAG 2.1 AA, GDPR-rajaukset, hallitut poikkeamat
 - [TECHNICAL_DESIGN.md](./TECHNICAL_DESIGN.md) — arkkitehtuuri, muutoshistoria, teknologiavalinnat
-- [user-paths.md](./user-paths.md) — käyttäjäpolut ja user storyt
+- [USER_PATHS.md](./USER_PATHS.md) — käyttäjäpolut ja user storyt (D-CENT + Uutisseuranta UP-1–15)
 - [LICENSES.md](./LICENSES.md) — lisenssit ja attribuutio
 
 ## Liittyvät repot
@@ -148,227 +148,354 @@ ActivityStreams 2.0 `Article`-objekti on tietomalliltaan blogipostauksen tai uut
   "id": "https://uutisseuranta.fi/articles/energiaremontti-2050",
   "url": "https://uutisseuranta.fi/articles/energiaremontti-2050",
   "name": "Energiaremontti 2050",
-  "summary": "Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.",
-  "content": "<p>Käynnistetään energiaremontti, joka tähtää siihen, että Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.</p>",
+  "content": "<p>Artikkelin HTML-sisältö tässä.</p>",
+  "published": "2026-07-01T12:00:00Z",
+  "updated": "2026-07-02T08:00:00Z",
   "attributedTo": {
-    "type": "Group",
-    "id": "https://uutisseuranta.fi/groups/suomen-uusenergiset",
-    "name": "Suomen uusenergiset"
+    "type": "Person",
+    "id": "https://uutisseuranta.fi/users/anna",
+    "name": "Anna Virtanen"
   },
-  "published": "2025-03-15T09:00:00Z",
-  "updated": "2025-03-15T10:42:00Z",
   "tag": [
-    { "type": "Hashtag", "name": "#UusiutuvaEnergia",  "href": "https://uutisseuranta.fi/tags/uusiutuva-energia" },
-    { "type": "Hashtag", "name": "#Ilmastonmuutos",    "href": "https://uutisseuranta.fi/tags/ilmastonmuutos" },
-    { "type": "Hashtag", "name": "#UusiTalous",        "href": "https://uutisseuranta.fi/tags/uusi-talous" }
+    { "type": "Hashtag", "name": "#energia" },
+    { "type": "Hashtag", "name": "#ilmasto" }
   ],
   "replies": {
     "type": "Collection",
-    "totalItems": 2,
-    "items": [
-      {
-        "type": "Note",
-        "id": "https://uutisseuranta.fi/comments/1",
-        "attributedTo": {
-          "type": "Person",
-          "id": "https://uutisseuranta.fi/users/mikko-mallikas",
-          "name": "Mikko Mallikas"
-        },
-        "content": "Luvut ovat niin nannaa, että tuossa kannattaisi suoraan linkata alkuperäiseen lähteeseen epäilijöiden vakuuttamiseksi.",
-        "published": "2025-03-15T10:05:00Z",
-        "inReplyTo": "https://uutisseuranta.fi/articles/energiaremontti-2050"
-      },
-      {
-        "type": "Note",
-        "id": "https://uutisseuranta.fi/comments/2",
-        "attributedTo": {
-          "type": "Person",
-          "id": "https://uutisseuranta.fi/users/elina-esimerkki",
-          "name": "Elina Esimerkki"
-        },
-        "content": "Sana \"parantaisi\" toistuu. Joku muu saa miettiä korvaavan ilmaisun, kun täältä loppui kahvi.",
-        "published": "2025-03-15T10:38:00Z",
-        "inReplyTo": "https://uutisseuranta.fi/articles/energiaremontti-2050"
-      }
-    ]
+    "totalItems": 3,
+    "items": []
   },
-  "likes": {
-    "type": "Collection",
-    "totalItems": 47
-  },
-  "shares": {
-    "type": "Collection",
-    "totalItems": 12
-  }
+  "likes": { "type": "Collection", "totalItems": 12 },
+  "shares": { "type": "Collection", "totalItems": 4 }
 }
 ```
 
-### Kenttäkartta — AS2 → UI-komponentti
+### HTML-rakenne (`data-ap-*`-attribuutit)
 
-Täydellinen AS2-kenttätaulukko: **[STANDARDS.md § AS2-kenttätaulukko](./STANDARDS.md#as2-kenttätaulukko)**.
-
-| AS2-kenttä | Tyyppi | UI-vastine (`index.html`) | `data-ap-*` |
-|---|---|---|---|
-| `@context` | IRI | `data-ap-context` juurielementissä | `data-ap-context` |
-| `id` | IRI | `data-ap-id` | `data-ap-id` |
-| `type` | string | `data-ap-type` | `data-ap-type` |
-| `name` | string | `.article-card__title` | — |
-| `summary` | string | `.article-card__text` (lyhyt) | — |
-| `content` | HTML string | `.article-card__text` (täysi) | — |
-| `attributedTo.name` | string | `.article-card__meta a` (ryhmän nimi) | `data-ap-type="Group"` |
-| `published` | xsd:dateTime | `<time datetime="...">` | RFC 3339 pakollinen |
-| `updated` | xsd:dateTime | `.comment-time` (viimeksi muokattu) | RFC 3339 pakollinen |
-| `tag[].name` | Hashtag[] | `.article-tag` | `data-ap-type="Hashtag"` |
-| `replies.totalItems` | integer | kommenttilaskuri | — |
-| `replies.items[]` | Note[] | `.comment-card` (yksi per Note) | `data-ap-type="Note"` |
-| `replies.items[].attributedTo.name` | string | `.comment-author` + `.comment-avatar` | — |
-| `likes.totalItems` | integer | tykkäyslaskuri | — |
-| `shares.totalItems` | integer | jakamislaskuri | — |
-
-### Backend ↔ Frontend alignment
-
-Taulukko kuvaa, miten kukin AS2-kenttä on mallinnettu backend-puolella (`gcs-activitystreams`, BigQuery `objects`-taulu ja `object_json`-JSON-sarake) ja frontend-puolella (`patterns`, `index.html` data-attribuutit ja CSS-komponentit). Status-sarake kuvaa yhteensopivuuden nykytilan.
-
-| AS2-kenttä | Backend (`gcs-activitystreams`) | Frontend (`patterns`) | Status |
-|---|---|---|---|
-| `@context` | Ei tallenneta BigQuery-sarakkeena; sisältyy `object_json`-JSON:iin vakiona `"https://www.w3.org/ns/activitystreams"` | `data-ap-context` juurielementissä (`<article>`/`<section>`) | ⚠️ Puuttuu frontend-templaatista — ks. #40 |
-| `id` | Primääriavain `objects.id`-sarakkeessa; IRI-kaava lähteittäin (esim. `.../articles/{source}/{sha256(url)}`) | `data-ap-id` — absoluuttinen IRI | ⚠️ Puuttuu frontend-templaatista — ks. #40 |
-| `type` | `object_json.type` — `Article`, `Note`, `Document`, `OrderedCollection` | `data-ap-type` — `Article`, `Collection`, `Note`, `Hashtag` | ✅ Yhteensopiva |
-| `name` | `object_json.name` (RSS: `<title>`, Ahjo: `subject`, HRI: `result.title`) | `.article-card__title` | ✅ Yhteensopiva |
-| `summary` | `object_json.summary` (RSS: `<description>`, Ahjo: `agenda_item.content`, OG: `og:description`) | `.article-card__text` (lyhyt näkymä) | ✅ Yhteensopiva |
-| `content` | `object_json.content` — HTML-merkkijono | `.article-card__text` (täysi näkymä) | ✅ Yhteensopiva |
-| `published` | `objects.published` TIMESTAMP (NOT NULL, partitiointi); myös `object_json.published` ISO 8601 | `<time datetime="...">` RFC 3339 | ✅ Yhteensopiva |
-| `replies` | Ei BigQuery-saraketta; kommentit haetaan `activities`-taulusta `in_reply_to`-kentän perusteella | `data-ap-type="Collection"` replies-wrapperissa; `data-ap-type="Note"` kommenttikortissa | ⚠️ Backend ei palauta `replies`-objektia suoraan — frontend kokoaa itse |
-| `tag` | `objects.tags ARRAY<STRING>` (Voikko-lemmat); `object_json.tag[]` Hashtag-objekteina | `data-ap-type="Hashtag"` `.article-tag`-linkeissä | ✅ Yhteensopiva |
-| `likes` | `objects.like_count INT64`; `activitystreams_social.likes`-taulu; palautetaan `object_json.likes.totalItems`-kenttänä | Tykkäyslaskuri (näkyvä numero) | ✅ Yhteensopiva |
-| `shares` | Ei erillistä taulua; `object_json.shares.totalItems` JSON:ssa | Jakamislaskuri (näkyvä numero) | ⚠️ Backend ei laske shares-arvoa — kentän lähde tarkistettava |
-| `attributedTo` | `object_json.attributedTo` — kevyt objekti (`type`, `id`, `name`); Ahjo: `policymaker.name`; HRI: organisaatiotaso | `.article-card__meta a` (ryhmän nimi); `data-ap-type="Group"` | ✅ Yhteensopiva (kevyt, ei Actor-endpoint) |
-
-#### Eksplisiittinen rajaus
-
-Tässä projektissa ei toteuteta ActivityPub Actor -objekteja (`Person`, `Group`, `Organization`, `Service`) täysinä Actor-endpointeina. `attributedTo`-kenttä sisältää kevyen viittauksen (`type` + `id` + `name`) ilman erillistä Actor-profiilisivua tai Webfinger-hakua. Samoin audience targeting -kenttiä (`to`, `cc`, `bto`, `bcc`, `audience`) ei käytetä missään API-vastauksessa eikä frontend-templaatissa — kaikki objektit oletetaan julkisiksi. Ensisijainen tavoite on ActivityStreams 2.0 -yhteensopivuus; ActivityPub-laajennukset ovat mahdollisia myöhemmin erillisissä projekteissa ja dokumentoidaan silloin hallittuina divergensseinä STANDARDS.md:hen.
-
-### `data-ap-*` -attribuuttikäytäntö
-
-HTML-templaatissa käytetään `data-ap-*` -attribuutteja kytkemään visuaaliset elementit AS2-tietomalliin ilman nimeämiskonfliktiä BEM-CSS-luokkien kanssa:
+`data-ap-*`-attribuutit sitovat HTML-elementin AS2-tietomalliin ilman JS-riippuvuutta. Ne mahdollistavat semanttisen haravoinnin ja tulevaisuuden ActivityPub-integraation.
 
 ```html
-<!-- AS2 Article -objekti -->
+<!-- AS2 Article -objekti: data-ap-context ankkuroi JSON-LD-kontekstin,
+     data-ap-type kertoo objektityypin, data-ap-id on kanonikaalinen IRI -->
 <article
-  class="article-card"
+  data-ap-context="https://www.w3.org/ns/activitystreams"
   data-ap-type="Article"
   data-ap-id="https://uutisseuranta.fi/articles/energiaremontti-2050"
-  data-ap-context="https://www.w3.org/ns/activitystreams"
->
+  class="news-card">
 
-  <!-- AS2: name -->
-  <div class="article-card__title">Energiaremontti 2050</div>
+  <header class="news-card__header">
+    <span class="news-card__source" data-ap-field="attributedTo">Yle</span>
+    <time class="news-card__time"
+          data-ap-field="published"
+          datetime="2026-07-01T12:00:00Z">tänään 12:00</time>
+  </header>
 
-  <!-- AS2: published — RFC 3339 datetime-attribuutti pakollinen -->
-  <time class="article-card__published" datetime="2025-03-15T09:00:00Z">noin tunti sitten</time>
+  <h2 class="news-card__title">
+    <a href="#" class="news-card__link" data-ap-field="url">Otsikko tähän</a>
+  </h2>
 
-  <!-- AS2: tag[] → Hashtag (epävirallinen Fediverse-laajennus) -->
-  <a class="article-tag" href="/tags/uusiutuva-energia"
-     data-ap-type="Hashtag"
-     data-ap-name="#UusiutuvaEnergia">Uusiutuva energia</a>
+  <p class="news-card__summary" data-ap-field="summary">
+    Tiivistelmä uutisesta. Maksimissaan kaksi kolme virkettä.
+  </p>
 
-  <!-- AS2: replies Collection → Note-objektit -->
-  <section class="article-replies"
-           data-ap-type="Collection"
-           aria-label="Kommentit">
+  <ul class="tag-list" role="list" data-ap-field="tag">
+    <li><a href="#" class="tag">Energia</a></li>
+    <li><a href="#" class="tag">EU</a></li>
+  </ul>
 
-    <!-- AS2: Note -->
-    <article class="comment-card"
-             data-ap-type="Note"
-             data-ap-id="https://uutisseuranta.fi/comments/1"
-             data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050">
-
-      <!-- AS2: Note.published — RFC 3339 datetime-attribuutti pakollinen -->
-      <time class="comment-time" datetime="2025-03-15T10:05:00Z">noin tunti sitten</time>
-    </article>
-
+  <!-- Replies-kokoelma: frontend kokoaa itse (ks. STANDARDS.md Poikkeama) -->
+  <section data-ap-field="replies" data-ap-type="Collection" class="article-replies">
+    <!-- Note[]-kommentit tässä -->
   </section>
+
+  <footer class="news-card__actions">
+    <!-- AS2 Like / Dislike: UI-teksti lokalisoitu, semantiikka erillään -->
+    <button data-ap-type="Like" class="btn btn-ghost">Samaa mieltä</button>
+    <button data-ap-type="Dislike" class="btn btn-ghost">Eri mieltä</button>
+  </footer>
 
 </article>
 ```
 
-### Miksi AS2 Article eikä Note
+---
 
-ActivityStreams 2.0 -spesifikaatiossa `Note` on lyhyt, kontekstiton viesti (twiitti, kommentti). `Article` on nimenomaan kirjoitettu, otsikollinen sisältöobjekti, jolla on `name`-kenttä ja joka on tarkoitettu luettavaksi pidempänä kokonaisuutena. D-CENT:n kansalaisaloitteet, kampanjakirjoitukset ja uutisanalyysit ovat rakenteeltaan artikkeleita, eivät lyhytviestejä — tämä tekee `Article`-tyypistä semanttisesti oikean valinnan.
+## CSS Design Tokens
 
-`Note`-tyyppiä käytetään `replies`-kokoelman sisällä yksittäisille kommenteille, mikä vastaa AS2-spesifikaation suositeltua rakennetta.
+Kaikki visuaaliset arvot määritellään CSS-muuttujina `:root`-tasolla. Komponentit käyttävät ainoastaan näitä muuttujia — ei kovia arvoja.
 
-### Pattern Lab -sijoitus
+### Värit
 
-Templaatti sijoittuu `03-templates`-tasolle, mutta hyödyntää kaikki alla olevat tasot:
+```css
+:root {
+  /* Primääri — D-CENT-vihreä, hallitseva */
+  --color-primary:           #007E84;
+  --color-primary-hover:     #006368;
+  --color-primary-active:    #00484c;
+  --color-primary-highlight: #e0f6f7;
 
-- **Atom:** `.article-tag` (Hashtag-linkki), `.comment-avatar` (Person-avatar)
-- **Molecule:** `.comment-card` (Note-objekti), `.article-card__meta` (aikaleima + ryhmälinkki)
-- **Organism:** `.article-card` (koko Article-objekti kommentteineen)
-- **Template:** `template-article-page` — Article + replies-Collection + like/share-laskurit
+  /* Pinnat */
+  --color-bg:      #f4f3f0;
+  --color-surface: #f9f8f6;
+
+  /* Teksti */
+  --color-text:       #1a1917;
+  --color-text-muted: #706e6b;
+}
+```
+
+Sääntö: D-CENT-primääriväri on aina hallitseva. Aksentteja käytetään vain CTA-elementeissä, ei dekoratiivisesti.
+
+### Typografia
+
+Projekti käyttää järjestelmäfonttipinoa (system font stack) — ei ulkoisia CDN-fontteja. Tämä parantaa suorituskykyä, tietoturvaa ja PWA-offline-yhteensopivuutta.
+
+```css
+:root {
+  --font-body:    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.825rem + 0.25vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem  + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem     + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem   + 1.25vw, 2.25rem);
+}
+```
+
+### Spacing ja Radius
+
+```css
+:root {
+  --space-1: 0.25rem;  /* 4px  */
+  --space-2: 0.5rem;   /* 8px  */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --shadow-md: 0 4px 12px oklch(from var(--color-text) l c h / 0.08);
+
+  --content-wide: 1200px;
+}
+```
 
 ---
 
-## CSS-arkkitehtuuri
+## Komponentit
 
-Tyylit noudattavat BEM-nimeämiskonventiota (Block__Element--Modifier).
+### Napit (Atoms)
 
-### Design tokens (CSS custom properties)
+```css
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+.btn-primary   { background: var(--color-primary); color: #fff; border: none; }
+.btn-secondary { background: transparent; color: var(--color-primary); border: 1px solid var(--color-primary); }
+.btn-ghost     { background: transparent; color: var(--color-text-muted); border: none; }
 
-Kaikki värit, typografia ja spacing on määritelty CSS custom property -tokeneina `index.html`:ssä (`:root`-lohko). Ei hardcodattuja hex-arvoja komponenttityylistä — kaikki viittaavat tokeneihin:
+.btn-primary:hover   { background: var(--color-primary-hover); }
+.btn-secondary:hover { background: oklch(from var(--color-primary) l c h / 0.07); }
+```
 
-**Värit:**
+### Listat ja tagit (Atoms)
 
-| Token | Vaaleatila | Tummotila | Käyttö |
-|-------|-----------|-----------|--------|
-| `--color-primary` | `#007E84` | `#4f98a3` | Pääpainiketaustat, linkit, aksentit |
-| `--color-primary-hover` | `#005f64` | `#227f8b` | Hover-tila — kontrasti valkoiseen ≥ 7:1 (WCAG AA) |
-| `--color-primary-highlight` | `#cedcd8` | `#313b3b` | Badget, taustakorostukset |
-| `--color-bg` | `#f7f6f2` | `#171614` | Sivun tausta |
-| `--color-surface` | `#ffffff` | `#1c1b19` | Kortit, header |
-| `--color-surface-2` | `#f3f0ec` | `#22211f` | Toissijainen pinta, koodiesimerkit |
-| `--color-text` | `#28251d` | `#cdccca` | Leipäteksti |
-| `--color-text-muted` | `#7a7974` | `#797876` | Toissijainen teksti |
-| `--color-border` | `#d4d1ca` | `#393836` | Kehykset |
+```html
+<ul role="list" class="tag-list">
+  <li><a href="#" class="tag">Politiikka</a></li>
+  <li><a href="#" class="tag">Talous</a></li>
+</ul>
+```
 
-**Typografia:**
+```css
+.tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tag {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.12);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+.tag:hover { background: var(--color-primary-highlight); color: var(--color-primary); }
+```
 
-| Token | Arvo | Käyttö |
-|-------|------|--------|
-| `--font-body` | `'Satoshi', 'Helvetica Neue', sans-serif` | Kaikki leipäteksti |
-| `--font-display` | `'Cabinet Grotesk', 'Helvetica Neue', sans-serif` | Otsikot (`--text-xl`+) |
-| `--text-xs` … `--text-2xl` | `clamp()`-funktiot | Fluid typography, ei kiinteitä px-arvoja |
+### Notifikaatiopalkki (Molecule)
 
-**Spacing:** `--space-1` (4 px) … `--space-16` (64 px) — 4 px:n ruudukko.
+```html
+<div class="notification" role="status" aria-live="polite">
+  <span class="notification__icon" aria-hidden="true">●</span>
+  <span class="notification__text">3 uutta uutista aiheesta Energia</span>
+  <button class="notification__dismiss btn-ghost" aria-label="Sulje ilmoitus">✕</button>
+</div>
+```
 
-### Tumma tila (dark mode)
+```css
+.notification {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+/* Poikkeus: border-left sallittu notifikaatiossa semanttisena tilaindikaattorina.
+   Korteissa border-left on kielletty. */
+```
 
-Toteutettu `[data-theme="dark"]`-selektorilla — ei erillistä `@media`-lohkoa, jotta JS-toggle toimii oikein. FOUC estetään blocking-skriptillä `<head>`-tagissa ennen CSS:ää.
+### Hakumolekyyli (Molecule)
 
-### JavaScript (`patterns.js`)
+```html
+<form class="search" role="search">
+  <label for="search-input" class="sr-only">Etsi uutisia</label>
+  <input id="search-input" type="search" class="search__input" placeholder="Etsi...">
+  <button type="submit" class="btn btn-primary search__btn">Hae</button>
+</form>
+```
 
-Vanilla JS — ei jQuery-riippuvuutta. Toiminnallisuudet:
+### Navigaatiopalkki (Organism)
 
-| Funktio | Kuvaus |
-|---------|--------|
-| `initThemeToggle()` | Tumma/vaalea-toggle, tallentaa `localStorage`-preferenssin, päivittää `aria-label` |
-| `initStickyHeader()` | IntersectionObserver-pohjainen sticky header — ei scroll-event-kuuntelijaa |
-| `initNavToggle()` | Mobiilinavigaation hamburger-toggle, `aria-expanded` päivittyy |
-| `initNavHighlight()` | Aktiivinen navigaatiolinkin korostus IntersectionObserverin avulla |
-| `initCommentToggle()` | Kommenttikentän avaus/sulkeminen, `aria-expanded` + `aria-controls` |
-| `initEmbeddedItems()` | Upotettavien kohteiden klikkaukset |
-| `initTabs()` | Välilehtikomponentti: `role="tab"`, nuolinäppäinnavigaatio (ARIA Authoring Practices) |
-| `initNotificationDismiss()` | Ilmoitusten sulkeminen animaatiolla |
+D-CENT Pattern Labin navigaatio-organismi: logo vasemmalla, linkit keskellä/oikealla, kirjautumistila oikeassa reunassa. Firebase Auth -tila päivittää vain `.nav__auth`-elementin — muu navigaatio pysyy staattisena.
+
+```html
+<header class="site-header">
+  <nav class="nav" aria-label="Päänavigaatio">
+    <a href="/" class="nav__logo" aria-label="Uutisseuranta – etusivu">
+      <!-- SVG logo tähän -->
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="#virta" class="nav__link">Virta</a></li>
+      <li><a href="#aiheet" class="nav__link">Aiheet</a></li>
+    </ul>
+    <div class="nav__auth">
+      <!-- Firebase Auth päivittää tämän: anonyymi → kirjautunut -->
+      <button class="btn btn-primary" id="login-btn">Kirjaudu</button>
+    </div>
+  </nav>
+</header>
+```
+
+### Uutiskortti (Organism)
+
+D-CENT:n stream-item-organismi sovitettuna uutisseurantaan. Ei `border-left`-väripalkki, ei ikoneita värillisissä ympyröissä — vain sisältö, lähde, aika ja tagit.
+
+```css
+.news-card {
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: box-shadow 180ms ease;
+}
+.news-card:hover            { box-shadow: var(--shadow-md); }
+.news-card__header          { display: flex; justify-content: space-between; align-items: center; }
+.news-card__source          { font-size: var(--text-xs); font-weight: 600; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; }
+.news-card__time            { font-size: var(--text-xs); color: var(--color-text-muted); }
+.news-card__title           { font-size: var(--text-lg); line-height: 1.3; margin: 0; }
+.news-card__link            { color: var(--color-text); text-decoration: none; }
+.news-card__link:hover      { color: var(--color-primary); }
+.news-card__summary         { font-size: var(--text-base); color: var(--color-text-muted); max-width: 72ch; }
+```
+
+### Kirjautumismodaali (Organism)
+
+Käytä natiivia `<dialog>`-elementtiä. Se hoitaa focus-loukon ja Escape-näppäimen automaattisesti ilman JS-kirjastoja.
+
+```html
+<dialog class="modal" id="login-modal" aria-labelledby="modal-title">
+  <div class="modal__inner">
+    <h2 id="modal-title" class="modal__title">Kirjaudu sisään</h2>
+    <p class="modal__desc">Tallenna seurantasi kirjautumalla Google-tilillä.</p>
+    <button class="btn btn-primary modal__google" id="google-signin-btn">
+      Kirjaudu Google-tilillä
+    </button>
+    <button class="btn-ghost modal__close" aria-label="Sulje" id="modal-close">✕</button>
+  </div>
+</dialog>
+```
+
+```javascript
+// Modaalin ohjaus — natiivi <dialog>, ei kirjastoja
+const modal = document.getElementById('login-modal');
+document.getElementById('login-btn').addEventListener('click', () => modal.showModal());
+document.getElementById('modal-close').addEventListener('click', () => modal.close());
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+```
+
+### Virta-template (Template)
+
+```html
+<main id="virta" class="template-stream">
+  <aside class="sidebar">
+    <!-- Organismi: aihesuodatin -->
+  </aside>
+  <section class="stream" aria-label="Uutisvirta">
+    <!-- Organismi: news-card × N -->
+  </section>
+</main>
+```
+
+```css
+.template-stream {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-8);
+  max-width: var(--content-wide);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4);
+}
+@media (max-width: 768px) {
+  .template-stream { grid-template-columns: 1fr; }
+  .sidebar { display: none; } /* korvautuu bottom-sheet-suodattimella */
+}
+```
 
 ---
 
-## Viitteet
+## Migraatiosuunnitelma
 
-- Alkuperäinen repo: [d-cent/patterns](https://github.com/d-cent/patterns)
-- Pattern Lab: [http://d-cent.github.io/patterns/](http://d-cent.github.io/patterns/)
-- Atomic Design -metodologia: [http://atomicdesign.bradfrost.com/](http://atomicdesign.bradfrost.com/)
-- WCAG 2.1: [https://www.w3.org/TR/WCAG21/](https://www.w3.org/TR/WCAG21/)
-- ActivityStreams 2.0: [https://www.w3.org/TR/activitystreams-core/](https://www.w3.org/TR/activitystreams-core/)
-- ActivityStreams 2.0 Vocabulary: [https://www.w3.org/TR/activitystreams-vocabulary/](https://www.w3.org/TR/activitystreams-vocabulary/)
-- ActivityPub: [https://www.w3.org/TR/activitypub/](https://www.w3.org/TR/activitypub/)
-- Fediverse Enhancement Proposals (FEP): [https://codeberg.org/fediverse/fep](https://codeberg.org/fediverse/fep)
+Nykyisen `index.html`:n korvaaminen patterneilla tapahtuu inkrementaalisesti. Jokainen vaihe on oma PR.
+
+| Vaihe | Kuvaus | Tiedostot |
+|-------|--------|-----------|
+| 1 | Atomit: CSS design tokens ja utility-luokat `style.css`:ään | `style.css` |
+| 2 | Molekyylit: notifikaatio, haku, tagit `style.css`:ään | `style.css` |
+| 3 | Navorganismi: header + Firebase Auth -tila | `index.html`, `patterns.js` |
+| 4 | Uutiskortti-organismi: korvaa nykyinen uutisvirta | `index.html`, `style.css` |
+| 5 | Kirjautumismodaali: korvaa nykyinen modaali `<dialog>`-elementillä | `index.html`, `patterns.js` |
+| 6 | Virta-template: sidebar + grid-layout | `index.html`, `style.css` |
+
+Jokainen vaihe on itsenäisesti testattavissa smoke-testillä ennen mergeä.
+
+---
+
+## Arkkitehtuuripoikkeamat
+
+Pattern-integraatio ei muuta perusperiaatteita:
+
+- **Kaikki tiedostot juuressa** — ei `components/`-, `patterns/`- tai `src/`-alikansioita
+- **Ei build-steppiä** — komponentit kirjoitetaan suoraan `index.html`:ään ja `style.css`:ään
+- **Ei CDN-riippuvuuksia** — D-CENT Pattern Lab toimii inspiraationa ja rakennemallina, ei asennettavana pakettina
+- **`<dialog>`-elementti on standardi HTML5** — ei vaadi JS-kirjastoa
+
+Normatiiviset standardit ja laajemmat poikkeamat: **[STANDARDS.md](./STANDARDS.md)**.
