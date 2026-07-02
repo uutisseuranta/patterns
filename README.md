@@ -45,6 +45,55 @@ Ohjeet ja toiminnallisuudet osoittavat selkeästi ja konkreettisesti, mitkä ova
 ### Simple
 Toiminnallisuuksia suunniteltaessa rakennetaan ensin yksinkertaisin toiminnallisuus, jolla luodaan ja validoidaan toiminnallisuuden tai user storyn tuottama ydinetu. Lisätoiminnallisuuksia lisätään vain mittareiden tai käyttäjäkokemuksen konkreettisten havaintojen perusteella.
 
+### AS2-yhteensopivuus
+
+UI-komponenttien HTML-rakenne ja data-attribuutit ovat ensisijaisesti yhteensopivia [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/) -tietomallin kanssa. Tämä tarkoittaa:
+
+- Jokaisella sisältöobjektilla (`Article`, `Note`) on `data-ap-id`-attribuutti absoluuttisella IRI:llä
+- `data-ap-context` ankkuroi objektin AS2-sanastoon (`https://www.w3.org/ns/activitystreams`)
+- Aikaleima-elementeillä on aina RFC 3339 -muotoinen `datetime`-attribuutti
+- `data-ap-type` kertoo konkreettisen AS2-objektityypin
+
+Tietoiset poikkeamat AS2- ja ActivityPub-standardeista on dokumentoitu alla omassa osiossaan. Poikkeamat ovat hallittuja: ne voidaan myöhemmin viedä upstreamiin yhteisölle tai ylläpitää projektikohtaisina laajennuksina.
+
+---
+
+## AS2-poikkeamat — hallitut divergenssit
+
+Nämä ovat tietoisia suunnittelupäätöksiä, jotka poikkeavat AS2/ActivityPub-standardista. Jokainen poikkeama on dokumentoitu syineen. Ne eivät ole bugeja.
+
+### 1. Ei Actor-profiileja tässä repossa
+
+**Poikkeama:** ActivityPub edellyttää, että jokaisella osallistujalla (`attributedTo`) on dereferointikelpoinen `Actor`-objekti omalla URL:llaan (`inbox`, `outbox`, `publicKey`). Tämä frontend-repo ei toteuta Actor-endpointteja.
+
+**Syy:** Actor-arkkitehtuuri kuuluu backend-repoon. Frontend mallintaa käyttäjän nimen ja avatarin ilman täyttä Actor-rakennetta.
+
+**Linjaus:** Backend-repo vastaa Actor-yhteensopivuudesta. Stack-alignment tarkistetaan tiketissä #35.
+
+### 2. Ei audience targeting (`to` / `cc`)
+
+**Poikkeama:** AS2/ActivityPub käyttää `to`- ja `cc`-kenttiä kohdentamaan sisällön tietyille Actoreille tai yleisölle (esim. `as:Public`). Tämä repo ei toteuta kohdentamista.
+
+**Syy:** Uutisseurannan sisältö on julkista eikä tarvitse yksilökohtaista kohdentamista tässä vaiheessa. Julkisuus oletetaan oletusarvoisesti.
+
+**Linjaus:** Jos yksityinen viestintä tai ryhmärajoitukset tulevat tarpeellisiksi, lisätään `to: ["https://www.w3.org/ns/activitystreams#Public"]` -kenttä.
+
+### 3. `tag-agree` / `tag-disagree` ovat D-CENT-spesifistä demokratiasemantikkaa
+
+**Poikkeama:** AS2-sanastossa ei ole `Agree`- tai `Disagree`-tyyppejä. Fediverse käyttää `Like`/`Dislike`-aktiviteetteja tai `EmojiReact`-laajennusta.
+
+**Syy:** D-CENT:n kansalaisosallistumismalli tarvitsee eksplisiittisen kannanotto-semantiikan joka ylittää tykkäämisen.
+
+**Linjaus:** Toteutetaan projektikohtaisena `@context`-laajennuksena: `{"type": "dcentAgree", "@id": "https://uutisseuranta.fi/ns#Agree"}`. Voidaan ehdottaa upstreamiin FEP-prosessiin (Fediverse Enhancement Proposal).
+
+### 4. `notification`-komponentti ei kartoidu AS2 Activity -tyyppeihin
+
+**Poikkeama:** AS2-toimintamallissa ilmoitukset ovat semanttisesti tarkkoja `Activity`-objekteja (`Create`, `Like`, `Announce`, `Follow`). Nykyinen `.notif-main` / `.notif-special` / `.notif-neutral` on visuaalinen jaottelu, ei AS2-tyyppijako.
+
+**Syy:** Komponentti on tällä hetkellä UI-tason palaute, ei federoidun verkon Activity.
+
+**Linjaus:** Kun `inbox`-virta toteutetaan, `notification`-komponenttiin lisätään `data-ap-type="Create"` / `"Like"` / `"Announce"` -attribuutit ja visuaalinen jaottelu päivitetään vastaamaan.
+
 ---
 
 ## Pattern Lab -objektihierarkia
@@ -181,20 +230,82 @@ ActivityStreams 2.0 `Article`-objekti on tietomalliltaan blogipostauksen tai uut
 
 ### Kenttäkartta — AS2 → UI-komponentti
 
-| AS2-kenttä | Tyyppi | UI-vastine (`index.html`) |
-|---|---|---|
-| `name` | `string` | `.article-card__title` |
-| `summary` | `string` | `.article-card__text` (lyhyt) |
-| `content` | `HTML string` | `.article-card__text` (täysi) |
-| `attributedTo.name` | `string` | `.article-card__meta a` (ryhmän nimi) |
-| `published` | `xsd:dateTime` | `.article-card__meta` aikaleima |
-| `updated` | `xsd:dateTime` | `.comment-time` (viimeksi muokattu) |
-| `tag[].name` | `Hashtag[]` | `.article-tag` |
-| `replies.totalItems` | `integer` | kommenttilaskuri |
-| `replies.items[]` | `Note[]` | `.comment-card` (yksi per Note) |
-| `replies.items[].attributedTo.name` | `string` | `.comment-author` + `.comment-avatar` (nimikirjaimet) |
-| `likes.totalItems` | `integer` | tykkäyslaskuri |
-| `shares.totalItems` | `integer` | jakamislaskuri |
+| AS2-kenttä | Tyyppi | UI-vastine (`index.html`) | `data-ap-*` |
+|---|---|---|---|
+| `@context` | IRI | `data-ap-context` juurielementissä | `data-ap-context` |
+| `id` | IRI | `data-ap-id` | `data-ap-id` |
+| `type` | string | `data-ap-type` | `data-ap-type` |
+| `name` | string | `.article-card__title` | — |
+| `summary` | string | `.article-card__text` (lyhyt) | — |
+| `content` | HTML string | `.article-card__text` (täysi) | — |
+| `attributedTo.name` | string | `.article-card__meta a` (ryhmän nimi) | `data-ap-type="Group"` |
+| `published` | xsd:dateTime | `<time datetime="...">` | RFC 3339 pakollinen |
+| `updated` | xsd:dateTime | `.comment-time` (viimeksi muokattu) | RFC 3339 pakollinen |
+| `tag[].name` | Hashtag[] | `.article-tag` | `data-ap-type="Hashtag"` |
+| `replies.totalItems` | integer | kommenttilaskuri | — |
+| `replies.items[]` | Note[] | `.comment-card` (yksi per Note) | `data-ap-type="Note"` |
+| `replies.items[].attributedTo.name` | string | `.comment-author` + `.comment-avatar` | — |
+| `likes.totalItems` | integer | tykkäyslaskuri | — |
+| `shares.totalItems` | integer | jakamislaskuri | — |
+
+### `data-ap-*` -attribuuttikäytäntö
+
+HTML-templaatissa käytetään `data-ap-*` -attribuutteja kytkemään visuaaliset elementit AS2-tietomalliin ilman nimeämiskonfliktiä BEM-CSS-luokkien kanssa:
+
+```html
+<!-- AS2 Article -objekti -->
+<article
+  class="article-card"
+  data-ap-type="Article"
+  data-ap-id="https://uutisseuranta.fi/articles/energiaremontti-2050"
+  data-ap-context="https://www.w3.org/ns/activitystreams"
+>
+
+  <!-- AS2: name -->
+  <div class="article-card__title">Energiaremontti 2050</div>
+
+  <!-- AS2: published — RFC 3339 datetime-attribuutti pakollinen -->
+  <time class="article-card__published" datetime="2025-03-15T09:00:00Z">noin tunti sitten</time>
+
+  <!-- AS2: tag[] → Hashtag (epävirallinen Fediverse-laajennus) -->
+  <a class="article-tag" href="/tags/uusiutuva-energia"
+     data-ap-type="Hashtag"
+     data-ap-name="#UusiutuvaEnergia">Uusiutuva energia</a>
+
+  <!-- AS2: replies Collection → Note-objektit -->
+  <section class="article-replies"
+           data-ap-type="Collection"
+           aria-label="Kommentit">
+
+    <!-- AS2: Note -->
+    <article class="comment-card"
+             data-ap-type="Note"
+             data-ap-id="https://uutisseuranta.fi/comments/1"
+             data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050">
+
+      <!-- AS2: Note.published — RFC 3339 datetime-attribuutti pakollinen -->
+      <time class="comment-time" datetime="2025-03-15T10:05:00Z">noin tunti sitten</time>
+    </article>
+
+  </section>
+
+</article>
+
+<!--
+  TIETOINEN POIKKEAMA — ei Actor-endpointteja tässä repossa
+  AS2/ActivityPub edellyttää, että attributedTo-linkit osoittavat
+  dereferointikelpoisen Actor-objektin (inbox, outbox, publicKey).
+  Frontend käyttää nimeä + avataria ilman täyttä Actor-rakennetta.
+  Actor-arkkitehtuuri toteutetaan backend-repossa.
+  Linjaus: tiketti #35.
+-->
+
+<!--
+  TIETOINEN POIKKEAMA — ei audience targeting (to / cc)
+  AS2 tukee to/cc-kohdentamista. Tässä projektissa kaikki sisältö
+  on oletusarvoisesti julkista. Kohdentaminen lisätään tarvittaessa.
+-->
+```
 
 ### Miksi AS2 Article eikä Note
 
@@ -274,3 +385,5 @@ Vanilla JS — ei jQuery-riippuvuutta. Toiminnallisuudet:
 - WCAG 2.1: [https://www.w3.org/TR/WCAG21/](https://www.w3.org/TR/WCAG21/)
 - ActivityStreams 2.0: [https://www.w3.org/TR/activitystreams-core/](https://www.w3.org/TR/activitystreams-core/)
 - ActivityStreams 2.0 Vocabulary: [https://www.w3.org/TR/activitystreams-vocabulary/](https://www.w3.org/TR/activitystreams-vocabulary/)
+- ActivityPub: [https://www.w3.org/TR/activitypub/](https://www.w3.org/TR/activitypub/)
+- Fediverse Enhancement Proposals (FEP): [https://codeberg.org/fediverse/fep](https://codeberg.org/fediverse/fep)
