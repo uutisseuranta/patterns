@@ -1,7 +1,7 @@
 /**
  * Uutisseuranta UI Patterns — patterns.js
- * Perustuu d-cent/patterns kalles-styles.mustache JS-logiikkaan.
- * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota (vanilla JS, ei jQuery-riippuvuutta).
+ * Käyttöliittymälogiikka Uutisseuranta-kuviointikirjastolle (vanilla JS, ei jQuery-riippuvuutta).
+ * Tekninen rakenne vastaa uutisseuranta.github.io-konventiota.
  *
  * Issues implemented:
  *  #2  dark mode localStorage persistence + FOUC fix

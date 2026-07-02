@@ -2,7 +2,7 @@
 
 Tämä dokumentti sisältää kaksi osiota:
 
-1. **Uutisseuranta-käyttäjäpolut** — Uutisseuranta D4.3 -spesifikaation pilottikohtaiset polut
+1. **Uutisseuranta-käyttäjäpolut** — pilottikohtaiset käyttötapaukset
 2. **Uutisseuranta-sovelluksen käyttäjäpolut (UP-1–UP-15)** — uutisseuranta.net-sovelluksen toteutetut ja suunnitellut polut
 
 ---
@@ -69,7 +69,7 @@ Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
 
 ### 4. Suomi — Open Ministry / Kansalaisaloitekampanja
 
-**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
+**Konteksti:** Aktivisti koordinoi kansalaisaloitekampanjaa, joka tarvitsee 50 000 tukijaa päästäkseen parlamenttikäsittelyyn.
 
 #### Polku
 
@@ -97,7 +97,7 @@ Tarkennus: [patterns/STANDARDS.md](./STANDARDS.md) — normatiiviset vaatimukset
 
 ### 6. Espanja — Podemos I+D+i
 
-**Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa D-CENT-alustaa kollektiiviseen päätöksentekoon.
+**Konteksti:** Podemos-puolueen tutkimus- ja innovaatiopiiri testaa alustaa kollektiiviseen päätöksentekoon.
 
 #### Polku
 
@@ -321,8 +321,8 @@ Käyttäjä klikkaa tagiä uutiskortissa
 Kirjautunut käyttäjä avaa asetukset
   └─ Asetuspaneeli aukeaa
        ├─ Seuratut tagit – poistettavissa
-       ├─ Teemavalinta (vaalea/tummä/järjestelmä)
-       └─ "Tyhjennekäikki asetukset"
+       ├─ Teemavalinta (vaalea/tumma/järjestelmä)
+       └─ "Tyhjennä kaikki asetukset"
 ```
 
 **Tekniset valinnat:** `localStorage.setItem('prefs_' + uid, JSON.stringify({tags, theme}))`.
@@ -384,7 +384,7 @@ Hakuikoni → hakukenttä laajenee
 
 ---
 
-### UP-15 · Kirjautuminen ja anonyymiyS (suunnitteluperiaatteet)
+### UP-15 · Kirjautuminen ja anonyymiys (suunnitteluperiaatteet)
 
 Kirjautuminen on valinnaista eikä toimi porttina sisällölle.
 

@@ -85,7 +85,7 @@ Kaikki värit on määritelty CSS custom property -tokeneina `:root`-lohkossa (`
 
 ## 3. Uutisseuranta-spesifiset poikkeamat
 
-Nämä ovat tietoisia visuaalisia valintoja, jotka poikkeavat tai laajentavat yleistä komponenttimallia Uutisseuranta-kontekstiin.
+Nämä ovat tietoisia visuaalisia valintoja, jotka poikkeavat tai laajentavat yleistä komponenttimallia Uutisseuranta-kontekstissa.
 
 ### `tag-agree` / `tag-disagree` -semantiikka
 
@@ -112,7 +112,7 @@ Magenta ei ole yleinen aksenttiväri — käyttö rajattu yllä mainittuihin tap
 |---|-----------|-----------|--------------------------------|
 | D-1 | `tag-agree`/`tag-disagree` -värit | Uutisseuranta-argumentointisemantiikka vaatii selkeän visuaalisen erottelun | `.article-tag` yleinen tyyli |
 | D-2 | Magenta ilmoitusbadgessa | Korkea näkyvyys kriittisissä toimintakehotuksissa | `--color-primary` normaalitilanteessa |
-| D-3 | Kommenttitasot max 2 | Kognitiivisen kuorman rajoittaminen; D4.3-spesifikaatio | Rajaton hierarkia |
+| D-3 | Kommenttitasot max 2 | Kognitiivisen kuorman rajoittaminen | Rajaton hierarkia |
 
 ---
 
