@@ -303,9 +303,27 @@
           <!-- TAGS -->
           <div class="component-card">
             <p class="component-card__label">Tagit</p>
+            <!--
+              AS2-semantiikka: tag-agree ja tag-disagree käyttävät AS2-standardin
+              Like- ja Dislike-aktiviteettityyppejä (data-ap-type).
+              Käyttöliittymässä näytetään lokalisoitu teksti "Samaa mieltä" / "Eri mieltä".
+
+              Mappaus:
+                data-ap-type="Like"    → näyttönimi "Samaa mieltä" (Agree)
+                data-ap-type="Dislike" → näyttönimi "Eri mieltä"   (Disagree)
+
+              Hallittu poikkeama: vanha D-CENT tag-agree / tag-disagree -semantiikka
+              on korvattu AS2-yhteensopivilla Like/Dislike-tyypeillä. Ks. STANDARDS.md § Poikkeama 3.
+            -->
             <div class="btn-row">
-              <a href="#" class="tag tag-agree">Samaa mieltä</a>
-              <a href="#" class="tag tag-disagree">Eri mieltä</a>
+              <a href="#"
+                 class="tag tag-agree"
+                 data-ap-type="Like"
+                 aria-label="Samaa mieltä">Samaa mieltä</a>
+              <a href="#"
+                 class="tag tag-disagree"
+                 data-ap-type="Dislike"
+                 aria-label="Eri mieltä">Eri mieltä</a>
               <a href="#" class="tag tag-neutral">Lorem ipsum</a>
             </div>
           </div>
@@ -495,7 +513,7 @@
     </div>
   </footer>
 
-  <!-- patterns.js handles all interactive logic (Issue #8, #34, #37) -->
+  <!-- patterns.js handles all interactive logic (Issue #8, #34, #37) -->\
   <script src="patterns.js" defer></script>
 
 </body>
