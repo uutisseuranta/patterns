@@ -9,7 +9,7 @@ Tämä dokumentti määrittää `patterns`-repositorion tekniset linjaukset, kom
 Kuviointikirjasto toteuttaa **Atomic Design** -hierarkian mukaisen rakenteen:
 
 - **Atomit (Atoms):** Perustyylit, värit, fontit, painikkeet (`style.css`).
-- **Molekyylit ja Organismit (Molecules & Organisms):** Komponenttikokonaisuudet (kuten kommenttikortti, välilehtipalkki ja navigointi).
+- **Molekyylit ja Organismit (Molecules & Organisms):** Komponenttikokonaisuudet (kuten kommenttikortti, välilehtipalki ja navigointi).
 - **Esikatselusivu (`index.html`):** Monoliittinen sivu, joka kokoaa kaikki komponentit yhteen helppoa katselmointia ja saavutettavuusauditointia varten.
 
 ---
@@ -32,9 +32,10 @@ Kaikki kuviointikirjaston muutokset ja julkaisut viedään läpi täysin automat
 
 ## 3. Muutoshistoria
 
-| Päivämäärä | Päätös | Perustelu | Vaihtoehto jota harkittiin | Revisit-kriteeri | Reviewaajat | Issue |
-|---|---|---|---|---|---|---|
-| 2026-07-02 | AS2-first, ei täyttä ActivityPub | ActivityPub vaatii Actor-endpointit ja federaation; AS2 riittää | Täysi ActivityPub | Jos tarvitaan federoitu verkosto | @jaakkokorhonen | #38 |
-| 2026-07-02 | Ei audience targeting -kenttiä | Kaikki objektit julkisia; kentät lisäisivät monimutkaisuutta ilman hyötyä | to/cc/bcc-kentät | Jos tarvitaan kohdennettua jakelua | @jaakkokorhonen | #38 |
-| 2026-07-02 | SCREAMING_SNAKE_CASE sopimusdokumenteille | Yhtenäinen nimeäminen kaikkien repojen välillä; erottaa sopimukset ops-tiedostoista | kebab-case kaikille | — | @jaakkokorhonen | #45 |
-| 2026-07-02 | Release-prosessiin perustuva automaatio | Kaikki muutokset menevät automatisoidun putken läpi; ops ei tee manuaalisia muutoksia | Manuaalinen ylläpito | — | @jaakkokorhonen | #45 |
+| Päivämäärä | Päätös | Perustelu | Vaihtoehto jota harkittiin | Revisit-kriteeri | Issue |
+|---|---|---|---|---|---|
+| 2026-07-02 | AS2-first, ei täyttä ActivityPub | ActivityPub vaatii Actor-endpointit ja federaation; AS2 riittää | Täysi ActivityPub | Jos tarvitaan federoitu verkosto | [#40](https://github.com/uutisseuranta/patterns/issues/40) |
+| 2026-07-02 | Ei audience targeting -kenttiä | Kaikki objektit julkisia; kentät lisäisivät monimutkaisuutta ilman hyötyä | to/cc/bcc-kentät | Jos tarvitaan kohdennettua jakelua | [#41](https://github.com/uutisseuranta/patterns/issues/41) |
+| 2026-07-02 | SCREAMING_SNAKE_CASE sopimusdokumenteille | Yhtenäinen nimeäminen kaikkien repojen välillä; erottaa sopimukset ops-tiedostoista | kebab-case kaikille | — | [#46](https://github.com/uutisseuranta/patterns/issues/46) |
+| 2026-07-02 | Cross-repo -linkit absoluuttisina GitHub-URL:eina | Relatiiviset polut eivät toimi GitHubissa cross-repo | Relatiiviset polut | — | [#46](https://github.com/uutisseuranta/patterns/issues/46) |
+| 2026-07-02 | Release-prosessiin perustuva automaatio | Kaikki muutokset medevät automatisoidun putken läpi; ops ei tee manuaalisia muutoksia | Manuaalinen ylläpito | — | [#46](https://github.com/uutisseuranta/patterns/issues/46) |
