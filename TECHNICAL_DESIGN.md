@@ -178,14 +178,14 @@ Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 
 | # | Tiketti | Kuvaus |
 |---|---|---|
-| 2 | [#24](https://github.com/uutisseuranta/patterns/issues/24) | Vaihe 2 — Molecules + Organisms: lisää komponentit index.html-visualisointiin |
-| 3 | [#40](https://github.com/uutisseuranta/patterns/issues/40) | feat: lisää AS2 @context ja id semanttiset data-attribuutit artikkelikortille |
+| 2 | [#24](https://github.com/uutisseuranta/patterns/issues/24) | Vaihe 2 — Molecules + Organisms: lisätään visualisoinnit `index.html`-tiedoston alaosaan erilliseksi komponenttikirjasto-osioksi demosivun alapuolelle, jotta sovelluksen varsinainen demo-leiska pysyy siistinä ja erillään. |
+| 3 | [#40](https://github.com/uutisseuranta/patterns/issues/40) | feat: lisää AS2 `@context` ja `id` semanttiset `data-as2-id` -attribuutit artikkelikortille (JavaScript lukee `dataset.as2Id` käyttäjäinteraktioihin, yhteensopiva `uutisseuranta.github.io`-repon kanssa) |
 
 #### Teema 3: Laadunvalvonta, testaus ja vakauttaminen (QA & Refactoring)
 
 | # | Tiketti | Kuvaus |
 |---|---|---|
-| 7 | [#55](https://github.com/uutisseuranta/patterns/issues/55) | chore: ota käyttöön W3C Markup Validator- ja Stylelint-työkalut laadunvalvontaan |
-| 8 | [#56](https://github.com/uutisseuranta/patterns/issues/56) | style.css rakenteellistaminen: jaottelu osioihin ja ylläpidettävyyden parantaminen |
+| 7 | [#55](https://github.com/uutisseuranta/patterns/issues/55) | chore: ota W3C Markup Validator ja Stylelint käyttöön GitHub Actions CI-putkessa PR-tarkistuksena (virheet katkaisevat PR-mergen automaattisesti) |
+| 8 | [#56](https://github.com/uutisseuranta/patterns/issues/56) | style.css rakenteellistaminen: jaottelu osioihin kommenteilla (`/* --- Reset & Variables --- */` → `/* --- Atoms --- */` → `/* --- Molecules --- */` → `/* --- Organisms --- */` → `/* --- Templates --- */` → `/* --- Utilities --- */`) |
 
 Koko Iteraatio 3 scope (kaikki kolme repoa): ks. [uutisseuranta.github.io PR #32](https://github.com/uutisseuranta/uutisseuranta.github.io/pull/32)
