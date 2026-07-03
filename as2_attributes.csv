@@ -1,0 +1,20 @@
+attribuutti_tai_kentta,tyyppi,lahdetiedosto,kayttotarkoitus,esimerkki_arvo,AS2_kentta,huomio
+data-theme,HTML data-attribuutti,index.html + patterns.js,Teeman tila dokumentin juuressa (dark/light),dark,,Ei AS2-data — UI-tila. Pysyy data-*-muodossa.
+data-toggle,HTML data-attribuutti,index.html + patterns.js,Tunnistaa kommentin avaus/sulkemis-napin,comment-field,,Ei AS2-data — UI-käyttäytyminen.
+data-target,HTML data-attribuutti,index.html + patterns.js,Viittaa kommentikentän CSS-selectoriin,#comment-field-1,,Ei AS2-data — UI-käyttäytyminen.
+data-tabs,HTML data-attribuutti,index.html + patterns.js,Merkitsee välilehtikontainerin,(tyhjä),,Ei AS2-data — UI-rakenne.
+data-dismiss,HTML data-attribuutti,index.html + patterns.js,Tunnistaa ilmoituksen sulkemisnapin,notification,,Ei AS2-data — UI-käyttäytyminen.
+data-tooltip-trigger,HTML data-attribuutti,index.html + patterns.js,Merkitsee tooltip-triggerin,(tyhjä / boolean),,Ei AS2-data — saavutettavuus/UI.
+data-tooltip,HTML data-attribuutti,index.html + patterns.js,Merkitsee tooltip-elementin itsensä,(tyhjä / boolean),,Ei AS2-data — saavutettavuus/UI.
+data-ap-id,HTML data-attribuutti,index.html,AS2 Object id — artikkelin tai aktiviteetin IRI,https://uutisseuranta.fi/articles/123,id,KORVATTAVA: käytä JSON-LD-blokkia
+data-ap-type,HTML data-attribuutti,index.html,AS2 Object type — objektin tai aktiviteetin tyyppi,Article / Like / Dislike,type,KORVATTAVA: käytä JSON-LD-blokkia
+data-ap-context,HTML data-attribuutti,index.html,AS2 @context — nimiavaruus,https://www.w3.org/ns/activitystreams,@context,KORVATTAVA: käytä JSON-LD-blokkia
+@context,JSON-LD kenttä,mock-article-wayback-machine.json,AS2 nimiavaruus,https://www.w3.org/ns/activitystreams,@context,Oikein — AS2 standardi
+id,JSON-LD kenttä,mock-article-wayback-machine.json,Objektin yksilöivä absoluuttinen IRI,https://uutisseuranta.fi/articles/wayback-machine,id,Oikein — AS2 standardi
+type,JSON-LD kenttä,mock-article-wayback-machine.json,Objektin AS2-tyyppi,Article,type,Oikein — AS2 standardi
+name,JSON-LD kenttä,mock-article-wayback-machine.json,Otsikko / nimi,Wayback Machine arkistoi...,name,Oikein — AS2 standardi
+summary,JSON-LD kenttä,mock-article-wayback-machine.json,Lyhyt tiivistelmä,Internet Archive laajentaa...,summary,Oikein — AS2 standardi
+content,JSON-LD kenttä,mock-article-wayback-machine.json,Sisältö HTML-muodossa,<p>Internet Archive ilmoitti...</p>,content,Oikein — AS2 standardi
+published,JSON-LD kenttä,mock-article-wayback-machine.json,Julkaisuaika ISO 8601 / xsd:dateTime,2026-07-02T14:00:00Z,published,Oikein — AS2 standardi
+tag,JSON-LD kenttä,mock-article-wayback-machine.json,Hashtag-kokoelma,"[{ type: Hashtag, name: #internet-archive }]",tag,Oikein — AS2 standardi
+replies,JSON-LD kenttä,mock-article-wayback-machine.json,AS2 Collection — vastauskommentit,"{type: Collection, totalItems: 0}",replies,Oikein — AS2 standardi
