@@ -130,6 +130,21 @@ Kuviointikirjaston kehityksessä noudatetaan ensisijaisuusperiaatetta riippuvuuk
 1. **Ensisijaisesti:** Avoimet standardit (kuten ActivityStreams 2.0, WCAG 2.1 AA, standardit web-rajapinnat).
 2. **Toissijaisesti:** Standardoidut, de facto standardoidut tai puhtaat "vanilla"-teknologiat (kuten Vanilla JS, Vanilla CSS).
 
+### Activity Streams 2.0 standardinmukaisuus
+Kaikessa tietomallinnuksessa ja rajapintatiedonsiirrossa käytetään W3C:n määrittelemiä Activity Streams 2.0 -kenttiä ja schemaa.
+- Kanoninen spesifikaatio: [W3C Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/) ja [Vocabulary](https://www.w3.org/TR/activitystreams-vocabulary/)
+- Kaikki JSON-LD `@context`-tunnisteet ja objektien ominaisuudet noudattavat suoraan standardissa sovittuja nimiä ja tyyppejä (kuten `Article` uutisille ja `Like`/`Dislike` reaktioille).
+- Koodissa käytetään aina standardinmukaista Activity Streams 2.0 -nimitystä rajapintakommunikaatiossa (esim. `Like`/`Dislike`), vaikka käyttöliittymän näyttöniminä (displayname) käytetään `Samaa mieltä` / `Eri mieltä` (tai `Agree`/`Disagree`).
+
+### Avoimen datan agnostisuusperiaate
+
+Kun käsitellään avointa dataa (kuten RSS-syötteitä tai ulkoisia datasettejä), noudatetaan datan suhteen agnostista periaatetta.
+- Datan laatua, puutteita tai virheitä ei yritetä korjata tai hylätä ingestion (fetch) -vaiheessa, vaan sisäänluku pidetään mahdollisimman sallivana.
+- Mahdolliset datan laatuongelmat, suodatukset ja korjaukset suoritetaan prosessin lopussa — joko lukupäässä (API) tai erillisellä rikastus-jobilla.
+
+---
+
+
 ### Luonnos-Pull Requestit (Draft PR) ja kysymykset kontekstissa
 Monimutkaiset tai laajat komponenttilisäykset voidaan aloittaa avaamalla luonnos-Pull Request (Draft PR).
 - PR voi aluksi olla tyhjä esikatselurunko, johon kirjataan suunnitteluvaihtoehdot.
@@ -165,3 +180,25 @@ Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 | 2026-07-03 | Tuotanto-URL vahvistettu kanoniseksi (patterns.uutisseuranta.fi) | Poistaa epäselvyyden kahdesta vaihtoehtoisesta URL:sta | uutisseuranta.github.io/patterns | Jos domain muuttuu | — |
 | 2026-07-03 | style.css rakenteellistaminen lisätty backlogiin | Tiedosto kasvaa iteraatioittain; osiokommenttijako parantaa ylläpidettävyyttä | Ei toimenpidettä | — | [#56](https://github.com/uutisseuranta/patterns/issues/56) |
 | 2026-07-03 | Yhtenäinen SemVer-versionumerointi (`vX.Y.Z`) | Yhtenäiset julkaisukäytännöt kaikkien repositorioiden välillä | Ei tagitusta / repo-kohtainen versionumerointi | — | — |
+
+---
+
+## Iteraatiot
+
+### Iteraatio 3 — Scope
+
+#### Teema 1: Rajapintaintegraatio ja dynaaminen uutisvirta (Core MVP)
+
+| # | Tiketti | Kuvaus |
+|---|---|---|
+| 2 | [#24](https://github.com/uutisseuranta/patterns/issues/24) | Vaihe 2 — Molecules + Organisms: lisätään visualisoinnit `index.html`-tiedoston alaosaan erilliseksi komponenttikirjasto-osioksi demosivun alapuolelle, jotta sovelluksen varsinainen demo-leiska pysyy siistinä ja erillään. |
+| 3 | [#40](https://github.com/uutisseuranta/patterns/issues/40) | feat: lisää AS2 `@context` ja `id` semanttiset `data-as2-id` -attribuutit artikkelikortille (JavaScript lukee `dataset.as2Id` käyttäjäinteraktioihin, yhteensopiva `uutisseuranta.github.io`-repon kanssa) |
+
+#### Teema 3: Laadunvalvonta, testaus ja vakauttaminen (QA & Refactoring)
+
+| # | Tiketti | Kuvaus |
+|---|---|---|
+| 7 | [#55](https://github.com/uutisseuranta/patterns/issues/55) | chore: ota W3C Markup Validator ja Stylelint käyttöön GitHub Actions CI-putkessa PR-tarkistuksena (virheet katkaisevat PR-mergen automaattisesti) |
+| 8 | [#56](https://github.com/uutisseuranta/patterns/issues/56) | style.css rakenteellistaminen: jaottelu osioihin kommenteilla (`/* --- Reset & Variables --- */` → `/* --- Atoms --- */` → `/* --- Molecules --- */` → `/* --- Organisms --- */` → `/* --- Templates --- */` → `/* --- Utilities --- */`) |
+
+Koko Iteraatio 3 scope (kaikki kolme repoa): ks. [uutisseuranta.github.io PR #32](https://github.com/uutisseuranta/uutisseuranta.github.io/pull/32)
