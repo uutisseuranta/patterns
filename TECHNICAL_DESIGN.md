@@ -130,6 +130,14 @@ Kuviointikirjaston kehityksessä noudatetaan ensisijaisuusperiaatetta riippuvuuk
 1. **Ensisijaisesti:** Avoimet standardit (kuten ActivityStreams 2.0, WCAG 2.1 AA, standardit web-rajapinnat).
 2. **Toissijaisesti:** Standardoidut, de facto standardoidut tai puhtaat "vanilla"-teknologiat (kuten Vanilla JS, Vanilla CSS).
 
+### Activity Streams 2.0 standardinmukaisuus
+Kaikessa tietomallinnuksessa ja rajapintatiedonsiirrossa käytetään W3C:n määrittelemiä Activity Streams 2.0 -kenttiä ja schemaa.
+- Kanoninen spesifikaatio: [W3C Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/) ja [Vocabulary](https://www.w3.org/TR/activitystreams-vocabulary/)
+- Kaikki JSON-LD `@context`-tunnisteet ja objektien ominaisuudet noudattavat suoraan standardissa sovittuja nimiä ja tyyppejä (kuten `Article` uutisille ja `Like`/`Dislike` reaktioille).
+- Koodissa käytetään aina standardinmukaista Activity Streams 2.0 -nimitystä rajapintakommunikaatiossa (esim. `Like`/`Dislike`), vaikka käyttöliittymän näyttöniminä (displayname) käytetään `Samaa mieltä` / `Eri mieltä` (tai `Agree`/`Disagree`).
+
+---
+
 ### Luonnos-Pull Requestit (Draft PR) ja kysymykset kontekstissa
 Monimutkaiset tai laajat komponenttilisäykset voidaan aloittaa avaamalla luonnos-Pull Request (Draft PR).
 - PR voi aluksi olla tyhjä esikatselurunko, johon kirjataan suunnitteluvaihtoehdot.
@@ -171,8 +179,6 @@ Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 ## Iteraatiot
 
 ### Iteraatio 3 — Scope
-
-> **Suunniteltu:** 2026-07-03 | **Arviointijakso:** Iteraation 3 sprintti
 
 #### Teema 1: Rajapintaintegraatio ja dynaaminen uutisvirta (Core MVP)
 
