@@ -1,0 +1,16 @@
+{
+  "name": "uutisseuranta-patterns",
+  "version": "1.0.0",
+  "description": "Uutisseuranta UI Patterns -kuviointikirjasto",
+  "main": "patterns.js",
+  "scripts": {
+    "test:html": "./validate-html.sh",
+    "test:css": "stylelint style.css",
+    "test": "npm run test:css && npm run test:html"
+  },
+  "devDependencies": {
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard": "^36.0.1"
+  },
+  "private": true
+}
