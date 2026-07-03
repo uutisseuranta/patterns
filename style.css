@@ -1,12 +1,16 @@
 /*
  * Uutisseuranta UI Patterns — style.css
- * Perustuu d-cent/patterns-repon spesifikaatioihin.
  *
  * Kaikki värit ja spacing käyttävät design-tokeneita (CSS custom properties).
  * Tämä mahdollistaa light/dark-moodin automaattisesti.
  *
  * BEM-nimeämiskonventio: Block__Element--Modifier
  */
+
+/* =============================================================================
+   RESET & VARIABLES
+   Normalisoi selainkohtaiset oletukset ja määrittelee globaalit muuttujat.
+   ============================================================================= */
 
 /* Local Fonts */
 @font-face {
@@ -184,6 +188,11 @@ ul, ol {
   margin-bottom: 1em;
 }
 
+/* =============================================================================
+   TYPOGRAPHY
+   Järjestelmäfonttipino — ei ulkoisia CDN-latauksia.
+   ============================================================================= */
+
 /* ==========================================================================
    2. TYPOGRAFIA
    ========================================================================== */
@@ -225,6 +234,11 @@ pre code {
   padding: 0;
 }
 
+/* =============================================================================
+   LAYOUT
+   Sivun päärakenne: grid, flex-kontainerit, responsiivisuus.
+   ============================================================================= */
+
 /* ==========================================================================
    3. GRID & LAYOUT
    ========================================================================== */
@@ -253,6 +267,11 @@ pre code {
 .inactive:hover {
   opacity: 1;
 }
+
+/* =============================================================================
+   COMPONENTS
+   Yksittäiset UI-komponentit.
+   ============================================================================= */
 
 /* ==========================================================================
    4. BUTTONS (atoms/06-buttons)
@@ -1029,6 +1048,11 @@ textarea {
 [role="tabpanel"][hidden] {
   display: none;
 }
+
+/* =============================================================================
+   UTILITIES
+   Apuluokat ja responsiivisuusleiskat.
+   ============================================================================= */
 
 /* ==========================================================================
    20. RESPONSIVE
