@@ -1,3 +1,8 @@
+# CI Validation
+# Vastuu: Suorittaa automaattiset HTML- ja CSS-tarkistukset jokaisessa pull requestissa ja push-tapahtumassa main-haaraan.
+# Työkalut: Stylelint (CSS-syntaksi/BEM) ja W3C HTML Nu Checker API (HTML-rakenne).
+# Estää mergauksen jos jokin tarkistus epäonnistuu.
+
 name: CI Validation
 
 on:
