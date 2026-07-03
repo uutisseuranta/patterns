@@ -165,3 +165,27 @@ Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 | 2026-07-03 | Tuotanto-URL vahvistettu kanoniseksi (patterns.uutisseuranta.fi) | Poistaa epäselvyyden kahdesta vaihtoehtoisesta URL:sta | uutisseuranta.github.io/patterns | Jos domain muuttuu | — |
 | 2026-07-03 | style.css rakenteellistaminen lisätty backlogiin | Tiedosto kasvaa iteraatioittain; osiokommenttijako parantaa ylläpidettävyyttä | Ei toimenpidettä | — | [#56](https://github.com/uutisseuranta/patterns/issues/56) |
 | 2026-07-03 | Yhtenäinen SemVer-versionumerointi (`vX.Y.Z`) | Yhtenäiset julkaisukäytännöt kaikkien repositorioiden välillä | Ei tagitusta / repo-kohtainen versionumerointi | — | — |
+
+---
+
+## Iteraatiot
+
+### Iteraatio 3 — Scope
+
+> **Suunniteltu:** 2026-07-03 | **Arviointijakso:** Iteraation 3 sprintti
+
+#### Teema 1: Rajapintaintegraatio ja dynaaminen uutisvirta (Core MVP)
+
+| # | Tiketti | Kuvaus |
+|---|---|---|
+| 2 | [#24](https://github.com/uutisseuranta/patterns/issues/24) | Vaihe 2 — Molecules + Organisms: lisää komponentit index.html-visualisointiin |
+| 3 | [#40](https://github.com/uutisseuranta/patterns/issues/40) | feat: lisää AS2 @context ja id semanttiset data-attribuutit artikkelikortille |
+
+#### Teema 3: Laadunvalvonta, testaus ja vakauttaminen (QA & Refactoring)
+
+| # | Tiketti | Kuvaus |
+|---|---|---|
+| 7 | [#55](https://github.com/uutisseuranta/patterns/issues/55) | chore: ota käyttöön W3C Markup Validator- ja Stylelint-työkalut laadunvalvontaan |
+| 8 | [#56](https://github.com/uutisseuranta/patterns/issues/56) | style.css rakenteellistaminen: jaottelu osioihin ja ylläpidettävyyden parantaminen |
+
+Koko Iteraatio 3 scope (kaikki kolme repoa): ks. [uutisseuranta.github.io PR #32](https://github.com/uutisseuranta/uutisseuranta.github.io/pull/32)
