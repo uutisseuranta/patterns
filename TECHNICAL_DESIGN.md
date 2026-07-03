@@ -96,12 +96,12 @@ Kaikki `patterns`-kirjaston komponentit noudattavat **WCAG 2.1 AA** -tasoa minim
 
 ---
 
-## 5. Versionumerointi ja release
+## 5. Versionumerointi ja julkaisut (Release)
 
-`patterns`-repo ei käytä SemVer-versionumerointia. Jokainen merge `main`-haaraan on release — GitHub Pages julkaisee automaattisesti.
-
-- **Ei erillisiä release-tageja** tässä vaiheessa. Tagit lisätään jos kuluttajien määrä kasvaa tai tarvitaan pinnattu versio.
-- **Muutoshistoria-taulukko** (§7) toimii päätöslokina — se ei ole SemVer-changelog.
+Projektissa noudatetaan yhtenäistä versionumerointi- ja julkaisukäytäntöä kaikkien repositorioiden välillä:
+- **SemVer (Semantic Versioning):** Versionumerot noudattavat muotoa `vX.Y.Z` (esim. `v0.1.0`).
+- **Tagien luominen:** Uusi julkaisu luodaan tekemällä vastaava Git-tagi (`vX.Y.Z`) ja julkaisemalla se GitHub Releases -palvelussa.
+- **Julkaisuvastuu:** Jokaisesta tuotantoon viedystä merkittävästä välitavoitteesta (kuten Iteraatioiden valmistumisesta) luodaan virallinen SemVer-julkaisu.
 
 ---
 
@@ -164,3 +164,4 @@ Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 | 2026-07-03 | patterns.js-vastuualue kirjattu §1:een | Tiedoston rooli oli epäselvä kolmessa eri kohdassa; yksi kanoninen kuvaus | Erillinen PATTERNS_JS.md | — | — |
 | 2026-07-03 | Tuotanto-URL vahvistettu kanoniseksi (patterns.uutisseuranta.fi) | Poistaa epäselvyyden kahdesta vaihtoehtoisesta URL:sta | uutisseuranta.github.io/patterns | Jos domain muuttuu | — |
 | 2026-07-03 | style.css rakenteellistaminen lisätty backlogiin | Tiedosto kasvaa iteraatioittain; osiokommenttijako parantaa ylläpidettävyyttä | Ei toimenpidettä | — | [#56](https://github.com/uutisseuranta/patterns/issues/56) |
+| 2026-07-03 | Yhtenäinen SemVer-versionumerointi (`vX.Y.Z`) | Yhtenäiset julkaisukäytännöt kaikkien repositorioiden välillä | Ei tagitusta / repo-kohtainen versionumerointi | — | — |
