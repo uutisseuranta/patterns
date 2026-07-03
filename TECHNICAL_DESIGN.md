@@ -144,7 +144,7 @@ Monimutkaiset tai laajat komponenttilisäykset voidaan aloittaa avaamalla luonno
 Kuviointikirjaston HTML- ja CSS-koodin laadun ja virheettömyyden valvontaan otetaan myöhemmin käyttöön seuraavat työkalut:
 - **W3C Markup Validator** – HTML-komponenttien validointi ja standardienmukaisuuden varmistus.
 - **Stylelint** – CSS-sääntöjen ja muotoilujen laadunvalvonta.
-Nämä integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
+Näät integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 
 ---
 
@@ -160,3 +160,7 @@ Nämä integroidaan automaattiseen CI-pipelineen iteraatiossa 3.
 | 2026-07-02 | Vanilla CSS + JS, ei build-vaihetta | Riippuvuuksien minimointi; GitHub Pages julkaisee suoraan lähdekoodista | Tailwind + Vite | Jos komponenttien määrä kasvaa merkittävästi | — |
 | 2026-07-02 | Suora URL-viittaus cross-repo-kulutukseen | Yksinkertaisin kulutustapa; ei submodulia tai npm-pakettia | git submodule | Jos tarvitaan pinnattu versio | — |
 | 2026-07-03 | WCAG 2.1 AA minimivaatimus | Julkinen palvelu; saavutettavuus on perusvaatimus | WCAG 2.1 A | — | [#35](https://github.com/uutisseuranta/patterns/issues/35) |
+| 2026-07-03 | Normatiivinen komponenttilista §1:een | Tekee iteraation laajuuden eksplisiittiseksi; estää scope creepin | Vapaa komponenttilisäys | Kun iteraatio-käsite poistuu käytöstä | — |
+| 2026-07-03 | patterns.js-vastuualue kirjattu §1:een | Tiedoston rooli oli epäselvä kolmessa eri kohdassa; yksi kanoninen kuvaus | Erillinen PATTERNS_JS.md | — | — |
+| 2026-07-03 | Tuotanto-URL vahvistettu kanoniseksi (patterns.uutisseuranta.fi) | Poistaa epäselvyyden kahdesta vaihtoehtoisesta URL:sta | uutisseuranta.github.io/patterns | Jos domain muuttuu | — |
+| 2026-07-03 | style.css rakenteellistaminen lisätty backlogiin | Tiedosto kasvaa iteraatioittain; osiokommenttijako parantaa ylläpidettävyyttä | Ei toimenpidettä | — | [#56](https://github.com/uutisseuranta/patterns/issues/56) |
