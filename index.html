@@ -302,12 +302,12 @@
             <p class="component-card__label">Tagit</p>
             <!--
               AS2-semantiikka: tag-agree ja tag-disagree käyttävät AS2-standardin
-              Like- ja Dislike-aktiviteettityyppejä (data-ap-type).
+              Like- ja Dislike-aktiviteettityyppejä (data-as2-type).
               Käyttöliittymässä näytetään lokalisoitu teksti "Samaa mieltä" / "Eri mieltä".
 
               Mappaus:
-                data-ap-type="Like"    → näyttönimi "Samaa mieltä" (Agree)
-                data-ap-type="Dislike" → näyttönimi "Eri mieltä"   (Disagree)
+                data-as2-type="Like"    → näyttönimi "Samaa mieltä" (Agree)
+                data-as2-type="Dislike" → näyttönimi "Eri mieltä"   (Disagree)
 
               Hallittu poikkeama: vanha Uutisseuranta tag-agree / tag-disagree -semantiikka
               on korvattu AS2-yhteensopivilla Like/Dislike-tyypeillä. Ks. STANDARDS.md § Poikkeama 3.
@@ -315,11 +315,11 @@
             <div class="btn-row">
               <a href="#"
                  class="tag tag-agree"
-                 data-ap-type="Like"
+                 data-as2-type="Like"
                  aria-label="Samaa mieltä">Samaa mieltä</a>
               <a href="#"
                  class="tag tag-disagree"
-                 data-ap-type="Dislike"
+                 data-as2-type="Dislike"
                  aria-label="Eri mieltä">Eri mieltä</a>
               <a href="#" class="tag tag-neutral">Lorem ipsum</a>
             </div>
@@ -404,9 +404,9 @@
           jonka replies-kenttä sisältää Note-objektien Collectionin.
 
           Semantiikka:
-            - data-ap-context="https://www.w3.org/ns/activitystreams"
-            - data-ap-id       = absoluuttinen IRI (Article.id)
-            - data-ap-type     = "Article" (pääobjekti), "Collection" (replies-wrapper), "Note" (kommentit)
+            - data-as2-context="https://www.w3.org/ns/activitystreams"
+            - data-as2-id       = absoluuttinen IRI (Article.id)
+            - data-as2-type     = "Article" (pääobjekti), "Collection" (replies-wrapper), "Note" (kommentit)
 
           Rajaukset (ks. STANDARDS.md):
             - Ei ActivityPub Actor-objekteja (Person, Group, Organization, Service) tässä UI:ssa.
@@ -420,9 +420,9 @@
         <article
           class="article-card"
           style="max-width:680px;"
-          data-ap-type="Article"
-          data-ap-id="https://uutisseuranta.fi/articles/energiaremontti-2050"
-          data-ap-context="https://www.w3.org/ns/activitystreams"
+          data-as2-type="Article"
+          data-as2-id="https://uutisseuranta.fi/articles/energiaremontti-2050"
+          data-as2-context="https://www.w3.org/ns/activitystreams"
         >
           <div class="article-card__header">
             <div>
@@ -436,7 +436,7 @@
                   style="color:var(--c-teal-mid);"
                 >noin tunti sitten</time>
                 <span>·</span>
-                <a href="#" style="color:#fff;" data-ap-type="Group">Suomen uusenergiset</a>
+                <a href="#" style="color:#fff;" data-as2-type="Group">Suomen uusenergiset</a>
               </div>
             </div>
             <a href="#" class="article-card__vote">&#9654; Äänestä</a>
@@ -444,24 +444,24 @@
           <div class="article-card__body">
             <p class="article-card__text">Käynnistetään energiaremontti, joka tähtää siihen, että Suomi siirtyy käyttämään ainoastaan uusiutuvaa energiaa vuoteen 2050 mennessä.</p>
             <div class="article-card__tags">
-              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#UusiutuvaEnergia">Uusiutuva energia</a>
-              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#Ilmastonmuutos">Ilmastonmuutos</a>
-              <a href="#" class="article-tag" data-ap-type="Hashtag" data-ap-name="#UusiTalous">Uusi talous</a>
+              <a href="#" class="article-tag" data-as2-type="Hashtag" data-as2-name="#UusiutuvaEnergia">Uusiutuva energia</a>
+              <a href="#" class="article-tag" data-as2-type="Hashtag" data-as2-name="#Ilmastonmuutos">Ilmastonmuutos</a>
+              <a href="#" class="article-tag" data-as2-type="Hashtag" data-as2-name="#UusiTalous">Uusi talous</a>
             </div>
           </div>
           <!-- AS2: replies → Collection of Note objects -->
           <section
             class="article-replies"
-            data-ap-type="Collection"
-            data-ap-part-of="https://uutisseuranta.fi/articles/energiaremontti-2050/replies"
+            data-as2-type="Collection"
+            data-as2-part-of="https://uutisseuranta.fi/articles/energiaremontti-2050/replies"
             aria-label="Kommentit"
             style="padding:0 var(--sp-6) var(--sp-6);"
           >
             <article
               class="comment-card"
-              data-ap-type="Note"
-              data-ap-id="https://uutisseuranta.fi/comments/1"
-              data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
+              data-as2-type="Note"
+              data-as2-id="https://uutisseuranta.fi/comments/1"
+              data-as2-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
             >
               <div class="comment-meta">
                 <div class="comment-avatar" aria-hidden="true">MM</div>
@@ -478,9 +478,9 @@
             </article>
             <article
               class="comment-card"
-              data-ap-type="Note"
-              data-ap-id="https://uutisseuranta.fi/comments/2"
-              data-ap-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
+              data-as2-type="Note"
+              data-as2-id="https://uutisseuranta.fi/comments/2"
+              data-as2-in-reply-to="https://uutisseuranta.fi/articles/energiaremontti-2050"
             >
               <div class="comment-meta">
                 <div class="comment-avatar" style="background:var(--c-magenta-dark);" aria-hidden="true">EE</div>
