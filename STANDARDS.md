@@ -80,14 +80,7 @@ Spesifikaatio: [https://www.w3.org/TR/WCAG21/](https://www.w3.org/TR/WCAG21/)
 
 ---
 
-## GDPR — Henkilötietojen käsittely
 
-- **Frontend-templaateissa ei henkilökohtaisia tunnistetietoja** (ei sähköpostia, ei IP:tä, ei evästeitä) ilman eksplisiittistä suostumusta
-- `data-ap-id` viittaa **artikkeliin tai kommenttiin**, ei käyttäjään
-- Käyttäjäprofiilisivu käsitelee henkilötietoja erikseen (ks. uutisseuranta.github.io STANDARDS.md)
-- Analytiikka vain anonymisoituna
-
----
 
 ## Hallitut poikkeamat
 
