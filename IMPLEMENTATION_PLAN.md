@@ -3,138 +3,151 @@
 Kukin label vastaa yhtä PR:ää. Issuet on ryhmitelty labeleittain toteutusjärjestyksessä.
 Merkintä `→` tarkoittaa riippuvuutta: edellinen PR on oltava mergettynä ensin.
 
+Huom: `patterns`-repo on **komponenttikirjasto** — se tagitaan ensimmäisenä tägiketjussa.
+Muut repot määrittelevät `patterns`-version omissa riippuvuuksissaan.
+
 ---
 
-## Label: `hardened` — Laadunvalvonta ja tietoturva (tehdään ensin)
-
-Nämä luovat pohjan muille töille: validointi- ja lintaustyökalut on oltava paikallaan ennen kuin komponenttitoteutus kasvaa.
+## Label: `0-sprint` — Välitön (blokkaajat, tehdään ensin)
 
 | Issue | Otsikko | Huomio |
 |---|---|---|
-| [#55](https://github.com/uutisseuranta/patterns/issues/55) | chore: W3C Markup Validator + Stylelint CI-putkeen | GitHub Actions -status check joka estää mergen jos rikkoo |
-| [#1](https://github.com/uutisseuranta/patterns/issues/1) | Pakota HTTPS ja tarkista julkaisu | Enforce HTTPS GitHub Pages -asetuksissa |
+| [#24](https://github.com/uutisseuranta/patterns/issues/24) | testing: kirjoita Playwright E2E-testit artikkelikortti-komponentille | CI-gate ennen kaikkea muuta |
+| [#38](https://github.com/uutisseuranta/patterns/issues/38) | chore: määrittää huoltoikkuna- ja versiopoistumastrategia | Versioitumispäätökset kirjataan ennen uusia ominaisuuksia |
 
 **PR-jako:**
-- PR `hardened/lint-ci` — issue #55 (W3C + Stylelint + Actions-workflow)
-- PR `hardened/https` — issue #1 (HTTPS-pakotus + mixed content -tarkistus)
+- PR `0-sprint/playwright-e2e` — issue #24 (Playwright-konfiguraatio + artikkelikortti-testit)
+- PR `0-sprint/version-policy` — issue #38 (DECISION_LOG.md + VERSIONING.md)
 
 ---
 
-## Label: `chore` — Tekninen velka ja nimeämiskonventiot
+## Label: `mvp` — Alpha-julkaisun ydinkomponentit
 
-Tehtävä ennen komponenttitoteutusta jotta codebase on siistässä kunnossa.
+| Issue | Otsikko | Riippuu |
+|---|---|---|
+| [#1](https://github.com/uutisseuranta/patterns/issues/1) | Artikkelikortti-komponentti (AS2 Article-objekti) | — |
+| [#2](https://github.com/uutisseuranta/patterns/issues/2) | Kommenttikortti-komponentti (AS2 Note-objekti) | — |
+| [#3](https://github.com/uutisseuranta/patterns/issues/3) | Tagipilvi-komponentti | → #1 valmis (tagit tulevat artikkelikorttidatasta) |
+| [#9](https://github.com/uutisseuranta/patterns/issues/9) | Hakupalkki-komponentti | — |
+| [#6](https://github.com/uutisseuranta/patterns/issues/6) | Kirjautumismodaali (Firebase Auth) | — |
+| [#34](https://github.com/uutisseuranta/patterns/issues/34) | Loading skeleton — artikkelikortti + uutisvirta | → #1 valmis |
+| [#33](https://github.com/uutisseuranta/patterns/issues/33) | Error boundary -komponentti | → #1 + #6 valmis |
+| [#16](https://github.com/uutisseuranta/patterns/issues/16) | WCAG AA — fokustyyli, kontrastit, aria-labelit | Tarkastettava jokainen MVP-komponentti |
+
+**PR-jako:**
+- PR `mvp/article-card` — issue #1 (artikkelikortti)
+- PR `mvp/comment-card` — issue #2 (kommenttikortti)
+- PR `mvp/tag-cloud` — issue #3 (tagipilvi)
+- PR `mvp/search-bar` — issue #9 (hakupalkki)
+- PR `mvp/auth-modal` — issue #6 (kirjautumismodaali)
+- PR `mvp/skeleton-loading` — issue #34 (skeleton loader)
+- PR `mvp/error-boundary` — issue #33 (error boundary)
+- PR `mvp/accessibility-audit` — issue #16 (WCAG AA läpäisy kaikille MVP-komponenteille)
+
+---
+
+## Label: `AS2` — ActivityStreams 2.0 -yhteensopivuus
+
+| Issue | Otsikko | Riippuu |
+|---|---|---|
+| [#47](https://github.com/uutisseuranta/patterns/issues/47) | docs: siirrä patterns.md → TECHNICAL_DESIGN.md, lisää AS2-objektimalli | koordinoi frontend #27 |
+| [#35](https://github.com/uutisseuranta/patterns/issues/35) | feat: AS2 JSON-LD-konteksti (context.jsonld) | → bq-activitystreams #54 contract määritelty |
+| [#36](https://github.com/uutisseuranta/patterns/issues/36) | feat: TypeScript-tyypit AS2-objekteille (Article, Note, Like, Dislike) | → #35 valmis |
+
+**PR-jako:**
+- PR `as2/technical-design` — issue #47 (dokumentaatio + AS2-objektimalli)
+- PR `as2/jsonld-context` — issue #35 (context.jsonld)
+- PR `as2/ts-types` — issue #36 (TypeScript-tyypit)
+
+---
+
+## Label: `hardened` — Tietoturva- ja laatukovennukset
+
+| Issue | Otsikko | Riippuu |
+|---|---|---|
+| [#45](https://github.com/uutisseuranta/patterns/issues/45) | sec: Supply chain — npm audit + Dependabot-konfiguraatio | — |
+| [#37](https://github.com/uutisseuranta/patterns/issues/37) | chore: määrittää npm-järjestelmän näkyvyyskäytännöt (public/private/scoped) | — |
+
+**PR-jako:**
+- PR `hardened/supply-chain` — issuet #45 + #37 (npm audit + näkyvyyspolitiikka yhdessä)
+
+---
+
+## Label: `testing` — Testikattavuus
+
+| Issue | Otsikko | Tehdään yhdessä |
+|---|---|---|
+| [#25](https://github.com/uutisseuranta/patterns/issues/25) | testing: kirjoita Playwright E2E-testit hakupalkille ja tagipilvelle | `mvp/search-bar` + `mvp/tag-cloud` |
+| [#26](https://github.com/uutisseuranta/patterns/issues/26) | testing: Playwright-testit autentikoituneille toiminnoille | `mvp/auth-modal` |
+| [#27](https://github.com/uutisseuranta/patterns/issues/27) | testing: Playwright cross-browser-testit (Chrome + Firefox + Safari) | `testing/e2e-*` kaikki valmis |
+
+**Periaate:** testit kuuluvat samaan PR:iin kuin komponentti. Erilliset `testing`-PR:t vain cross-browser (#27).
+
+---
+
+## Label: `enhancement` — Jatkokehitys (post-alpha)
+
+| Issue | Otsikko | Riippuu |
+|---|---|---|
+| [#4](https://github.com/uutisseuranta/patterns/issues/4) | Like/Dislike-komponentti (Agree/Disagree-näyttönimillä) | → bq-activitystreams #33 Like/Dislike-API |
+| [#5](https://github.com/uutisseuranta/patterns/issues/5) | Profiilisivu-komponentti + Agree/Disagree-tilastovisualisointi | → #4 valmis |
+| [#7](https://github.com/uutisseuranta/patterns/issues/7) | Wayback-linkkikomponentti | → bq-activitystreams #26 Wayback API |
+| [#8](https://github.com/uutisseuranta/patterns/issues/8) | Notifikaatiopaneeli (Firebase Cloud Messaging) | → bq-activitystreams write-api toimii |
+| [#10](https://github.com/uutisseuranta/patterns/issues/10) | Latausindikaattori + työjonon hallinta | → #34 skeleton valmis |
+
+**PR-jako:**
+- PR `feat/like-dislike` — issuet #4 + #5 (komponentit, riippuvat toisistaan)
+- PR `feat/wayback-link` — issue #7
+- PR `feat/notifications` — issue #8
+- PR `feat/progress-queue` — issue #10
+
+---
+
+## Label: `documentation` — Dokumentaatio ja tekninen velka
 
 | Issue | Otsikko | Huomio |
 |---|---|---|
-| [#64](https://github.com/uutisseuranta/patterns/issues/64) | chore: nimeä as2_attributes.csv → as2-attributes.csv | `kebab-case`-rikkomus, 1-rivi git mv |
-
-**PR-scope:** PR `chore/kebab-rename` — yksi commit, tiedostonimen korjaus + kaikki viittaukset.
-
----
-
-## Label: `documentation` — Dokumentaatio
-
-Tehtävissä missä vaiheessa tahansa, mutta README:n yhdistäminen on tehtävä ennen kuin uusia komponentteja dokumentoidaan.
-
-| Issue | Otsikko | Riippuu |
-|---|---|---|
-| [#58](https://github.com/uutisseuranta/patterns/issues/58) | docs: yhdistä PATTERNS_CATALOG.md README.md:hen | — |
-| [#49](https://github.com/uutisseuranta/patterns/issues/49) | chore: määritä ja kirjaa DoR ja DoD | — |
-| [#66](https://github.com/uutisseuranta/patterns/issues/66) | docs: lisää business case -osio puuttuviin issueisiin | — |
-| [#36](https://github.com/uutisseuranta/patterns/issues/36) | docs: Linkitys Espanja-pilottien käyttäjäpolut index.html:lle | — |
+| [#39](https://github.com/uutisseuranta/patterns/issues/39) | chore: siirrä kehitysmuistiinpanot dev-notesista asianmukaisiin tiedostoihin | Tehdään `0-sprint`-työn jälkeen |
+| [#40](https://github.com/uutisseuranta/patterns/issues/40) | chore: populoi LICENSES.md | `as2/technical-design` jälkeen |
+| [#41](https://github.com/uutisseuranta/patterns/issues/41) | chore: dokumentoi CSS-muuttujajärjestelmä | `mvp/accessibility-audit` jälkeen |
+| [#43](https://github.com/uutisseuranta/patterns/issues/43) | Meta: Jira–GitHub-integraation päätökset | Vain dokumentaatiota |
 
 **PR-jako:**
-- PR `docs/readme-merge` — issuet #58 + #49 (README + DoR/DoD yhdessä, molemmat vaikuttavat TECHNICAL_DESIGN.md:hen)
-- PR `docs/issue-cleanup` — issue #66 (issueiden business case -lisäykset, vain issue-päivityksiä, ei koodia)
-- PR `docs/user-paths-link` — issue #36 (pieni lisäys index.html:iin)
-
----
-
-## Label: `AS2` — ActivityStreams 2.0 -semantiikka
-
-Nämä voidaan tehdä rinnakkain komponenttityön kanssa. #40 on tehtävä ennen #50:ä.
-
-| Issue | Otsikko | Riippuu |
-|---|---|---|
-| [#40](https://github.com/uutisseuranta/patterns/issues/40) | feat: AS2 @context ja id data-attribuutit artikkelikorteille | — |
-| [#50](https://github.com/uutisseuranta/patterns/issues/50) | chore: tarkista AS2-kenttätoteutus — replies, shares, Like/Dislike | → #40 valmis |
-| [#38](https://github.com/uutisseuranta/patterns/issues/38) | AS2 stack-alignment: frontend ↔ backend ↔ standardi | → #40 + #50 valmis, koordinoi bq-activitystreams |
-| [#59](https://github.com/uutisseuranta/patterns/issues/59) | refactor: korvaa data-*-attribuutit avoimilla standardeilla (ARIA, JSON-LD) | → #40 + #50 valmis |
-
-**PR-jako:**
-- PR `as2/context-id` — issue #40 (@context ja id -attribuutit)
-- PR `as2/replies-shares-votes` — issue #50 (replies + shares + Like/Dislike)
-- PR `as2/stack-alignment` — issue #38 (dokumentaatio + cross-repo katselmus)
-- PR `as2/aria-refactor` — issue #59 (data-* → ARIA/JSON-LD, isompi refaktorointi)
-
----
-
-## Label: `accessibility` — Saavutettavuus
-
-| Issue | Otsikko | Riippuu |
-|---|---|---|
-| [#35](https://github.com/uutisseuranta/patterns/issues/35) | a11y/perf: poista Google Fonts -CDN, käytä paikallisia fontteja | — |
-| [#27](https://github.com/uutisseuranta/patterns/issues/27) | atom-datepicker: suunnittele ja toteuta päivämäärävalitsin | → #26 CSS-kartoitus |
-
-**PR-jako:**
-- PR `a11y/local-fonts` — issue #35 (Google Fonts → @font-face paikallisesti)
-- PR `a11y/datepicker` — issue #27 (datepicker-komponentti, natiivi `<input type=date>` lähtökohta)
-
----
-
-## Label: `enhancement` — Komponenttikehitys (Atomic Design -hierarkia)
-
-Nämä on toteutettava järjestyksessä: CSS-kartoitus ensin, sitten Atoms, sitten Molecules+Organisms, sitten Templates. Komponenttistrategiapäätös (#48) on tehtävä ennen mihinkään komponenttikoodia.
-
-| Issue | Otsikko | Riippuu |
-|---|---|---|
-| [#48](https://github.com/uutisseuranta/patterns/issues/48) | chore: Vite + Web Components vai Svelte (päätös) | — |
-| [#56](https://github.com/uutisseuranta/patterns/issues/56) | style.css rakenteellistaminen osioihin | → #48 päätös |
-| [#26](https://github.com/uutisseuranta/patterns/issues/26) | CSS-luokkien holistinen kartoitus ennen pattern-toteutusta | → #56 |
-| [#23](https://github.com/uutisseuranta/patterns/issues/23) | Vaihe 1 — Atoms: perusatomit index.html:iin | → #26 |
-| [#24](https://github.com/uutisseuranta/patterns/issues/24) | Vaihe 2 — Molecules + Organisms | → #23 |
-| [#28](https://github.com/uutisseuranta/patterns/issues/28) | organism-footer: suunnittele ja toteuta footer | → #24 |
-| [#25](https://github.com/uutisseuranta/patterns/issues/25) | Vaihe 3 — Templates | → #24 + #28 |
-| [#65](https://github.com/uutisseuranta/patterns/issues/65) | feat: komponenttimigraatiosuunnitelma (#48 jatko) | → #48 päätös + #25 |
-
-**PR-jako:**
-- PR `feat/component-strategy` — issue #48 (päätös dokumenttina, ei koodia)
-- PR `feat/css-structure` — issue #56 (style.css jako osioihin)
-- PR `feat/css-audit` — issue #26 (CSS-luokkakartoitus + päätökset)
-- PR `feat/atoms` — issue #23 (kaikki Atom-komponentit)
-- PR `feat/molecules-organisms` — issuet #24 + #28 (Molecules + Organisms + footer yhteen PR:iin)
-- PR `feat/templates` — issue #25 (Templates)
-- PR `feat/migration-plan` — issue #65 (migraatiosuunnitelma dokumenttina)
+- PR `docs/dev-notes-cleanup` — issue #39 + #40 (kehitysmuistiinpanot + lisenssit)
+- PR `docs/css-variables` — issue #41 (CSS-dokumentaatio)
+- PR `docs/jira-meta` — issue #43 (ei koodimuutoksia)
 
 ---
 
 ## Yhteenveto: PR-järjestys
 
 ```
-hardened/lint-ci
-hardened/https
-chore/kebab-rename
+0-sprint/playwright-e2e
+0-sprint/version-policy
 
-docs/readme-merge          (missä vaiheessa tahansa)
-docs/user-paths-link       (missä vaiheessa tahansa)
-docs/issue-cleanup         (issue-päivityksiä, ei koodia)
+mvp/article-card
+mvp/comment-card
+  → mvp/tag-cloud
+mvp/search-bar
+mvp/auth-modal
+  → mvp/skeleton-loading
+  → mvp/error-boundary
+mvp/accessibility-audit     (kaikkien mvp-komponenttien jälkeen)
 
-as2/context-id
-  → as2/replies-shares-votes
-      → as2/stack-alignment
-      → as2/aria-refactor
+as2/technical-design        (rinnakkain mvp-työn kanssa)
+as2/jsonld-context
+  → as2/ts-types
 
-a11y/local-fonts            (milloin tahansa)
+testing/*                   (rinnakkain vastaavan ominaisuuden kanssa)
 
-feat/component-strategy
-  → feat/css-structure
-      → feat/css-audit
-          → feat/atoms
-              → feat/molecules-organisms  (sis. footer #28)
-                  → feat/templates
-                      → feat/migration-plan
+hardened/supply-chain       (mvp valmis ensin)
 
-a11y/datepicker             (→ feat/css-audit valmis)
+feat/like-dislike           (alpha + bq-activitystreams #33 valmis)
+feat/wayback-link           (alpha + bq-activitystreams #26 valmis)
+feat/notifications          (alpha stabiili)
+feat/progress-queue         (alpha stabiili)
+
+docs/*                      (missä vaiheessa tahansa)
 ```
 
 ---
@@ -143,5 +156,105 @@ a11y/datepicker             (→ feat/css-audit valmis)
 
 | Aihe | Label | Mihin PR |
 |---|---|---|
-| Dark mode -testaus kaikille komponenteille | `enhancement` | lisätään `feat/atoms`-PR:n acceptance criteriaan |
-| WCAG AA -tarkistus komponenttikirjastolle | `accessibility` | erillinen PR ennen tuotantoa |
+| Storybook-dokumentaatio komponenteille | `documentation` | oma PR, ennen v1.0.0 |
+| Dark mode -tuki komponenttikirjastolle | `mvp` tai `enhancement` | `mvp/accessibility-audit` PR:n yhteydessä |
+| npm-paketin julkaisuautomaatio (GitHub Actions) | `0-sprint` | `0-sprint/playwright-e2e` yhteyteen |
+
+---
+
+## Release — tägijärjestys ja gate-kriteerit
+
+Tägit luodaan kolmessa vaiheessa. Jokainen tägi odottaa edellisen CI-buildin läpimenoa.
+Tägiketju: **patterns → bq-activitystreams → uutisseuranta.github.io**.
+patterns tagitaan **aina ensimmäisenä** — muut repot riippuvat patterns-versiosta.
+
+### v0.1.0 — "Komponenttikirjasto olemassa"
+
+**Gate:** kaikki `0-sprint`-labeliset issuet kiinni, Playwright-testit läpimäissä.
+
+```bash
+git tag -a v0.1.0 -m "Release v0.1.0: 0-sprint valmis, Playwright CI käynnissä"
+git push origin v0.1.0
+```
+
+### v0.3.0 — "MVP-komponentit: artikkelikortti, haku, kirjautuminen, skeleton"
+
+**Gate:** kaikki `mvp`-labeliset issuet kiinni, WCAG AA läpimennyt.
+
+```bash
+# Avoimet mvp-issuet — nolla ennen tagausta
+gh issue list --label mvp --state open --repo uutisseuranta/patterns
+```
+
+```bash
+git tag -a v0.3.0 -m "Release v0.3.0: MVP-komponentit, WCAG AA, skeleton loader"
+git push origin v0.3.0
+```
+
+> **Ketjugate:** bq-activitystreams `v0.5.0` voidaan tagita vasta kun patterns on tagittu `v0.3.0`.
+> uutisseuranta.github.io `v0.5.0` voidaan tagita vasta kun bq-activitystreams on tagittu `v0.5.0`.
+
+### v1.0.0 — "Tuotantovalmis komponenttikirjasto"
+
+**Gate:** kaikki `hardened`- ja `testing`-labeliset issuet kiinni, AS2-tyypit julkaistu.
+
+```bash
+gh issue list --label hardened --state open --repo uutisseuranta/patterns
+
+git tag -a v1.0.0 -m "Release v1.0.0: tuotantovalmis — AS2-tyypit, supply chain, cross-browser"
+git push origin v1.0.0
+```
+
+### Terraform-infrastruktuuri labelien hallintaan
+
+Repolabelit ja branch protection hallitaan Terraformilla. Katso
+[`terraform/github/patterns/labels.tf`](../terraform/github/patterns/labels.tf)
+joka provisioi tässä dokumentissa käytetyt labelit (`0-sprint`, `mvp`, `AS2`,
+`hardened`, `testing`, `enhancement`, `documentation`) sekä `main`-haaran
+suojaussäännöt.
+
+```hcl
+# Esimerkki: terraform/github/patterns/labels.tf
+resource "github_issue_label" "mvp" {
+  repository  = "patterns"
+  name        = "mvp"
+  color       = "0075ca"
+  description = "MVP-komponentit — vaaditaan alpha-julkaisuun"
+}
+
+resource "github_issue_label" "as2" {
+  repository  = "patterns"
+  name        = "AS2"
+  color       = "5319e7"
+  description = "ActivityStreams 2.0 -yhteensopivuus"
+}
+
+resource "github_branch_protection" "main" {
+  repository_id = github_repository.patterns.node_id
+  pattern       = "main"
+
+  required_status_checks {
+    strict   = true
+    contexts = ["ci / playwright"]
+  }
+
+  required_pull_request_reviews {
+    required_approving_review_count = 1
+  }
+}
+```
+
+Aja muutokset:
+
+```bash
+export GITHUB_TOKEN="ghp_..."
+cd terraform/github
+terraform init && terraform plan && terraform apply
+```
+
+### AS2-skeemaversio per release
+
+| Release | AS2-skeemaversio | Muutokset |
+|---|---|---|
+| `v0.3.0` | schema-v1 | Article, Note, Collection, Hashtag TypeScript-tyypit |
+| `v1.0.0` | schema-v2 | Like, Dislike, JSON-LD context.jsonld, `_uutisseuranta:*`-laajennukset |
