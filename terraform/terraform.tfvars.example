@@ -1,0 +1,7 @@
+# terraform/terraform.tfvars.example
+# Kopioi terraform.tfvars:ksi.
+# Tässä repossa ei ole salaisia muuttujia.
+
+default_branch          = "main"
+required_ci_checks      = []
+component_lib_version   = "v0.3.0"
